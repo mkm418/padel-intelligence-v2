@@ -23,6 +23,18 @@ export const metadata: Metadata = {
   title: "Padel Passport | Miami Padel Stats, Rankings and Player Network",
   description:
     "Track your padel stats, compare players head to head, explore the Miami player network, and climb the power rankings. Built on real match data from 27,000+ players.",
+  metadataBase: new URL("https://www.thepadelpassport.com"),
+  openGraph: {
+    title: "Padel Passport",
+    description: "The scoreboard for Miami padel. 27K+ players tracked.",
+    siteName: "Padel Passport",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Padel Passport",
+    description: "The scoreboard for Miami padel. 27K+ players tracked.",
+  },
 };
 
 /* ── Root Layout ────────────────────────────────────────────── */
