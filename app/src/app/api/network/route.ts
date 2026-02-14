@@ -101,7 +101,9 @@ export async function GET(req: NextRequest) {
   // Real player IDs set (for partner filtering)
   const realIds = playerIds;
 
-  // ── Fetch edges via SQL function (fast server-side filtering) ─────
+  // ── Fetch edges ────────────────────────────────────────────────────
+  // For large player sets (>3000), query edges directly with weight filter
+  // instead of sending a huge player_ids array that exceeds request limits.
 
   const playerIdArray = Array.from(playerIds);
 
@@ -124,18 +126,35 @@ export async function GET(req: NextRequest) {
     return all;
   }
 
-  let edgesFromRpc;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let edgesArr: any[] = [];
+
   try {
-    edgesFromRpc = await paginateRpc("get_network_edges", {
-      player_ids: playerIdArray,
-      min_weight: minWeight,
-      filter_club: club || null,
-    });
+    if (playerIdArray.length > 3000) {
+      // Broad query: fetch edges by weight threshold directly, then filter
+      const allEdges = await fetchAll((sb, from, to) =>
+        sb
+          .from("edges")
+          .select("source, target, weight, relationship")
+          .gte("weight", minWeight)
+          .range(from, to),
+      );
+      // Only keep edges where both endpoints are in the player set
+      edgesArr = allEdges.filter(
+        (e) => playerIds.has(e.source) && playerIds.has(e.target),
+      );
+    } else {
+      // Smaller player set: use the RPC for precise filtering
+      const edgesFromRpc = await paginateRpc("get_network_edges", {
+        player_ids: playerIdArray,
+        min_weight: minWeight,
+        filter_club: club || null,
+      });
+      edgesArr = edgesFromRpc ?? [];
+    }
   } catch (e) {
     return NextResponse.json({ error: (e as Error).message }, { status: 500 });
   }
-
-  const edgesArr = edgesFromRpc ?? [];
 
   // ── Build adjacency from network edges (for top partners) ────────────
 

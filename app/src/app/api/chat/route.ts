@@ -57,11 +57,9 @@ export async function POST(req: NextRequest) {
     });
   } catch (error) {
     console.error("[Chat API Error]", error);
-    return new Response(
-      JSON.stringify({
-        error: error instanceof Error ? error.message : "Internal server error",
-      }),
-      { status: 500 }
-    );
+    const msg = error instanceof Error ? error.message : "Internal server error";
+    // Missing API key is a config issue, not a server crash
+    const status = msg.includes("OPENROUTER_API_KEY") ? 503 : 500;
+    return new Response(JSON.stringify({ error: msg }), { status });
   }
 }
