@@ -36,9 +36,17 @@ export default async function Home() {
           <span className="text-sm font-bold uppercase tracking-[0.2em]">
             Padel Passport
           </span>
-          <span className="rounded-full bg-surface px-3 py-1 text-xs font-medium text-muted">
-            Miami
-          </span>
+          <div className="flex items-center gap-4">
+            <a
+              href="/network"
+              className="rounded-lg bg-accent/10 px-3 py-1.5 text-xs font-medium text-accent hover:bg-accent/20 transition-colors"
+            >
+              Player Network
+            </a>
+            <span className="rounded-full bg-surface px-3 py-1 text-xs font-medium text-muted">
+              Miami
+            </span>
+          </div>
         </div>
       </nav>
 
