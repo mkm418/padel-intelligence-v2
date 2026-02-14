@@ -79,6 +79,13 @@ function formatWR(p: RankedPlayer): string {
   return `${Math.round(p.winRate * 100)}%`;
 }
 
+/** Client-side name filter — instant, no API call needed */
+function filterBySearch(players: RankedPlayer[], query: string): RankedPlayer[] {
+  if (!query.trim()) return players;
+  const q = query.toLowerCase().trim();
+  return players.filter((p) => p.name.toLowerCase().includes(q));
+}
+
 const TABS: { id: Tab; label: string }[] = [
   { id: "overall", label: "Overall" },
   { id: "hot", label: "On Fire" },
@@ -95,6 +102,7 @@ export default function PowerRankings() {
   const [tab, setTab] = useState<Tab>("overall");
   const [club, setClub] = useState("");
   const [levelRange, setLevelRange] = useState<[number, number]>([0, 8]);
+  const [search, setSearch] = useState("");
   const debounceRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   useEffect(() => {
@@ -169,6 +177,35 @@ export default function PowerRankings() {
 
         {/* ── Filters — single row desktop, stacked mobile */}
         <div className="mb-8 flex flex-col sm:flex-row sm:items-center gap-3">
+          {/* Player search */}
+          <div className="relative w-full sm:w-64">
+            <svg
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-dim pointer-events-none"
+              width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search player..."
+              className="input-field w-full pl-9"
+            />
+            {search && (
+              <button
+                onClick={() => setSearch("")}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-dim hover:text-foreground"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              </button>
+            )}
+          </div>
+
           <select
             value={club}
             onChange={(e) => setClub(e.target.value)}
@@ -223,17 +260,17 @@ export default function PowerRankings() {
         {/* ── Content */}
         {data && !loading && (
           <>
-            {/* Overall rankings — no podium, straight to table */}
+            {/* Overall rankings */}
             {tab === "overall" && (
               <>
-                {data.rankings.length > 0 ? (
+                {filterBySearch(data.rankings, search).length > 0 ? (
                   <RankingTable
-                    players={data.rankings}
+                    players={filterBySearch(data.rankings, search)}
                     showRank
-                    highlightTop={3}
+                    highlightTop={search ? 0 : 3}
                   />
                 ) : (
-                  <EmptyState message="No players match these filters." />
+                  <EmptyState message={search ? `No players matching "${search}".` : "No players match these filters."} />
                 )}
               </>
             )}
@@ -244,13 +281,13 @@ export default function PowerRankings() {
                 <p className="text-sm text-muted mb-5">
                   Most active players in the last 2 weeks with strong results.
                 </p>
-                {data.categories.hotPlayers.length > 0 ? (
+                {filterBySearch(data.categories.hotPlayers, search).length > 0 ? (
                   <RankingTable
-                    players={data.categories.hotPlayers}
+                    players={filterBySearch(data.categories.hotPlayers, search)}
                     showRank
                   />
                 ) : (
-                  <EmptyState message="No hot players with current filters. Try widening your level range." />
+                  <EmptyState message={search ? `No players matching "${search}".` : "No hot players with current filters."} />
                 )}
               </div>
             )}
@@ -261,13 +298,13 @@ export default function PowerRankings() {
                 <p className="text-sm text-muted mb-5">
                   Players who started playing in the last 45 days.
                 </p>
-                {data.categories.risingStars.length > 0 ? (
+                {filterBySearch(data.categories.risingStars, search).length > 0 ? (
                   <RankingTable
-                    players={data.categories.risingStars}
+                    players={filterBySearch(data.categories.risingStars, search)}
                     showRank={false}
                   />
                 ) : (
-                  <EmptyState message="No new players with current filters." />
+                  <EmptyState message={search ? `No players matching "${search}".` : "No new players with current filters."} />
                 )}
               </div>
             )}
@@ -278,26 +315,34 @@ export default function PowerRankings() {
                 {Object.entries(data.brackets).length > 0 ? (
                   Object.entries(data.brackets)
                     .sort(([a], [b]) => parseFloat(b) - parseFloat(a))
-                    .map(([bracket, players]) => (
-                      <div key={bracket}>
-                        <h3 className="text-base font-bold mb-4 flex items-center gap-2.5">
-                          <span
-                            className="inline-block w-2.5 h-2.5 rounded-full"
-                            style={{
-                              background: levelColor(parseFloat(bracket)),
-                            }}
-                          />
-                          Level {bracket}
-                          <span className="text-muted font-normal text-sm">
-                            ({players.length})
-                          </span>
-                        </h3>
-                        <RankingTable players={players} showRank={false} />
-                      </div>
-                    ))
+                    .filter(([, players]) => filterBySearch(players, search).length > 0)
+                    .map(([bracket, players]) => {
+                      const filtered = filterBySearch(players, search);
+                      return (
+                        <div key={bracket}>
+                          <h3 className="text-base font-bold mb-4 flex items-center gap-2.5">
+                            <span
+                              className="inline-block w-2.5 h-2.5 rounded-full"
+                              style={{
+                                background: levelColor(parseFloat(bracket)),
+                              }}
+                            />
+                            Level {bracket}
+                            <span className="text-muted font-normal text-sm">
+                              ({filtered.length})
+                            </span>
+                          </h3>
+                          <RankingTable players={filtered} showRank={false} />
+                        </div>
+                      );
+                    })
                 ) : (
                   <EmptyState message="No level data available with current filters." />
                 )}
+                {Object.entries(data.brackets).length > 0 &&
+                  Object.entries(data.brackets).filter(([, players]) => filterBySearch(players, search).length > 0).length === 0 && (
+                    <EmptyState message={`No players matching "${search}".`} />
+                  )}
               </div>
             )}
           </>
