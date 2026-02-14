@@ -103,6 +103,8 @@ export default function PowerRankings() {
   const [club, setClub] = useState("");
   const [levelRange, setLevelRange] = useState<[number, number]>([0, 8]);
   const [search, setSearch] = useState("");
+  // Cache the full club list from the first unfiltered fetch so it persists
+  const [allClubs, setAllClubs] = useState<string[]>([]);
   const debounceRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   useEffect(() => {
@@ -123,6 +125,10 @@ export default function PowerRankings() {
         .then((d) => {
           if (d.error) throw new Error(d.error);
           setData(d);
+          // Only update club list from unfiltered results (no club selected)
+          if (!club && d.clubs?.length > 0) {
+            setAllClubs(d.clubs);
+          }
         })
         .catch((e) => {
           setError(e.message ?? "Failed to load");
@@ -212,9 +218,9 @@ export default function PowerRankings() {
             className="input-field w-full sm:w-56"
           >
             <option value="">All clubs</option>
-            {(data?.clubs ?? []).map((c) => (
+            {allClubs.map((c) => (
               <option key={c} value={c}>
-                {c.trim()}
+                {c}
               </option>
             ))}
           </select>

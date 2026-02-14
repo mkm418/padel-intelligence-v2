@@ -212,10 +212,10 @@ export async function GET(req: NextRequest) {
     }
   }
 
-  // All clubs for filter (raw values for exact DB matching)
+  // All clubs for filter from current result set
   const clubSet = new Set<string>();
   for (const p of allPlayers) {
-    for (const c of p.clubs ?? []) clubSet.add(c);
+    for (const c of p.clubs ?? []) clubSet.add(c.trim());
   }
 
   return NextResponse.json({
