@@ -118,6 +118,7 @@ export async function GET(req: NextRequest) {
   try {
   const url = req.nextUrl;
   const club = url.searchParams.get("club") ?? "";
+  const search = url.searchParams.get("search") ?? "";
   const minLevel = parseFloat(url.searchParams.get("minLevel") ?? "0");
   const maxLevel = parseFloat(url.searchParams.get("maxLevel") ?? "8");
   const minMatches = parseInt(url.searchParams.get("minMatches") ?? "5", 10);
@@ -139,6 +140,8 @@ export async function GET(req: NextRequest) {
     if (minLevel > 0) q = q.gte("level_value", minLevel);
     if (maxLevel < 8) q = q.lte("level_value", maxLevel);
     if (club) q = q.contains("clubs", [club]);
+    // Server-side name search using case-insensitive pattern match
+    if (search) q = q.ilike("name", `%${search}%`);
 
     const { data, error } = await q;
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
@@ -228,8 +231,11 @@ export async function GET(req: NextRequest) {
     allClubNames = Array.from(clubSet).sort();
   }
 
+  // When searching, return all matches (up to 200). Default: top 100.
+  const resultLimit = search ? 200 : 100;
+
   return NextResponse.json({
-    rankings: withRank.slice(0, 100),
+    rankings: withRank.slice(0, resultLimit),
     totalRanked: withRank.length,
     categories: {
       hotPlayers,

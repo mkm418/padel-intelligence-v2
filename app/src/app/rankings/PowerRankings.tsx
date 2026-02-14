@@ -79,13 +79,6 @@ function formatWR(p: RankedPlayer): string {
   return `${Math.round(p.winRate * 100)}%`;
 }
 
-/** Client-side name filter — instant, no API call needed */
-function filterBySearch(players: RankedPlayer[], query: string): RankedPlayer[] {
-  if (!query.trim()) return players;
-  const q = query.toLowerCase().trim();
-  return players.filter((p) => p.name.toLowerCase().includes(q));
-}
-
 const TABS: { id: Tab; label: string }[] = [
   { id: "overall", label: "Overall" },
   { id: "hot", label: "On Fire" },
@@ -109,6 +102,9 @@ export default function PowerRankings() {
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
 
+    // Longer debounce for search typing, shorter for filter changes
+    const delay = search ? 400 : 250;
+
     debounceRef.current = setTimeout(() => {
       setLoading(true);
       setError(null);
@@ -118,13 +114,13 @@ export default function PowerRankings() {
         maxLevel: String(levelRange[1]),
       });
       if (club) params.set("club", club);
+      if (search.trim()) params.set("search", search.trim());
 
       fetch(`/api/rankings?${params}`)
         .then((r) => r.json())
         .then((d) => {
           if (d.error) throw new Error(d.error);
           setData(d);
-          // API now always returns the full club list (fetched independently)
           if (d.clubs?.length > 0) {
             setAllClubs(d.clubs);
           }
@@ -134,12 +130,12 @@ export default function PowerRankings() {
           setData(null);
         })
         .finally(() => setLoading(false));
-    }, 250);
+    }, delay);
 
     return () => {
       if (debounceRef.current) clearTimeout(debounceRef.current);
     };
-  }, [club, levelRange]);
+  }, [club, levelRange, search]);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -268,9 +264,9 @@ export default function PowerRankings() {
             {/* Overall rankings */}
             {tab === "overall" && (
               <>
-                {filterBySearch(data.rankings, search).length > 0 ? (
+                {data.rankings.length > 0 ? (
                   <RankingTable
-                    players={filterBySearch(data.rankings, search)}
+                    players={data.rankings}
                     showRank
                     highlightTop={search ? 0 : 3}
                   />
@@ -286,9 +282,9 @@ export default function PowerRankings() {
                 <p className="text-sm text-muted mb-5">
                   Most active players in the last 2 weeks with strong results.
                 </p>
-                {filterBySearch(data.categories.hotPlayers, search).length > 0 ? (
+                {data.categories.hotPlayers.length > 0 ? (
                   <RankingTable
-                    players={filterBySearch(data.categories.hotPlayers, search)}
+                    players={data.categories.hotPlayers}
                     showRank
                   />
                 ) : (
@@ -303,9 +299,9 @@ export default function PowerRankings() {
                 <p className="text-sm text-muted mb-5">
                   Players who started playing in the last 45 days.
                 </p>
-                {filterBySearch(data.categories.risingStars, search).length > 0 ? (
+                {data.categories.risingStars.length > 0 ? (
                   <RankingTable
-                    players={filterBySearch(data.categories.risingStars, search)}
+                    players={data.categories.risingStars}
                     showRank={false}
                   />
                 ) : (
@@ -320,10 +316,7 @@ export default function PowerRankings() {
                 {Object.entries(data.brackets).length > 0 ? (
                   Object.entries(data.brackets)
                     .sort(([a], [b]) => parseFloat(b) - parseFloat(a))
-                    .filter(([, players]) => filterBySearch(players, search).length > 0)
-                    .map(([bracket, players]) => {
-                      const filtered = filterBySearch(players, search);
-                      return (
+                    .map(([bracket, players]) => (
                         <div key={bracket}>
                           <h3 className="text-base font-bold mb-4 flex items-center gap-2.5">
                             <span
@@ -334,20 +327,15 @@ export default function PowerRankings() {
                             />
                             Level {bracket}
                             <span className="text-muted font-normal text-sm">
-                              ({filtered.length})
+                              ({players.length})
                             </span>
                           </h3>
-                          <RankingTable players={filtered} showRank={false} />
+                          <RankingTable players={players} showRank={false} />
                         </div>
-                      );
-                    })
+                      ))
                 ) : (
-                  <EmptyState message="No level data available with current filters." />
+                  <EmptyState message={search ? `No players matching "${search}".` : "No level data available with current filters."} />
                 )}
-                {Object.entries(data.brackets).length > 0 &&
-                  Object.entries(data.brackets).filter(([, players]) => filterBySearch(players, search).length > 0).length === 0 && (
-                    <EmptyState message={`No players matching "${search}".`} />
-                  )}
               </div>
             )}
           </>
