@@ -1,101 +1,125 @@
 /**
- * GET /api/rankings?club=&minLevel=0&maxLevel=8&period=all
+ * GET /api/rankings?club=&minLevel=0&maxLevel=8&minMatches=5
  *
  * Power rankings computed from match data.
- * Factors: win rate (weighted by match volume), level, recent activity, opponent quality.
+ * Only shows meaningful stats. Win rate hidden when sample is too small.
  */
 
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 
-// ── Power score formula ──────────────────────────────────────────────────
+export const revalidate = 300; // Cache for 5 minutes
+
+/* ── Power score formula ──────────────────────────────────────── */
 
 function computePowerScore(player: Record<string, unknown>): number {
   const matches = (player.matches_played as number) || 0;
-  const winRate = (player.win_rate as number) ?? 0;
-  const level = (player.level_value as number) ?? 2;
-  const competitive = (player.competitive_matches as number) || 0;
-  const uniqueOpp = (player.unique_opponents as number) || 0;
+  const wins = (player.wins as number) || 0;
+  const losses = (player.losses as number) || 0;
+  const wlTotal = wins + losses;
+  const level = (player.level_value as number) ?? 0;
   const lastMatch = player.last_match as string | null;
 
-  // Base: level contributes most (0-8 scale, normalized to 0-40)
+  // Level is the strongest signal (0-40 points)
   const levelScore = level * 5;
 
-  // Win rate bonus (0-25 points, scaled by confidence from match volume)
-  const confidence = Math.min(matches / 50, 1); // caps at 50 matches
-  const winScore = winRate * 25 * confidence;
+  // Match volume (0-20 points, log scale)
+  const volumeScore = Math.min(Math.log2(matches + 1) * 2.5, 20);
 
-  // Volume bonus (0-15 points, log scale)
-  const volumeScore = Math.min(Math.log2(matches + 1) * 2, 15);
+  // Win rate bonus, only if enough W/L results (0-20 points)
+  let winScore = 0;
+  if (wlTotal >= 5) {
+    const winRate = wins / wlTotal;
+    const confidence = Math.min(wlTotal / 30, 1);
+    winScore = winRate * 20 * confidence;
+  }
 
-  // Competitive bonus (0-10 points)
-  const compScore = Math.min(competitive / 10, 10);
-
-  // Opponent diversity bonus (0-5 points)
-  const diversityScore = Math.min(uniqueOpp / 20, 5);
-
-  // Recency bonus (0-5 points, decays over 90 days)
+  // Recency bonus (0-10 points, decays over 60 days)
   let recencyScore = 0;
   if (lastMatch) {
     const daysAgo = (Date.now() - new Date(lastMatch).getTime()) / 86400000;
-    recencyScore = Math.max(0, 5 * (1 - daysAgo / 90));
+    recencyScore = Math.max(0, 10 * (1 - daysAgo / 60));
   }
 
   return Math.round(
-    (levelScore + winScore + volumeScore + compScore + diversityScore + recencyScore) * 10,
+    (levelScore + volumeScore + winScore + recencyScore) * 10,
   ) / 10;
 }
 
-// ── Streak detection ─────────────────────────────────────────────────────
+/* ── Streak detection ─────────────────────────────────────────── */
 
 function detectStreak(player: Record<string, unknown>): {
   type: "hot" | "cold" | "new" | "steady";
   label: string;
-  color: string;
 } {
   const matches = (player.matches_played as number) || 0;
-  const winRate = (player.win_rate as number) ?? 0;
+  const wins = (player.wins as number) || 0;
+  const losses = (player.losses as number) || 0;
+  const wlTotal = wins + losses;
   const lastMatch = player.last_match as string | null;
   const firstMatch = player.first_match as string | null;
 
-  if (!lastMatch) return { type: "cold", label: "Inactive", color: "#6b7280" };
+  if (!lastMatch) return { type: "cold", label: "Inactive" };
 
   const daysAgo = (Date.now() - new Date(lastMatch).getTime()) / 86400000;
 
-  // New player (first match within last 30 days)
+  // New player (first match within last 45 days, fewer than 15 matches)
   if (firstMatch) {
     const daysSinceFirst = (Date.now() - new Date(firstMatch).getTime()) / 86400000;
-    if (daysSinceFirst <= 30 && matches <= 10) {
-      return { type: "new", label: "Rising Star", color: "#a855f7" };
+    if (daysSinceFirst <= 45 && matches <= 15) {
+      return { type: "new", label: "New Player" };
     }
   }
 
-  // Hot streak: active recently + high win rate
-  if (daysAgo <= 14 && winRate >= 0.6 && matches >= 10) {
-    return { type: "hot", label: "On Fire", color: "#ef4444" };
+  // Hot: active last 14 days + decent win record (if W/L data exists)
+  if (daysAgo <= 14 && matches >= 10) {
+    if (wlTotal >= 5 && wins / wlTotal >= 0.55) {
+      return { type: "hot", label: "On Fire" };
+    }
+    // Active with high volume, even without W/L
+    if (matches >= 30) {
+      return { type: "hot", label: "On Fire" };
+    }
   }
 
-  // Active and steady
+  // Active in last 30 days
   if (daysAgo <= 30) {
-    return { type: "steady", label: "Active", color: "#22c55e" };
+    return { type: "steady", label: "Active" };
   }
 
   // Inactive
   if (daysAgo > 60) {
-    return { type: "cold", label: "Inactive", color: "#6b7280" };
+    return { type: "cold", label: "Inactive" };
   }
 
-  return { type: "steady", label: "Steady", color: "#3b82f6" };
+  return { type: "steady", label: "Steady" };
 }
 
-// ── Handler ──────────────────────────────────────────────────────────────
+/* ── Determine if win rate is trustworthy ─────────────────────── */
+
+function isWinRateMeaningful(player: Record<string, unknown>): boolean {
+  const wins = (player.wins as number) || 0;
+  const losses = (player.losses as number) || 0;
+  const matches = (player.matches_played as number) || 0;
+  const wlTotal = wins + losses;
+  // Need at least 5 recorded results AND results must be >= 10% of total matches
+  return wlTotal >= 5 && (matches === 0 || wlTotal / matches >= 0.1);
+}
+
+/* ── Trim club name for display (keep raw value for filtering) ─ */
+
+function trimClub(name: string): string {
+  return name.trim();
+}
+
+/* ── Handler ──────────────────────────────────────────────────── */
 
 export async function GET(req: NextRequest) {
   const url = req.nextUrl;
   const club = url.searchParams.get("club") ?? "";
   const minLevel = parseFloat(url.searchParams.get("minLevel") ?? "0");
   const maxLevel = parseFloat(url.searchParams.get("maxLevel") ?? "8");
-  const minMatches = parseInt(url.searchParams.get("minMatches") ?? "10", 10);
+  const minMatches = parseInt(url.searchParams.get("minMatches") ?? "5", 10);
 
   // Paginate through all matching players
   const PAGE = 1000;
@@ -123,9 +147,10 @@ export async function GET(req: NextRequest) {
     from += PAGE;
   }
 
-  // Compute power scores and streaks
+  // Filter junk accounts and compute rankings
   const ranked = allPlayers
     .filter((p) => !(
+      !p.name ||
       p.name.includes("sin Playtomic") ||
       p.name.includes("Torneo ") ||
       p.name.startsWith("PBP ") ||
@@ -138,20 +163,26 @@ export async function GET(req: NextRequest) {
     .map((p) => {
       const powerScore = computePowerScore(p);
       const streak = detectStreak(p);
+      const wins = p.wins || 0;
+      const losses = p.losses || 0;
+      const wlTotal = wins + losses;
+      const meaningful = isWinRateMeaningful(p);
+
       return {
         id: p.user_id,
         name: p.name,
         level: p.level_value,
         picture: p.picture,
         matches: p.matches_played,
-        wins: p.wins,
-        losses: p.losses,
-        winRate: p.win_rate,
-        clubs: p.clubs,
+        wins,
+        losses,
+        wlRecorded: wlTotal,
+        // Only show win rate if we have enough data
+        winRate: meaningful ? p.win_rate : null,
+        winRateMeaningful: meaningful,
+        clubs: (p.clubs ?? []).map(trimClub),
         lastMatch: p.last_match,
         firstMatch: p.first_match,
-        uniqueOpponents: p.unique_opponents,
-        competitiveMatches: p.competitive_matches,
         powerScore,
         streak,
       };
@@ -164,21 +195,11 @@ export async function GET(req: NextRequest) {
   // Category leaderboards
   const hotPlayers = withRank
     .filter((p) => p.streak.type === "hot")
-    .slice(0, 20);
+    .slice(0, 25);
 
   const risingStars = withRank
     .filter((p) => p.streak.type === "new")
-    .slice(0, 20);
-
-  const mostImproved = withRank
-    .filter((p) => p.matches >= 20 && p.winRate != null && p.winRate >= 0.55)
-    .sort((a, b) => {
-      // Newer players with high win rate = most improved
-      const aRecency = a.firstMatch ? (Date.now() - new Date(a.firstMatch).getTime()) / 86400000 : 9999;
-      const bRecency = b.firstMatch ? (Date.now() - new Date(b.firstMatch).getTime()) / 86400000 : 9999;
-      return aRecency - bRecency;
-    })
-    .slice(0, 20);
+    .slice(0, 25);
 
   // Level bracket rankings
   const brackets: Record<string, typeof withRank> = {};
@@ -186,12 +207,12 @@ export async function GET(req: NextRequest) {
     if (p.level == null) continue;
     const bracket = `${Math.floor(p.level)}.0-${Math.floor(p.level)}.9`;
     if (!brackets[bracket]) brackets[bracket] = [];
-    if (brackets[bracket].length < 10) {
+    if (brackets[bracket].length < 15) {
       brackets[bracket].push(p);
     }
   }
 
-  // All clubs for filter
+  // All clubs for filter (raw values for exact DB matching)
   const clubSet = new Set<string>();
   for (const p of allPlayers) {
     for (const c of p.clubs ?? []) clubSet.add(c);
@@ -203,9 +224,10 @@ export async function GET(req: NextRequest) {
     categories: {
       hotPlayers,
       risingStars,
-      mostImproved,
     },
     brackets,
     clubs: Array.from(clubSet).sort(),
+  }, {
+    headers: { "Cache-Control": "public, s-maxage=300, stale-while-revalidate=600" },
   });
 }

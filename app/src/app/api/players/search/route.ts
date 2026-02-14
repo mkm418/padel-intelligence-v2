@@ -7,10 +7,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 
+export const revalidate = 60; // Cache for 1 minute for search
+
 export async function GET(req: NextRequest) {
   const q = req.nextUrl.searchParams.get("q")?.trim();
   if (!q || q.length < 2) {
-    return NextResponse.json({ results: [] });
+    return NextResponse.json({ results: [] }, {
+      headers: { "Cache-Control": "public, s-maxage=60, stale-while-revalidate=120" },
+    });
   }
 
   const { data, error } = await supabase
@@ -35,5 +39,7 @@ export async function GET(req: NextRequest) {
         ? Math.round((p.wins / (p.wins + p.losses)) * 100)
         : null,
     })),
+  }, {
+    headers: { "Cache-Control": "public, s-maxage=60, stale-while-revalidate=120" },
   });
 }

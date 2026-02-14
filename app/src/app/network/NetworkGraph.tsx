@@ -3,6 +3,9 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import dynamic from "next/dynamic";
 
+import Nav from "@/components/Nav";
+import { useTheme } from "@/components/ThemeProvider";
+
 // react-force-graph-2d: client-only (canvas)
 const ForceGraph2D = dynamic(() => import("react-force-graph-2d"), {
   ssr: false,
@@ -21,33 +24,20 @@ interface GraphNode {
   id: string;
   name: string;
   level: number | null;
-  levelConfidence: number | null;
   matchCount: number;
-  totalBookings: number;
   clubs: string[];
-  gender: string;
   picture: string | null;
   firstMatch: string;
   lastMatch: string;
   position: string | null;
-  isPremium: boolean;
   degree: number;
   topPartners: TopPartner[];
-  // W/L
+  // W/L (only meaningful when winRateMeaningful is true)
   wins: number;
   losses: number;
+  wlRecorded: number;
   winRate: number | null;
-  // Sets/games
-  setsWon: number;
-  setsLost: number;
-  gamesWon: number;
-  gamesLost: number;
-  // Social
-  uniqueTeammates: number;
-  uniqueOpponents: number;
-  // Match types
-  competitiveMatches: number;
-  friendlyMatches: number;
+  winRateMeaningful: boolean;
   x?: number;
   y?: number;
 }
@@ -132,8 +122,8 @@ function daysBetween(a: string, b: string) {
 /** Returns a recency label + color class based on days since last match */
 function recencyBadge(lastMatch: string): { label: string; color: string } | null {
   const days = daysBetween(lastMatch, new Date().toISOString());
-  if (days <= 7) return { label: "This week", color: "text-green-400" };
-  if (days <= 30) return { label: "This month", color: "text-yellow-400" };
+  if (days <= 7) return { label: "This week", color: "text-teal" };
+  if (days <= 30) return { label: "This month", color: "text-amber" };
   if (days <= 90) return { label: `${Math.round(days / 30)}mo ago`, color: "text-muted" };
   return null;
 }
@@ -146,6 +136,7 @@ type SortDir = "asc" | "desc";
 // ─── Component ──────────────────────────────────────────────────────────
 
 export default function NetworkGraph() {
+  const { theme } = useTheme();
   // Filters
   const [minMatches, setMinMatches] = useState(5);
   const [minWeight, setMinWeight] = useState(3);
@@ -163,6 +154,9 @@ export default function NetworkGraph() {
 
   // Sidebar tab
   const [tab, setTab] = useState<SidebarTab>("filters");
+
+  // Mobile: filters sidebar open/closed (collapsible on small screens)
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Data
   const [data, setData] = useState<NetworkData | null>(null);
@@ -240,7 +234,6 @@ export default function NetworkGraph() {
   const handleNodeClick = useCallback(
     (node: GraphNode) => {
       setSelected(node);
-      // Zoom to node with animation
       if (graphRef.current) {
         graphRef.current.centerAt(node.x, node.y, 600);
         graphRef.current.zoom(4, 600);
@@ -251,7 +244,6 @@ export default function NetworkGraph() {
 
   const handleBackgroundClick = useCallback(() => {
     setSelected(null);
-    // Reset zoom
     if (graphRef.current) {
       graphRef.current.zoomToFit(600, 40);
     }
@@ -301,13 +293,17 @@ export default function NetworkGraph() {
       if (isSelected) {
         ctx.beginPath();
         ctx.arc(node.x!, node.y!, size + 3, 0, 2 * Math.PI);
-        ctx.fillStyle = "rgba(16,185,129,0.3)";
+        ctx.fillStyle = "rgba(255,107,44,0.3)";
         ctx.fill();
       }
 
       ctx.beginPath();
       ctx.arc(node.x!, node.y!, size, 0, 2 * Math.PI);
-      ctx.fillStyle = levelColor(node.level);
+      ctx.fillStyle = isSelected
+        ? "#FF6B2C"
+        : highlightSet.size > 0 && highlightSet.has(node.id)
+          ? "#FF8F5C"
+          : theme === "dark" ? "#1C2541" : "#D4D4D8";
       ctx.fill();
 
       // Labels for bigger nodes or highlighted
@@ -317,7 +313,7 @@ export default function NetworkGraph() {
       ) {
         const fontSize = Math.max(2.5, size * 0.7);
         ctx.font = `${fontSize}px sans-serif`;
-        ctx.fillStyle = "#fff";
+        ctx.fillStyle = theme === "dark" ? "#fff" : "#18181B";
         ctx.textAlign = "center";
         ctx.fillText(
           node.name.split(" ")[0],
@@ -328,7 +324,7 @@ export default function NetworkGraph() {
 
       ctx.globalAlpha = 1;
     },
-    [highlightSet, selected],
+    [highlightSet, selected, theme],
   );
 
   const paintLink = useCallback(
@@ -346,14 +342,14 @@ export default function NetworkGraph() {
       ctx.moveTo(src.x!, src.y!);
       ctx.lineTo(tgt.x!, tgt.y!);
       ctx.strokeStyle = isHl
-        ? `rgba(16,185,129,${Math.min(0.7, link.weight * 0.06)})`
-        : "rgba(255,255,255,0.015)";
+        ? `rgba(45,212,191,${Math.min(0.7, link.weight * 0.06)})`
+        : theme === "dark" ? "rgba(255,255,255,0.015)" : "rgba(0,0,0,0.04)";
       ctx.lineWidth = isHl
         ? Math.min(3, 0.3 + link.weight * 0.2)
         : Math.min(1, link.weight * 0.1);
       ctx.stroke();
     },
-    [highlightSet],
+    [highlightSet, theme],
   );
 
   // Sort handler for list view
@@ -364,80 +360,104 @@ export default function NetworkGraph() {
 
   // ── Render ──────────────────────────────────────────────────────────
   return (
-    <div className="flex h-screen w-full flex-col bg-background text-foreground">
-      {/* ── Top bar ──────────────────────────────────────────── */}
-      <header className="flex items-center justify-between border-b border-border/50 bg-background/90 px-5 py-3 backdrop-blur-lg">
-        <div className="flex items-center gap-4">
-          <a
-            href="/"
-            className="text-xs font-bold uppercase tracking-[0.2em] text-muted hover:text-foreground transition-colors"
-          >
-            Padel Passport
-          </a>
-          <span className="text-muted/40">/</span>
-          <h1 className="text-sm font-semibold">Player Network</h1>
-          <span className="text-muted/40">|</span>
-          <a href="/rankings" className="text-xs text-muted hover:text-accent transition-colors">Rankings</a>
-          <a href="/h2h" className="text-xs text-muted hover:text-accent transition-colors">H2H</a>
-          <a href="/chat" className="text-xs text-muted hover:text-accent transition-colors">Coach AI</a>
+    <div className="flex h-screen w-full flex-col bg-background text-foreground pt-14 overflow-x-hidden">
+      <Nav />
+
+      {/* ── Header bar ─────────────────────────────────────────── */}
+      <header className="flex-shrink-0 flex items-center justify-between gap-3 border-b border-border bg-surface px-4 sm:px-5 py-2">
+        <div className="flex items-center gap-3 min-w-0">
+          <h1 className="font-display text-base font-bold tracking-tight truncate">
+            Miami Padel Network
+          </h1>
+          {data && (
+            <div className="hidden sm:flex items-center gap-3 text-[11px] text-muted">
+              <span>
+                <strong className="text-foreground stat-number">
+                  {data.meta.filteredPlayers.toLocaleString()}
+                </strong>{" "}
+                players
+              </span>
+              <span>
+                <strong className="text-foreground stat-number">
+                  {data.meta.filteredEdges.toLocaleString()}
+                </strong>{" "}
+                connections
+              </span>
+            </div>
+          )}
         </div>
-        <div className="flex items-center gap-4">
-          {/* View mode toggle */}
-          <div className="flex rounded-lg border border-border/50 overflow-hidden">
+
+        <div className="flex items-center gap-2 shrink-0">
+          {/* Mobile filter toggle */}
+          <button
+            onClick={() => setSidebarOpen((o) => !o)}
+            className="flex md:hidden min-h-[44px] min-w-[44px] items-center justify-center rounded-[10px] border border-border bg-raised text-muted hover:text-foreground hover:border-border-hover transition-colors"
+            aria-label={sidebarOpen ? "Close filters" : "Open filters"}
+          >
+            {sidebarOpen ? (
+              <span className="text-lg">&times;</span>
+            ) : (
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+              </svg>
+            )}
+          </button>
+
+          {/* Graph / List underline tabs */}
+          <nav className="flex">
             <button
               onClick={() => setViewMode("graph")}
-              className={`px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wider transition-colors ${
+              className={`px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider border-b-2 transition-colors ${
                 viewMode === "graph"
-                  ? "bg-accent text-background"
-                  : "text-muted hover:text-foreground"
+                  ? "border-accent text-accent"
+                  : "border-transparent text-muted hover:text-foreground"
               }`}
             >
               Graph
             </button>
             <button
               onClick={() => setViewMode("list")}
-              className={`px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wider transition-colors ${
+              className={`px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider border-b-2 transition-colors ${
                 viewMode === "list"
-                  ? "bg-accent text-background"
-                  : "text-muted hover:text-foreground"
+                  ? "border-accent text-accent"
+                  : "border-transparent text-muted hover:text-foreground"
               }`}
             >
               List
             </button>
-          </div>
-          {data && (
-            <div className="flex items-center gap-5 text-xs text-muted">
-              <span>
-                <strong className="text-foreground">
-                  {data.meta.filteredPlayers.toLocaleString()}
-                </strong>{" "}
-                players
-              </span>
-              <span>
-                <strong className="text-foreground">
-                  {data.meta.filteredEdges.toLocaleString()}
-                </strong>{" "}
-                connections
-              </span>
-              <span className="text-muted/40">|</span>
-              <span className="text-muted/60">
-                {data.meta.totalPlayers.toLocaleString()} total in DB
-              </span>
-            </div>
-          )}
+          </nav>
         </div>
       </header>
 
-      <div className="flex flex-1 overflow-hidden">
-        {/* ── Sidebar ──────────────────────────────────────────── */}
-        <aside className="flex w-72 shrink-0 flex-col border-r border-border/50 bg-surface/50">
+      <div className="flex flex-1 overflow-hidden min-w-0">
+        {/* Mobile backdrop when sidebar open */}
+        {sidebarOpen && (
+          <button
+            type="button"
+            onClick={() => setSidebarOpen(false)}
+            className="fixed inset-0 z-40 bg-black/50 md:hidden"
+            aria-label="Close filters"
+          />
+        )}
+
+        {/* ── Sidebar: overlay on mobile, inline on md+ ─────────────── */}
+        <aside
+          className={`
+            fixed md:relative inset-y-0 left-0 z-50 flex w-[min(320px,85vw)] md:w-72 shrink-0 flex-col
+            border-r border-border bg-surface
+            transform transition-transform duration-200 ease-out
+            md:translate-x-0
+            ${sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
+          `}
+          style={{ top: "4rem" }}
+        >
           {/* Tab switcher */}
-          <div className="flex border-b border-border/50">
+          <div className="flex border-b border-border">
             {(["filters", "leaderboard"] as const).map((t) => (
               <button
                 key={t}
                 onClick={() => setTab(t)}
-                className={`flex-1 py-2.5 text-[10px] font-semibold uppercase tracking-wider transition-colors ${
+                className={`flex-1 min-h-[44px] py-3 md:py-2.5 text-[11px] font-semibold uppercase tracking-wider transition-colors ${
                   tab === t
                     ? "border-b-2 border-accent text-accent"
                     : "text-muted hover:text-foreground"
@@ -448,7 +468,7 @@ export default function NetworkGraph() {
             ))}
           </div>
 
-          <div className="flex-1 overflow-y-auto p-4">
+          <div className="flex-1 overflow-y-auto p-4 overscroll-contain">
             {tab === "filters" ? (
               <FiltersPanel
                 searchInput={searchInput}
@@ -470,7 +490,6 @@ export default function NetworkGraph() {
                   if (viewMode === "graph") {
                     focusPlayer(id);
                   } else {
-                    // In list view, select the player
                     const node = data?.nodes.find((n) => n.id === id);
                     if (node) setSelected(node);
                   }
@@ -480,7 +499,7 @@ export default function NetworkGraph() {
           </div>
 
           {/* Legend (always visible) */}
-          <div className="border-t border-border/50 p-4">
+          <div className="border-t border-border p-4 shrink-0">
             <div className="flex items-center gap-1">
               {[0, 1, 2, 3, 4, 5, 6].map((l) => (
                 <div
@@ -490,7 +509,7 @@ export default function NetworkGraph() {
                 />
               ))}
             </div>
-            <div className="mt-1 flex justify-between text-[9px] text-muted">
+            <div className="mt-1 flex justify-between text-[11px] text-muted">
               <span>Beginner</span>
               <span>Advanced</span>
             </div>
@@ -498,19 +517,23 @@ export default function NetworkGraph() {
         </aside>
 
         {/* ── Main content area ──────────────────────────────── */}
-        <main className="relative flex-1">
+        <main className="relative flex-1 min-w-0 overflow-hidden">
           {loading && (
-            <div className="absolute inset-0 z-10 flex items-center justify-center bg-background/80">
+            <div className="absolute inset-0 z-10 flex items-center justify-center bg-background/90">
               <div className="text-center">
-                <div className="mx-auto mb-3 h-8 w-8 animate-spin rounded-full border-2 border-accent border-t-transparent" />
-                <p className="text-sm text-muted">Loading network...</p>
+                <div className="mx-auto mb-4 h-10 w-10 animate-spin rounded-full border-2 border-accent border-t-transparent" />
+                <p className="text-sm font-medium text-muted">Loading network...</p>
+                <p className="text-[11px] text-dim mt-1">Crunching player data</p>
               </div>
             </div>
           )}
 
           {error && (
-            <div className="absolute inset-0 z-10 flex items-center justify-center bg-background/80">
-              <p className="text-sm text-red-400">{error}</p>
+            <div className="absolute inset-0 z-10 flex items-center justify-center bg-background/90">
+              <div className="card px-6 py-4 text-center max-w-sm">
+                <p className="text-sm font-medium text-loss mb-1">Something went wrong</p>
+                <p className="text-[11px] text-muted">{error}</p>
+              </div>
             </div>
           )}
 
@@ -539,16 +562,15 @@ export default function NetworkGraph() {
                 warmupTicks={50}
                 d3AlphaDecay={0.02}
                 d3VelocityDecay={0.3}
-                backgroundColor="#09090b"
+                backgroundColor={theme === "dark" ? "#0A0C14" : "#FAFAFA"}
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 {...({} as any)}
               />
 
               {/* Hint overlay */}
               {!selected && (
-                <div className="absolute bottom-4 left-4 z-10 rounded-lg bg-surface/80 px-3 py-2 text-[10px] text-muted backdrop-blur">
-                  Click a node to explore &middot; Click background to reset
-                  zoom
+                <div className="absolute bottom-4 left-4 z-10 rounded-[10px] bg-surface border border-border px-3 py-2 text-[11px] text-muted">
+                  Click a node to explore &middot; Click background to reset zoom
                 </div>
               )}
 
@@ -570,237 +592,244 @@ export default function NetworkGraph() {
 
           {/* ── List view ──────────────────────────────────────── */}
           {viewMode === "list" && data && !loading && (
-            <div className="flex h-full">
-              {/* Table */}
-              <div className="flex-1 overflow-auto">
-                <table className="w-full text-xs">
-                  <thead className="sticky top-0 z-10 bg-surface border-b border-border/50">
-                    <tr>
-                      <SortHeader
-                        label=""
-                        sortKey="name"
-                        current={sortKey}
-                        dir={sortDir}
-                        onSort={handleSort}
-                        className="w-12"
-                      />
-                      <SortHeader
-                        label="Player"
-                        sortKey="name"
-                        current={sortKey}
-                        dir={sortDir}
-                        onSort={handleSort}
-                      />
-                      <SortHeader
-                        label="Level"
-                        sortKey="level"
-                        current={sortKey}
-                        dir={sortDir}
-                        onSort={handleSort}
-                        className="w-20 text-center"
-                      />
-                      <SortHeader
-                        label="Matches"
-                        sortKey="matchCount"
-                        current={sortKey}
-                        dir={sortDir}
-                        onSort={handleSort}
-                        className="w-20 text-center"
-                      />
-                      <SortHeader
-                        label="Win Rate"
-                        sortKey="winRate"
-                        current={sortKey}
-                        dir={sortDir}
-                        onSort={handleSort}
-                        className="w-24 text-center"
-                      />
-                      <SortHeader
-                        label="W-L"
-                        sortKey="wins"
-                        current={sortKey}
-                        dir={sortDir}
-                        onSort={handleSort}
-                        className="w-20 text-center"
-                      />
-                      <SortHeader
-                        label="Last Active"
-                        sortKey="lastMatch"
-                        current={sortKey}
-                        dir={sortDir}
-                        onSort={handleSort}
-                        className="w-28 text-center"
-                      />
-                      <th className="px-3 py-2.5 text-[10px] font-semibold uppercase tracking-wider text-muted text-left w-48">
-                        Clubs
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {sortedNodes.map((player) => (
-                      <tr
-                        key={player.id}
-                        onClick={() => setSelected(player)}
-                        className={`border-b border-border/20 cursor-pointer transition-colors hover:bg-surface/80 ${
-                          selected?.id === player.id ? "bg-accent/10" : ""
-                        }`}
-                      >
-                        {/* Photo */}
-                        <td className="px-3 py-2">
-                          {player.picture ? (
-                            <img
-                              src={player.picture.replace(
-                                "c_limit,w_1280",
-                                "c_fill,w_32,h_32",
-                              )}
-                              alt=""
-                              className="h-7 w-7 rounded-full object-cover"
-                            />
-                          ) : (
-                            <div
-                              className="h-7 w-7 rounded-full flex items-center justify-center text-[10px] font-bold"
-                              style={{
-                                background: levelColor(player.level),
-                                color:
-                                  player.level != null && player.level > 3
-                                    ? "#fff"
-                                    : "#000",
-                              }}
-                            >
-                              {player.name.charAt(0)}
-                            </div>
-                          )}
-                        </td>
-                        {/* Name */}
-                        <td className="px-3 py-2">
-                          <div className="font-medium truncate max-w-[200px]">
-                            {player.name}
-                          </div>
-                          {player.isPremium && (
-                            <span className="text-[9px] text-amber-400 font-medium">
-                              PRO
-                            </span>
-                          )}
-                        </td>
-                        {/* Level */}
-                        <td className="px-3 py-2 text-center">
-                          {player.level != null ? (
-                            <span
-                              className="inline-flex h-6 min-w-[40px] items-center justify-center rounded-full px-2 text-[11px] font-bold"
-                              style={{
-                                background: levelColor(player.level),
-                                color:
-                                  player.level > 3 ? "#fff" : "#000",
-                              }}
-                            >
-                              {player.level.toFixed(2)}
-                            </span>
-                          ) : (
-                            <span className="text-muted">—</span>
-                          )}
-                        </td>
-                        {/* Matches */}
-                        <td className="px-3 py-2 text-center font-mono">
-                          {player.matchCount}
-                        </td>
-                        {/* Win Rate */}
-                        <td className="px-3 py-2 text-center">
-                          {player.winRate != null &&
-                          player.wins + player.losses > 0 ? (
-                            <div className="flex items-center justify-center gap-1.5">
-                              <div className="w-12 h-1.5 rounded-full overflow-hidden bg-border/30">
-                                <div
-                                  className="h-full rounded-full"
-                                  style={{
-                                    width: `${player.winRate * 100}%`,
-                                    background:
-                                      player.winRate >= 0.5
-                                        ? "#22c55e"
-                                        : "#ef4444",
-                                  }}
-                                />
-                              </div>
-                              <span
-                                className={`font-mono text-[10px] font-medium ${
-                                  player.winRate >= 0.5
-                                    ? "text-green-400"
-                                    : "text-red-400"
-                                }`}
-                              >
-                                {Math.round(player.winRate * 100)}%
-                              </span>
-                            </div>
-                          ) : (
-                            <span className="text-muted">—</span>
-                          )}
-                        </td>
-                        {/* W-L */}
-                        <td className="px-3 py-2 text-center font-mono text-muted">
-                          {player.wins + player.losses > 0 ? (
-                            <>
-                              <span className="text-green-400">
-                                {player.wins}
-                              </span>
-                              -
-                              <span className="text-red-400">
-                                {player.losses}
-                              </span>
-                            </>
-                          ) : (
-                            "—"
-                          )}
-                        </td>
-                        {/* Last active */}
-                        <td className="px-3 py-2 text-center">
-                          <span className="text-muted">{formatDate(player.lastMatch)}</span>
-                          {(() => {
-                            const badge = recencyBadge(player.lastMatch);
-                            return badge ? (
-                              <span className={`block text-[9px] font-medium ${badge.color}`}>
-                                {badge.label}
-                              </span>
-                            ) : null;
-                          })()}
-                        </td>
-                        {/* Clubs */}
-                        <td className="px-3 py-2">
-                          <div className="flex flex-wrap gap-1 max-w-[200px]">
-                            {player.clubs.slice(0, 2).map((c) => (
-                              <span
-                                key={c}
-                                className="rounded-full bg-background border border-border/50 px-1.5 py-0.5 text-[9px] text-muted truncate max-w-[90px]"
-                              >
-                                {c}
-                              </span>
-                            ))}
-                            {player.clubs.length > 2 && (
-                              <span className="text-[9px] text-muted/50">
-                                +{player.clubs.length - 2}
-                              </span>
-                            )}
-                          </div>
-                        </td>
+            <div className="flex h-full flex-col md:flex-row min-w-0">
+              {/* Table in a card */}
+              <div className="card flex-1 min-w-0 overflow-hidden m-3">
+                <div className="h-full overflow-x-auto overflow-y-auto">
+                  <table className="w-full min-w-[600px] text-xs">
+                    <thead className="sticky top-0 z-10 bg-raised border-b border-border">
+                      <tr>
+                        <SortHeader
+                          label=""
+                          sortKey="name"
+                          current={sortKey}
+                          dir={sortDir}
+                          onSort={handleSort}
+                          className="w-10 sm:w-12 shrink-0"
+                        />
+                        <SortHeader
+                          label="Player"
+                          sortKey="name"
+                          current={sortKey}
+                          dir={sortDir}
+                          onSort={handleSort}
+                          className="min-w-[100px] max-w-[40vw] sm:max-w-none"
+                        />
+                        <SortHeader
+                          label="Level"
+                          sortKey="level"
+                          current={sortKey}
+                          dir={sortDir}
+                          onSort={handleSort}
+                          className="w-16 sm:w-20 text-center shrink-0"
+                        />
+                        <SortHeader
+                          label="Matches"
+                          sortKey="matchCount"
+                          current={sortKey}
+                          dir={sortDir}
+                          onSort={handleSort}
+                          className="w-14 sm:w-20 text-center shrink-0"
+                        />
+                        <SortHeader
+                          label="Win Rate"
+                          sortKey="winRate"
+                          current={sortKey}
+                          dir={sortDir}
+                          onSort={handleSort}
+                          className="w-20 sm:w-24 text-center shrink-0 hidden sm:table-cell"
+                        />
+                        <SortHeader
+                          label="W-L"
+                          sortKey="wins"
+                          current={sortKey}
+                          dir={sortDir}
+                          onSort={handleSort}
+                          className="w-14 sm:w-20 text-center shrink-0 hidden md:table-cell"
+                        />
+                        <SortHeader
+                          label="Last Active"
+                          sortKey="lastMatch"
+                          current={sortKey}
+                          dir={sortDir}
+                          onSort={handleSort}
+                          className="w-20 sm:w-28 text-center shrink-0 hidden lg:table-cell"
+                        />
+                        <th className="px-3 py-2.5 text-[11px] font-semibold uppercase tracking-wider text-dim text-left w-32 sm:w-48 shrink-0 hidden lg:table-cell">
+                          Clubs
+                        </th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {sortedNodes.map((player, i) => (
+                        <tr
+                          key={player.id}
+                          onClick={() => setSelected(player)}
+                          className={`border-b border-border/30 cursor-pointer transition-colors hover:bg-surface min-h-[44px] touch-manipulation ${
+                            i % 2 === 1 ? "bg-surface/25" : ""
+                          } ${
+                            selected?.id === player.id ? "!bg-accent/10 border-l-2 border-l-accent" : ""
+                          }`}
+                        >
+                          {/* Photo */}
+                          <td className="px-3 py-2">
+                            {player.picture ? (
+                              <img
+                                src={player.picture.replace(
+                                  "c_limit,w_1280",
+                                  "c_fill,w_32,h_32",
+                                )}
+                                alt=""
+                                className="h-7 w-7 rounded-full object-cover"
+                              />
+                            ) : (
+                              <div
+                                className="h-7 w-7 rounded-full flex items-center justify-center text-[11px] font-bold"
+                                style={{
+                                  background: levelColor(player.level),
+                                  color:
+                                    player.level != null && player.level > 3
+                                      ? "#fff"
+                                      : "#000",
+                                }}
+                              >
+                                {player.name.charAt(0)}
+                              </div>
+                            )}
+                          </td>
+                          {/* Name */}
+                          <td className="px-3 py-2 min-w-0 max-w-[40vw] sm:max-w-none">
+                            <div className="font-medium truncate min-w-0">
+                              {player.name}
+                            </div>
+                          </td>
+                          {/* Level */}
+                          <td className="px-3 py-2 text-center">
+                            {player.level != null ? (
+                              <span
+                                className="inline-flex h-6 min-w-[40px] items-center justify-center rounded-full px-2 text-[11px] font-bold"
+                                style={{
+                                  background: levelColor(player.level),
+                                  color:
+                                    player.level > 3 ? "#fff" : "#000",
+                                }}
+                              >
+                                {player.level.toFixed(2)}
+                              </span>
+                            ) : (
+                              <span className="text-muted">-</span>
+                            )}
+                          </td>
+                          {/* Matches */}
+                          <td className="px-3 py-2 text-center font-mono">
+                            {player.matchCount}
+                          </td>
+                          {/* Win Rate */}
+                          <td className="px-3 py-2 text-center hidden sm:table-cell">
+                            {player.winRateMeaningful && player.winRate != null ? (
+                              <div className="flex items-center justify-center gap-1.5">
+                                <div className="w-12 h-1.5 rounded-full overflow-hidden bg-border">
+                                  <div
+                                    className="h-full rounded-full"
+                                    style={{
+                                      width: `${player.winRate * 100}%`,
+                                      background:
+                                        player.winRate >= 0.5
+                                          ? "var(--teal)"
+                                          : "var(--loss)",
+                                    }}
+                                  />
+                                </div>
+                                <span
+                                  className={`font-mono text-[11px] font-medium ${
+                                    player.winRate >= 0.5
+                                      ? "text-teal"
+                                      : "text-loss"
+                                  }`}
+                                >
+                                  {Math.round(player.winRate * 100)}%
+                                </span>
+                              </div>
+                            ) : (
+                              <span className="text-dim">-</span>
+                            )}
+                          </td>
+                          {/* W-L */}
+                          <td className="px-3 py-2 text-center font-mono text-muted hidden md:table-cell">
+                            {player.wlRecorded > 0 ? (
+                              <>
+                                <span className="text-teal">
+                                  {player.wins}
+                                </span>
+                                -
+                                <span className="text-loss">
+                                  {player.losses}
+                                </span>
+                              </>
+                            ) : (
+                              <span className="text-dim">-</span>
+                            )}
+                          </td>
+                          {/* Last active */}
+                          <td className="px-3 py-2 text-center hidden lg:table-cell">
+                            <span className="text-muted">{formatDate(player.lastMatch)}</span>
+                            {(() => {
+                              const badge = recencyBadge(player.lastMatch);
+                              return badge ? (
+                                <span className={`block text-[11px] font-medium ${badge.color}`}>
+                                  {badge.label}
+                                </span>
+                              ) : null;
+                            })()}
+                          </td>
+                          {/* Clubs */}
+                          <td className="px-3 py-2 hidden lg:table-cell">
+                            <div className="flex flex-wrap gap-1 max-w-[200px] min-w-0">
+                              {player.clubs.slice(0, 2).map((c) => (
+                                <span
+                                  key={c}
+                                  className="rounded-full bg-background border border-border px-1.5 py-0.5 text-[11px] text-muted truncate max-w-[90px]"
+                                >
+                                  {c}
+                                </span>
+                              ))}
+                              {player.clubs.length > 2 && (
+                                <span className="text-[11px] text-dim">
+                                  +{player.clubs.length - 2}
+                                </span>
+                              )}
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
 
-              {/* Player detail panel (list view) */}
+              {/* Player detail panel (list view): bottom sheet on mobile, side panel on md+ */}
               {selected && (
-                <div className="w-[340px] shrink-0 border-l border-border/50 overflow-y-auto">
-                  <PlayerPanel
-                    player={selected}
-                    links={data?.links ?? []}
-                    nodes={data?.nodes ?? []}
-                    onClose={() => setSelected(null)}
-                    onPartnerClick={(id) => {
-                      const node = data?.nodes.find((n) => n.id === id);
-                      if (node) setSelected(node);
-                    }}
-                    inline
+                <>
+                  <button
+                    type="button"
+                    className="md:hidden fixed inset-0 z-10 bg-black/50"
+                    onClick={() => setSelected(null)}
+                    aria-label="Close player details"
                   />
-                </div>
+                  <div className="shrink-0 overflow-y-auto bg-raised border border-border md:w-[340px] fixed md:relative inset-x-0 bottom-0 md:inset-auto z-20 md:z-auto w-full max-h-[85vh] md:max-h-none rounded-t-xl md:rounded-xl md:m-3 md:ml-0">
+                    <PlayerPanel
+                      player={selected}
+                      links={data?.links ?? []}
+                      nodes={data?.nodes ?? []}
+                      onClose={() => setSelected(null)}
+                      onPartnerClick={(id) => {
+                        const node = data?.nodes.find((n) => n.id === id);
+                        if (node) setSelected(node);
+                      }}
+                      inline
+                    />
+                  </div>
+                </>
               )}
             </div>
           )}
@@ -850,16 +879,16 @@ function FiltersPanel({
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
           placeholder="Name..."
-          className="w-full rounded-md border border-border bg-background px-3 py-1.5 text-sm text-foreground placeholder:text-muted/50 focus:outline-none focus:ring-1 focus:ring-accent"
+          className="input-field w-full mt-1.5 min-h-[44px] sm:min-h-0 touch-manipulation"
         />
       </div>
 
       {/* Level range */}
       <div>
-        <div className="mb-1 flex items-center justify-between">
+        <div className="mb-1.5 flex items-center justify-between">
           <Label>Level range</Label>
           <span className="font-mono text-xs text-foreground">
-            {levelRange[0].toFixed(1)} – {levelRange[1].toFixed(1)}
+            {levelRange[0].toFixed(1)} - {levelRange[1].toFixed(1)}
           </span>
         </div>
         <div className="flex gap-2 items-center">
@@ -873,7 +902,7 @@ function FiltersPanel({
               const v = parseFloat(e.target.value);
               setLevelRange([Math.min(v, levelRange[1]), levelRange[1]]);
             }}
-            className="flex-1 accent-accent"
+            className="flex-1 accent-accent min-h-[44px] touch-manipulation"
           />
           <input
             type="range"
@@ -885,10 +914,10 @@ function FiltersPanel({
               const v = parseFloat(e.target.value);
               setLevelRange([levelRange[0], Math.max(v, levelRange[0])]);
             }}
-            className="flex-1 accent-accent"
+            className="flex-1 accent-accent min-h-[44px] touch-manipulation"
           />
         </div>
-        <div className="flex justify-between text-[9px] text-muted mt-0.5">
+        <div className="flex justify-between text-[11px] text-dim mt-0.5">
           <span>0</span>
           <span>8</span>
         </div>
@@ -899,7 +928,7 @@ function FiltersPanel({
         <select
           value={club}
           onChange={(e) => setClub(e.target.value)}
-          className="w-full rounded-md border border-border bg-background px-2 py-1.5 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-accent"
+          className="input-field w-full mt-1.5 min-h-[44px] sm:min-h-0 touch-manipulation"
         >
           <option value="">All clubs</option>
           {clubs.map((c) => (
@@ -911,7 +940,7 @@ function FiltersPanel({
       </div>
 
       <div>
-        <div className="mb-1 flex items-center justify-between">
+        <div className="mb-1.5 flex items-center justify-between">
           <Label>Min matches</Label>
           <span className="font-mono text-xs text-foreground">{minMatches}</span>
         </div>
@@ -921,12 +950,12 @@ function FiltersPanel({
           max={100}
           value={minMatches}
           onChange={(e) => setMinMatches(parseInt(e.target.value, 10))}
-          className="w-full accent-accent"
+          className="w-full accent-accent min-h-[44px] touch-manipulation"
         />
       </div>
 
       <div>
-        <div className="mb-1 flex items-center justify-between">
+        <div className="mb-1.5 flex items-center justify-between">
           <Label>Min shared matches</Label>
           <span className="font-mono text-xs text-foreground">{minWeight}</span>
         </div>
@@ -936,20 +965,8 @@ function FiltersPanel({
           max={50}
           value={minWeight}
           onChange={(e) => setMinWeight(parseInt(e.target.value, 10))}
-          className="w-full accent-accent"
+          className="w-full accent-accent min-h-[44px] touch-manipulation"
         />
-      </div>
-
-      {/* How-to */}
-      <div className="rounded-lg border border-border/50 bg-background/50 p-3 text-[10px] text-muted leading-relaxed">
-        <p className="font-semibold text-foreground mb-1">How to use</p>
-        <ul className="space-y-0.5 list-disc pl-3">
-          <li>Toggle Graph / List view in the header</li>
-          <li>Filter by level to find players at your skill</li>
-          <li>Click a dot or row to see player details</li>
-          <li>Filter by club to see community clusters</li>
-          <li>Switch to Insights tab for leaderboards</li>
-        </ul>
       </div>
     </div>
   );
@@ -968,7 +985,7 @@ function InsightsPanel({
     "active" | "connected" | "winrate" | "pairs" | "clubs" | "levels"
   >("active");
 
-  if (!leaderboard) return <p className="text-xs text-muted">Loading...</p>;
+  if (!leaderboard) return <p className="text-sm text-muted">Loading...</p>;
 
   return (
     <div className="flex flex-col gap-3">
@@ -987,10 +1004,10 @@ function InsightsPanel({
           <button
             key={key}
             onClick={() => setSection(key)}
-            className={`rounded-full px-2.5 py-1 text-[10px] font-medium transition-colors ${
+            className={`rounded-full px-2.5 py-1 text-[11px] font-medium transition-colors ${
               section === key
                 ? "bg-accent text-background"
-                : "bg-background text-muted hover:text-foreground"
+                : "bg-raised text-muted hover:text-foreground"
             }`}
           >
             {label}
@@ -1031,9 +1048,9 @@ function InsightsPanel({
           {leaderboard.topPairs.map((p, i) => (
             <div
               key={i}
-              className="flex items-center gap-2 rounded-lg bg-background p-2 text-xs"
+              className="flex items-center gap-2 rounded-lg bg-raised p-2 text-sm"
             >
-              <span className="w-5 text-right text-muted font-mono text-[10px]">
+              <span className="w-5 text-right text-dim font-mono text-[11px]">
                 {i + 1}
               </span>
               <div className="flex-1 min-w-0">
@@ -1057,15 +1074,15 @@ function InsightsPanel({
                   {p.target.name}
                 </button>
               </div>
-              <span className="text-muted font-mono text-[10px] shrink-0">
+              <span className="text-muted font-mono text-[11px] shrink-0">
                 {p.weight}g
                 <span
                   className={`ml-1 ${
                     p.relationship === "teammate"
-                      ? "text-green-400"
+                      ? "text-teal"
                       : p.relationship === "opponent"
-                        ? "text-red-400"
-                        : "text-yellow-400"
+                        ? "text-loss"
+                        : "text-amber"
                   }`}
                 >
                   {p.relationship === "teammate"
@@ -1086,13 +1103,13 @@ function InsightsPanel({
           {leaderboard.clubBreakdown.map((c, i) => (
             <div
               key={c.name}
-              className="flex items-center gap-2 rounded-lg bg-background p-2 text-xs"
+              className="flex items-center gap-2 rounded-lg bg-raised p-2 text-sm"
             >
-              <span className="w-5 text-right text-muted font-mono text-[10px]">
+              <span className="w-5 text-right text-dim font-mono text-[11px]">
                 {i + 1}
               </span>
               <span className="flex-1 truncate">{c.name}</span>
-              <span className="text-muted font-mono text-[10px]">
+              <span className="text-muted font-mono text-[11px]">
                 {c.count.toLocaleString()}
               </span>
             </div>
@@ -1111,17 +1128,17 @@ function InsightsPanel({
               );
               const pct = (count / maxCount) * 100;
               return (
-                <div key={bucket} className="flex items-center gap-2 text-xs">
-                  <span className="w-14 text-right text-muted font-mono text-[10px]">
+                <div key={bucket} className="flex items-center gap-2 text-sm">
+                  <span className="w-14 text-right text-muted font-mono text-[11px]">
                     {bucket}
                   </span>
-                  <div className="flex-1 h-4 rounded bg-background overflow-hidden">
+                  <div className="flex-1 h-4 rounded bg-raised overflow-hidden">
                     <div
                       className="h-full rounded bg-accent/60"
                       style={{ width: `${pct}%` }}
                     />
                   </div>
-                  <span className="w-10 text-right text-muted font-mono text-[10px]">
+                  <span className="w-10 text-right text-muted font-mono text-[11px]">
                     {count.toLocaleString()}
                   </span>
                 </div>
@@ -1150,9 +1167,9 @@ function RankedList({
         <button
           key={p.id}
           onClick={() => onPlayerClick(p.id)}
-          className="flex w-full items-center gap-2 rounded-lg bg-background p-2 text-xs text-left hover:ring-1 hover:ring-accent/50 transition-all"
+          className="flex w-full items-center gap-2 rounded-lg bg-raised p-2 text-sm text-left hover:border-border-hover transition-colors"
         >
-          <span className="w-5 text-right text-muted font-mono text-[10px]">
+          <span className="w-5 text-right text-dim font-mono text-[11px]">
             {i + 1}
           </span>
           <div
@@ -1160,10 +1177,10 @@ function RankedList({
             style={{ background: levelColor(p.level) }}
           />
           <span className="flex-1 truncate">{p.name}</span>
-          <span className="text-muted font-mono text-[10px] shrink-0">
+          <span className="text-muted font-mono text-[11px] shrink-0">
             {p.value.toLocaleString()} {valueLabel}
             {p.extra && (
-              <span className="ml-1 text-muted/60">({p.extra})</span>
+              <span className="ml-1 text-dim">({p.extra})</span>
             )}
           </span>
         </button>
@@ -1206,20 +1223,20 @@ function PlayerPanel({
     return result.sort((a, b) => b.weight - a.weight);
   }, [links, nodes, player.id]);
 
-  const activeSpan = daysBetween(player.firstMatch, player.lastMatch);
-
-  // Wrapper: inline (list view sidebar) vs floating (graph overlay)
   const wrapperClass = inline
     ? "h-full"
-    : "absolute bottom-4 right-4 z-20 w-[340px] max-h-[calc(100vh-120px)] overflow-y-auto rounded-xl border border-border bg-surface/95 backdrop-blur-xl shadow-2xl";
+    : "card absolute bottom-4 right-4 z-20 w-[340px] max-h-[calc(100vh-120px)] overflow-y-auto shadow-2xl";
 
   return (
     <div className={wrapperClass}>
+      {/* Accent top line */}
+      <div className="h-0.5 bg-accent shrink-0" />
+
       {/* Header */}
-      <div className={`sticky top-0 z-10 bg-surface/95 backdrop-blur-xl border-b border-border/50 p-4 pb-3 ${!inline ? "rounded-t-xl" : ""}`}>
+      <div className={`sticky top-0 z-10 bg-raised border-b border-border p-4 pb-3 ${!inline ? "rounded-t-xl" : ""}`}>
         <button
           onClick={onClose}
-          className="absolute right-3 top-3 h-6 w-6 flex items-center justify-center rounded-full text-muted hover:bg-background hover:text-foreground transition-colors"
+          className="absolute right-3 top-3 h-6 w-6 flex items-center justify-center rounded-full text-muted hover:bg-surface hover:text-foreground transition-colors"
         >
           &times;
         </button>
@@ -1249,7 +1266,7 @@ function PlayerPanel({
             <div className="flex items-center gap-2">
               {player.level != null && (
                 <span
-                  className="inline-flex items-center rounded-full px-1.5 py-0.5 text-[10px] font-bold"
+                  className="inline-flex items-center rounded-full px-1.5 py-0.5 text-[11px] font-bold"
                   style={{
                     background: levelColor(player.level),
                     color: player.level > 3 ? "#fff" : "#000",
@@ -1262,7 +1279,7 @@ function PlayerPanel({
                 href={`${PLAYTOMIC_PROFILE}/${player.id}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[10px] text-accent hover:underline"
+                className="text-[11px] text-accent hover:underline"
               >
                 Playtomic &rarr;
               </a>
@@ -1274,99 +1291,68 @@ function PlayerPanel({
       {/* Stats grid */}
       <div className="grid grid-cols-3 gap-2 p-4 pb-2">
         <StatCard label="Matches" value={player.matchCount.toLocaleString()} />
-        <StatCard label="Teammates" value={String(player.uniqueTeammates)} />
-        <StatCard label="Opponents" value={String(player.uniqueOpponents)} />
-        <StatCard
-          label="Active span"
-          value={activeSpan > 365 ? `${Math.round(activeSpan / 365)}y` : `${activeSpan}d`}
-        />
-        <StatCard label="Gender" value={player.gender || "—"} />
-        <StatCard label="Position" value={player.position || "—"} />
+        <StatCard label="Partners" value={String(player.degree)} />
+        <StatCard label="Position" value={player.position || "-"} />
       </div>
 
-      {/* W/L Record */}
-      {(player.wins > 0 || player.losses > 0) && (
-        <div className="mx-4 mb-2 rounded-lg border border-border/50 bg-background p-3">
+      {/* W/L Record: only when meaningful */}
+      {player.winRateMeaningful && player.winRate != null && (
+        <div className="mx-4 mb-2 card-flush p-3">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[10px] font-semibold uppercase tracking-wider text-muted">
+            <span className="section-label">
               W/L Record
-              <span className="font-normal normal-case tracking-normal ml-1 text-muted/60">
-                ({player.wins + player.losses} of {player.matchCount} reported)
+              <span className="font-normal normal-case tracking-normal ml-1 text-dim">
+                ({player.wlRecorded} of {player.matchCount} tracked)
               </span>
             </span>
-            {player.winRate != null && (
-              <span
-                className={`text-xs font-bold ${
-                  player.winRate >= 0.5 ? "text-green-400" : "text-red-400"
-                }`}
-              >
-                {Math.round(player.winRate * 100)}%
-              </span>
-            )}
+            <span
+              className={`text-xs font-bold ${
+                player.winRate >= 0.5 ? "text-teal" : "text-loss"
+              }`}
+            >
+              {Math.round(player.winRate * 100)}%
+            </span>
           </div>
           <div className="flex items-center gap-2">
             <div className="flex-1">
-              {/* Win/loss bar */}
-              <div className="flex h-2 rounded-full overflow-hidden bg-border/30">
+              <div className="flex h-2 rounded-full overflow-hidden bg-border">
                 <div
-                  className="bg-green-500 h-full"
+                  className="bg-teal h-full"
                   style={{
                     width: `${(player.wins / (player.wins + player.losses)) * 100}%`,
                   }}
                 />
-                <div className="bg-red-500 h-full flex-1" />
+                <div className="bg-loss h-full flex-1" />
               </div>
             </div>
-            <span className="text-[10px] text-muted font-mono shrink-0">
+            <span className="text-[11px] text-muted font-mono shrink-0">
               {player.wins}W - {player.losses}L
             </span>
           </div>
-          {/* Sets and games */}
-          {(player.setsWon > 0 || player.setsLost > 0) && (
-            <div className="mt-2 flex gap-4 text-[10px] text-muted">
-              <span>
-                Sets{" "}
-                <span className="text-foreground font-medium">
-                  {player.setsWon}-{player.setsLost}
-                </span>
-              </span>
-              <span>
-                Games{" "}
-                <span className="text-foreground font-medium">
-                  {player.gamesWon}-{player.gamesLost}
-                </span>
-              </span>
-            </div>
-          )}
         </div>
       )}
 
       {/* Date range + recency */}
-      <div className="px-4 pb-3 text-[10px] text-muted flex items-center gap-2 flex-wrap">
-        <span>{formatDate(player.firstMatch)} — {formatDate(player.lastMatch)}</span>
+      <div className="px-4 pb-3 text-[11px] text-muted flex items-center gap-2 flex-wrap">
+        <span>{formatDate(player.firstMatch)} to {formatDate(player.lastMatch)}</span>
         {(() => {
           const badge = recencyBadge(player.lastMatch);
           return badge ? (
-            <span className={`rounded-full bg-background px-1.5 py-0.5 text-[9px] font-medium ${badge.color}`}>
+            <span className={`rounded-full bg-surface px-1.5 py-0.5 text-[11px] font-medium ${badge.color}`}>
               {badge.label}
             </span>
           ) : null;
         })()}
-        {player.competitiveMatches > 0 && (
-          <span>
-            &middot; {player.competitiveMatches} competitive
-          </span>
-        )}
       </div>
 
       {/* Clubs */}
       <div className="px-4 pb-3">
-        <SectionLabel>Clubs ({player.clubs.length})</SectionLabel>
-        <div className="mt-1 flex flex-wrap gap-1">
+        <p className="section-label">Clubs ({player.clubs.length})</p>
+        <div className="mt-1.5 flex flex-wrap gap-1">
           {player.clubs.map((c) => (
             <span
               key={c}
-              className="rounded-full border border-border bg-background px-2 py-0.5 text-[10px] text-muted"
+              className="rounded-full border border-border bg-surface px-2 py-0.5 text-[11px] text-muted"
             >
               {c}
             </span>
@@ -1377,22 +1363,22 @@ function PlayerPanel({
       {/* Top partners from pre-computed data */}
       {player.topPartners.length > 0 && (
         <div className="px-4 pb-3">
-          <SectionLabel>Top Connections (all-time)</SectionLabel>
-          <div className="mt-1 space-y-1">
+          <p className="section-label">Top Connections (all-time)</p>
+          <div className="mt-1.5 space-y-1">
             {player.topPartners.map((tp) => (
               <button
                 key={tp.id}
                 onClick={() => onPartnerClick(tp.id)}
-                className="flex w-full items-center justify-between rounded-lg bg-background p-2 text-xs hover:ring-1 hover:ring-accent/50 transition-all text-left"
+                className="flex w-full items-center justify-between rounded-lg bg-surface p-2 text-sm hover:bg-raised transition-colors text-left"
               >
                 <div className="flex items-center gap-2 min-w-0">
                   <span
-                    className={`text-[9px] font-bold shrink-0 ${
+                    className={`text-[11px] font-bold shrink-0 ${
                       tp.relationship === "teammate"
-                        ? "text-green-400"
+                        ? "text-teal"
                         : tp.relationship === "opponent"
-                          ? "text-red-400"
-                          : "text-yellow-400"
+                          ? "text-loss"
+                          : "text-amber"
                     }`}
                   >
                     {tp.relationship === "teammate"
@@ -1403,7 +1389,7 @@ function PlayerPanel({
                   </span>
                   <span className="truncate text-accent">{tp.name}</span>
                 </div>
-                <span className="text-muted font-mono text-[10px] shrink-0 ml-2">
+                <span className="text-muted font-mono text-[11px] shrink-0 ml-2">
                   {tp.weight}g
                 </span>
               </button>
@@ -1415,28 +1401,28 @@ function PlayerPanel({
       {/* In-graph neighbors (current filter) */}
       {neighborLinks.length > 0 && (
         <div className="px-4 pb-4">
-          <SectionLabel>
+          <p className="section-label">
             Connections in view ({neighborLinks.length})
-          </SectionLabel>
-          <div className="mt-1 space-y-1 max-h-48 overflow-y-auto">
+          </p>
+          <div className="mt-1.5 space-y-1 max-h-48 overflow-y-auto">
             {neighborLinks.slice(0, 20).map(({ node: n, weight }) => (
               <button
                 key={n.id}
                 onClick={() => onPartnerClick(n.id)}
-                className="flex w-full items-center gap-2 rounded-lg bg-background p-2 text-xs hover:ring-1 hover:ring-accent/50 transition-all text-left"
+                className="flex w-full items-center gap-2 rounded-lg bg-surface p-2 text-sm hover:bg-raised transition-colors text-left"
               >
                 <div
                   className="h-2 w-2 rounded-full shrink-0"
                   style={{ background: levelColor(n.level) }}
                 />
                 <span className="flex-1 truncate">{n.name}</span>
-                <span className="text-muted font-mono text-[10px] shrink-0">
+                <span className="text-muted font-mono text-[11px] shrink-0">
                   Lv {n.level?.toFixed(1) ?? "?"} &middot; {weight}g
                 </span>
               </button>
             ))}
             {neighborLinks.length > 20 && (
-              <p className="text-center text-[10px] text-muted">
+              <p className="text-center text-[11px] text-muted">
                 +{neighborLinks.length - 20} more
               </p>
             )}
@@ -1445,7 +1431,7 @@ function PlayerPanel({
       )}
 
       {/* Playtomic link footer */}
-      <div className="border-t border-border/50 p-3 text-center">
+      <div className="border-t border-border p-3 text-center">
         <a
           href={`${PLAYTOMIC_PROFILE}/${player.id}`}
           target="_blank"
@@ -1463,25 +1449,15 @@ function PlayerPanel({
 
 function Label({ children }: { children: React.ReactNode }) {
   return (
-    <span className="text-[10px] font-semibold uppercase tracking-wider text-muted">
-      {children}
-    </span>
-  );
-}
-
-function SectionLabel({ children }: { children: React.ReactNode }) {
-  return (
-    <p className="text-[10px] font-semibold uppercase tracking-wider text-muted">
-      {children}
-    </p>
+    <span className="section-label">{children}</span>
   );
 }
 
 function StatCard({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-lg bg-background p-2">
-      <p className="text-[9px] text-muted uppercase">{label}</p>
-      <p className="text-sm font-semibold">{value}</p>
+    <div className="rounded-lg bg-surface p-2.5">
+      <p className="section-label">{label}</p>
+      <p className="text-sm font-semibold stat-number mt-0.5">{value}</p>
     </div>
   );
 }
@@ -1506,7 +1482,7 @@ function SortHeader({
   const active = current === key;
   return (
     <th
-      className={`px-3 py-2.5 text-[10px] font-semibold uppercase tracking-wider text-muted cursor-pointer select-none hover:text-foreground transition-colors ${className}`}
+      className={`px-3 py-2.5 text-[11px] font-semibold uppercase tracking-wider text-dim cursor-pointer select-none hover:text-foreground transition-colors ${className}`}
       onClick={() => onSort(key)}
     >
       <span className="inline-flex items-center gap-1">

@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import PlayerCard from "./PlayerCard";
 
 export const metadata: Metadata = {
-  title: "Player Card — Padel Passport",
-  description: "Your padel stats, badges, and ranking in one shareable card.",
+  title: "Player Card | Padel Passport",
+  description:
+    "Your padel stats, badges, and ranking in one shareable card.",
 };
 
 export default async function PlayerPage({

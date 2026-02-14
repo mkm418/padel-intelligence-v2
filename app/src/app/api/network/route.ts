@@ -9,6 +9,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 import type { SupabaseClient } from "@supabase/supabase-js";
 
+export const revalidate = 300; // Cache for 5 minutes
+
 // ── Helpers ──────────────────────────────────────────────────────────────
 
 /** Paginate through all rows for a Supabase query (bypasses 1000 row limit) */
@@ -189,34 +191,33 @@ export async function GET(req: NextRequest) {
 
   // ── Build nodes ─────────────────────────────────────────────────────
 
-  const nodes = players.map((p) => ({
-    id: p.user_id,
-    name: p.name,
-    level: p.level_value,
-    levelConfidence: p.level_confidence,
-    matchCount: p.matches_played,
-    totalBookings: p.total_bookings,
-    clubs: p.clubs,
-    gender: p.gender,
-    picture: p.picture,
-    firstMatch: p.first_match,
-    lastMatch: p.last_match,
-    position: p.preferred_position,
-    isPremium: p.is_premium,
-    degree: degreeMap.get(p.user_id) ?? 0,
-    topPartners: topPartnersMap.get(p.user_id) ?? [],
-    wins: p.wins,
-    losses: p.losses,
-    winRate: p.win_rate,
-    setsWon: p.sets_won,
-    setsLost: p.sets_lost,
-    gamesWon: p.games_won,
-    gamesLost: p.games_lost,
-    uniqueTeammates: p.unique_teammates,
-    uniqueOpponents: p.unique_opponents,
-    competitiveMatches: p.competitive_matches,
-    friendlyMatches: p.friendly_matches,
-  }));
+  const nodes = players.map((p) => {
+    const wins = (p.wins as number) || 0;
+    const losses = (p.losses as number) || 0;
+    const wlTotal = wins + losses;
+    const matches = p.matches_played as number;
+    // Win rate only meaningful if enough results tracked
+    const wrMeaningful = wlTotal >= 5 && (matches === 0 || wlTotal / matches >= 0.1);
+
+    return {
+      id: p.user_id,
+      name: p.name,
+      level: p.level_value,
+      matchCount: matches,
+      clubs: p.clubs,
+      picture: p.picture,
+      firstMatch: p.first_match,
+      lastMatch: p.last_match,
+      position: p.preferred_position,
+      degree: degreeMap.get(p.user_id) ?? 0,
+      topPartners: topPartnersMap.get(p.user_id) ?? [],
+      wins,
+      losses,
+      wlRecorded: wlTotal,
+      winRate: wrMeaningful ? p.win_rate : null,
+      winRateMeaningful: wrMeaningful,
+    };
+  });
 
   const links = edgesArr.map((e) => ({
     source: e.source,
@@ -236,7 +237,7 @@ export async function GET(req: NextRequest) {
     .slice(0, 20);
 
   const playersByWinRate = [...nodes]
-    .filter((p) => p.wins + p.losses >= 10)
+    .filter((p) => p.winRateMeaningful && p.winRate != null)
     .sort((a, b) => (b.winRate ?? 0) - (a.winRate ?? 0))
     .slice(0, 20);
 
@@ -323,5 +324,7 @@ export async function GET(req: NextRequest) {
       clubBreakdown: clubBreakdown.slice(0, 25),
       levelDistribution: levelBuckets,
     },
+  }, {
+    headers: { "Cache-Control": "public, s-maxage=300, stale-while-revalidate=600" },
   });
 }

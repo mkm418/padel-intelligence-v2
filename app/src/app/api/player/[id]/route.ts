@@ -2,10 +2,13 @@
  * GET /api/player/:id
  *
  * Returns detailed player data + top partners + badges for the player card.
+ * Win rate only shown when W/L sample is meaningful.
  */
 
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
+
+export const revalidate = 3600; // Cache for 1 hour - player data changes slowly
 
 // ── Badge computation ────────────────────────────────────────────────────
 
@@ -15,21 +18,28 @@ interface Badge {
   color: string;
 }
 
+/** Check if win rate data is reliable enough to display */
+function isWinRateMeaningful(wins: number, losses: number, matches: number): boolean {
+  const wlTotal = wins + losses;
+  return wlTotal >= 5 && (matches === 0 || wlTotal / matches >= 0.1);
+}
+
 function computeBadges(player: Record<string, unknown>, partnerCount: number): Badge[] {
   const badges: Badge[] = [];
   const matches = player.matches_played as number;
+  const wins = (player.wins as number) || 0;
+  const losses = (player.losses as number) || 0;
   const winRate = player.win_rate as number | null;
   const clubs = (player.clubs as string[]) || [];
   const level = player.level_value as number | null;
-  const competitive = player.competitive_matches as number;
 
   // Volume badges
   if (matches >= 200) badges.push({ icon: "🔥", label: "200 Club", color: "#ef4444" });
   else if (matches >= 100) badges.push({ icon: "⭐", label: "Centurion", color: "#f59e0b" });
   else if (matches >= 50) badges.push({ icon: "🎯", label: "Dedicated", color: "#3b82f6" });
 
-  // Win rate badges (min 20 matches)
-  if (matches >= 20 && winRate != null) {
+  // Win rate badges (only when data is meaningful)
+  if (isWinRateMeaningful(wins, losses, matches) && winRate != null) {
     if (winRate >= 0.75) badges.push({ icon: "👑", label: "Dominant", color: "#eab308" });
     else if (winRate >= 0.6) badges.push({ icon: "💪", label: "Winner", color: "#22c55e" });
   }
@@ -47,9 +57,6 @@ function computeBadges(player: Record<string, unknown>, partnerCount: number): B
   // Social badge
   if (partnerCount >= 50) badges.push({ icon: "🌐", label: "Networker", color: "#ec4899" });
   else if (partnerCount >= 20) badges.push({ icon: "🤝", label: "Social", color: "#f472b6" });
-
-  // Competitive badge
-  if (competitive >= 30) badges.push({ icon: "⚔️", label: "Competitor", color: "#dc2626" });
 
   return badges;
 }
@@ -74,24 +81,27 @@ export async function GET(
 ) {
   const { id } = await params;
 
-  // Fetch player
-  const { data: player, error } = await supabase
-    .from("players")
-    .select("*")
-    .eq("user_id", id)
-    .single();
+  // Fetch player and edges in parallel (Optimization A)
+  const [playerResult, edgesResult] = await Promise.all([
+    supabase
+      .from("players")
+      .select("*")
+      .eq("user_id", id)
+      .single(),
+    supabase
+      .from("edges")
+      .select("source, target, weight, relationship")
+      .or(`source.eq.${id},target.eq.${id}`)
+      .order("weight", { ascending: false })
+      .limit(10), // Optimization C: Changed from 50 to 10 since we only use first 10
+  ]);
+
+  const { data: player, error } = playerResult;
+  const { data: partnerEdges } = edgesResult;
 
   if (error || !player) {
     return NextResponse.json({ error: "Player not found" }, { status: 404 });
   }
-
-  // Fetch top partners (teammates + opponents)
-  const { data: partnerEdges } = await supabase
-    .from("edges")
-    .select("source, target, weight, relationship")
-    .or(`source.eq.${id},target.eq.${id}`)
-    .order("weight", { ascending: false })
-    .limit(50);
 
   // Resolve partner names
   const partnerIds = new Set<string>();
@@ -126,27 +136,50 @@ export async function GET(
   const badges = computeBadges(player, partnerIds.size);
   const tier = computeTier(player.level_value);
 
-  // Percentile ranks (how this player compares)
-  const { count: totalPlayers } = await supabase
-    .from("players")
-    .select("*", { count: "exact", head: true });
+  // W/L data validation
+  const wins = (player.wins as number) || 0;
+  const losses = (player.losses as number) || 0;
+  const wlTotal = wins + losses;
+  const meaningful = isWinRateMeaningful(wins, losses, player.matches_played);
 
-  const { count: belowMatches } = await supabase
-    .from("players")
-    .select("*", { count: "exact", head: true })
-    .lt("matches_played", player.matches_played);
-
-  const { count: belowWinRate } = await supabase
-    .from("players")
-    .select("*", { count: "exact", head: true })
-    .lt("win_rate", player.win_rate ?? 0)
-    .not("win_rate", "is", null);
+  // Percentile ranks (Optimization B: parallelize all 4 count queries)
+  const [
+    { count: totalPlayers },
+    { count: belowMatches },
+    { count: totalWithWR },
+    { count: belowWR },
+  ] = await Promise.all([
+    supabase
+      .from("players")
+      .select("*", { count: "exact", head: true })
+      .gte("matches_played", 5),
+    supabase
+      .from("players")
+      .select("*", { count: "exact", head: true })
+      .gte("matches_played", 5)
+      .lt("matches_played", player.matches_played),
+    supabase
+      .from("players")
+      .select("*", { count: "exact", head: true })
+      .gte("matches_played", 5)
+      .not("win_rate", "is", null),
+    supabase
+      .from("players")
+      .select("*", { count: "exact", head: true })
+      .gte("matches_played", 5)
+      .not("win_rate", "is", null)
+      .lt("win_rate", player.win_rate),
+  ]);
 
   const total = totalPlayers ?? 1;
   const matchPercentile = Math.round(((belowMatches ?? 0) / total) * 100);
-  const winRatePercentile = player.win_rate != null
-    ? Math.round(((belowWinRate ?? 0) / total) * 100)
-    : null;
+
+  // Win rate percentile: only compare against players WITH meaningful W/L data
+  let winRatePercentile: number | null = null;
+  if (meaningful && player.win_rate != null) {
+    const wrTotal = totalWithWR ?? 1;
+    winRatePercentile = Math.round(((belowWR ?? 0) / wrTotal) * 100);
+  }
 
   return NextResponse.json({
     player: {
@@ -158,21 +191,17 @@ export async function GET(
       gender: player.gender,
       position: player.preferred_position,
       isPremium: player.is_premium,
-      clubs: player.clubs,
+      clubs: (player.clubs ?? []).map((c: string) => c.trim()),
       matches: player.matches_played,
-      wins: player.wins,
-      losses: player.losses,
-      winRate: player.win_rate,
-      setsWon: player.sets_won,
-      setsLost: player.sets_lost,
-      gamesWon: player.games_won,
-      gamesLost: player.games_lost,
+      wins,
+      losses,
+      wlRecorded: wlTotal,
+      // Only return win rate when meaningful
+      winRate: meaningful ? player.win_rate : null,
+      winRateMeaningful: meaningful,
       firstMatch: player.first_match,
       lastMatch: player.last_match,
-      uniqueTeammates: player.unique_teammates,
-      uniqueOpponents: player.unique_opponents,
-      competitiveMatches: player.competitive_matches,
-      friendlyMatches: player.friendly_matches,
+      uniquePartners: partnerIds.size,
     },
     tier,
     badges,
@@ -182,5 +211,7 @@ export async function GET(
       winRate: winRatePercentile,
     },
     totalPlayers: total,
+  }, {
+    headers: { "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=7200" },
   });
 }

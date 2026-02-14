@@ -10,6 +10,8 @@ import { retrieveDocuments } from "@/lib/rag";
 import { buildPromptWithContext } from "@/lib/system-prompt";
 import { chatCompletionStream } from "@/lib/openrouter";
 
+export const dynamic = "force-dynamic"; // Streaming cannot be cached
+
 export async function POST(req: NextRequest) {
   try {
     const { message, history } = await req.json();

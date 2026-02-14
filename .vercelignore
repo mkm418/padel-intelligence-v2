@@ -1,0 +1,13 @@
+output/
+tools/
+skills/
+docs/
+*.json
+!app/package.json
+!app/tsconfig.json
+!app/next.config.ts
+!app/src/data/knowledge-base.json
+.git/
+node_modules/
+app/scripts/
+app/.env.local

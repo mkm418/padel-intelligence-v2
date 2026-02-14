@@ -169,15 +169,13 @@ function main() {
       }
       totalPlayed++;
 
-      // ── Filter: 2+ real players ──
+      // ── Collect all player IDs in this match ──
       const allPlayerIds: string[] = [];
       for (const team of match.teams) {
         for (const p of team.players) {
           if (p.user_id) allPlayerIds.push(p.user_id);
         }
       }
-      if (allPlayerIds.length < 2) continue;
-      totalWith2Plus++;
 
       const clubName = match.tenant?.tenant_name ?? "Unknown";
       const isCompetitive = match.competition_mode === "COMPETITIVE";
@@ -186,7 +184,6 @@ function main() {
       const team0Result = match.teams[0]?.team_result ?? null;
       const team1Result = match.teams[1]?.team_result ?? null;
       const hasResult = team0Result === "WON" || team0Result === "LOST";
-      if (hasResult) totalWithResults++;
 
       // Parse set scores
       let setScores: { team0: number; team1: number }[] = [];
@@ -201,9 +198,13 @@ function main() {
           }
         }
       }
+
+      // Track quality metrics
+      if (allPlayerIds.length >= 2) totalWith2Plus++;
+      if (hasResult) totalWithResults++;
       if (setScores.length > 0) totalWithScores++;
 
-      // ── Accumulate per-player stats ──
+      // ── Accumulate per-player stats for ALL played matches ──
       for (const team of match.teams) {
         const teamIdx = team.team_id; // "0" or "1"
         const teamResult = teamIdx === "0" ? team0Result : team1Result;
@@ -213,6 +214,7 @@ function main() {
 
           const existing = players.get(p.user_id);
           if (existing) {
+            // Count ALL played matches (not just 2+ player ones)
             existing.matches_played++;
             existing.total_bookings++;
             if (!existing.clubs.includes(clubName))
@@ -335,8 +337,8 @@ function main() {
   console.log(`  CANCELED:            ${totalCanceled.toLocaleString()} (${(100 * totalCanceled / totalRaw).toFixed(1)}%)`);
   console.log(`  PENDING/other:       ${totalPending.toLocaleString()} (${(100 * totalPending / totalRaw).toFixed(1)}%)`);
   console.log(`  PLAYED w/ 2+ players:${totalWith2Plus.toLocaleString()} (${(100 * totalWith2Plus / totalRaw).toFixed(1)}%)`);
-  console.log(`  With W/L results:    ${totalWithResults.toLocaleString()} (${(100 * totalWithResults / totalWith2Plus).toFixed(1)}% of played)`);
-  console.log(`  With set scores:     ${totalWithScores.toLocaleString()} (${(100 * totalWithScores / totalWith2Plus).toFixed(1)}% of played)`);
+  console.log(`  With W/L results:    ${totalWithResults.toLocaleString()} (${(100 * totalWithResults / totalPlayed).toFixed(1)}% of played)`);
+  console.log(`  With set scores:     ${totalWithScores.toLocaleString()} (${(100 * totalWithScores / totalPlayed).toFixed(1)}% of played)`);
   console.log(`  Unique players:      ${players.size.toLocaleString()}`);
 
   // ── Build edges with teammate/opponent distinction ──

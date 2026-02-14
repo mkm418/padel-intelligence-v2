@@ -8,20 +8,17 @@
  */
 
 import { useState, useRef, useEffect, useCallback } from "react";
+import Nav from "@/components/Nav";
 
 interface Message {
   role: "user" | "assistant";
   content: string;
 }
 
-// Suggested starter questions
-const STARTERS = [
+// Two inline suggestion prompts
+const SUGGESTIONS = [
   "How do I hit a bandeja?",
-  "What racket should I buy as a beginner?",
   "Explain the golden point rule",
-  "How do I transition from defense to offense?",
-  "What's the difference between padel and tennis?",
-  "Best warm-up routine before a match?",
 ];
 
 export default function ChatPage() {
@@ -145,54 +142,44 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-[#0a0a0a] text-white">
-      {/* Header */}
-      <header className="flex-shrink-0 border-b border-white/10 px-6 py-4">
-        <div className="max-w-3xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400 text-sm font-bold">
-              P
-            </div>
-            <div>
-              <h1 className="text-base font-semibold tracking-tight">
-                Padel Coach AI
-              </h1>
-              <p className="text-xs text-white/40">
-                Powered by 100 expert knowledge articles
-              </p>
-            </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <a href="/" className="text-xs text-white/40 hover:text-white transition-colors">Home</a>
-            <a href="/network" className="text-xs text-white/40 hover:text-emerald-400 transition-colors">Network</a>
-            <a href="/rankings" className="text-xs text-white/40 hover:text-emerald-400 transition-colors">Rankings</a>
-            <a href="/h2h" className="text-xs text-white/40 hover:text-emerald-400 transition-colors">H2H</a>
-          </div>
-        </div>
-      </header>
+    <div className="flex flex-col h-screen overflow-x-hidden bg-background text-foreground">
+      <Nav />
 
       {/* Messages area */}
-      <main className="flex-1 overflow-y-auto">
-        <div className="max-w-3xl mx-auto px-6 py-8">
+      <main className="flex-1 overflow-y-auto pt-14 pb-[140px] overflow-x-hidden">
+        <div className="max-w-3xl mx-auto px-5 py-6 sm:px-8 sm:py-8">
           {messages.length === 0 ? (
-            // Empty state with suggested starters
+            /* Empty state — clean centered content */
             <div className="flex flex-col items-center justify-center min-h-[60vh]">
-              <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 text-2xl font-bold mb-6">
-                P
+              <div className="mb-6 w-12 h-12 rounded-xl bg-surface border border-border flex items-center justify-center">
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="var(--accent)"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                </svg>
               </div>
-              <h2 className="text-xl font-semibold mb-2">
-                Ask me anything about padel
+
+              <h2 className="font-display text-2xl font-bold tracking-tight text-foreground mb-2">
+                Ask your coach
               </h2>
-              <p className="text-white/40 text-sm mb-8 text-center max-w-md">
-                Technique, strategy, rules, equipment, fitness, history — I've
-                got 100 expert articles ready to help you improve your game.
+              <p className="text-muted text-sm mb-8 text-center max-w-sm leading-relaxed">
+                Technique, strategy, rules, equipment. 100 expert articles ready
+                to answer.
               </p>
-              <div className="grid grid-cols-2 gap-2 w-full max-w-lg">
-                {STARTERS.map((q) => (
+
+              <div className="flex flex-wrap items-center justify-center gap-3">
+                {SUGGESTIONS.map((q) => (
                   <button
                     key={q}
                     onClick={() => sendMessage(q)}
-                    className="text-left text-sm px-4 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all text-white/70 hover:text-white"
+                    className="btn-secondary text-sm px-4 py-2.5 min-h-[44px] touch-manipulation"
                   >
                     {q}
                   </button>
@@ -200,30 +187,41 @@ export default function ChatPage() {
               </div>
             </div>
           ) : (
-            // Message thread
-            <div className="space-y-6">
+            /* Message thread */
+            <div className="space-y-5">
               {messages.map((msg, i) => (
                 <div
                   key={i}
                   className={`flex gap-3 ${msg.role === "user" ? "justify-end" : ""}`}
                 >
                   {msg.role === "assistant" && (
-                    <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400 text-xs font-bold mt-1">
-                      P
+                    <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-surface border border-border flex items-center justify-center mt-1">
+                      <svg
+                        width="13"
+                        height="13"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="var(--accent)"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                      </svg>
                     </div>
                   )}
                   <div
-                    className={`max-w-[85%] ${
+                    className={`max-w-[85%] min-w-0 rounded-2xl px-4 py-3 ${
                       msg.role === "user"
-                        ? "bg-white/10 rounded-2xl rounded-br-md px-4 py-3"
-                        : "prose prose-invert prose-sm max-w-none"
+                        ? "bg-raised border border-border rounded-br-md"
+                        : "bg-surface border border-border rounded-bl-md"
                     }`}
                   >
                     {msg.role === "user" ? (
-                      <p className="text-sm">{msg.content}</p>
+                      <p className="text-sm text-foreground">{msg.content}</p>
                     ) : (
                       <div
-                        className="text-sm text-white/85 leading-relaxed whitespace-pre-wrap"
+                        className="text-sm text-foreground/85 leading-relaxed whitespace-pre-wrap"
                         dangerouslySetInnerHTML={{
                           __html: formatMarkdown(msg.content),
                         }}
@@ -237,13 +235,24 @@ export default function ChatPage() {
               {isLoading &&
                 messages[messages.length - 1]?.role === "user" && (
                   <div className="flex gap-3">
-                    <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400 text-xs font-bold mt-1">
-                      P
+                    <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-surface border border-border flex items-center justify-center mt-1">
+                      <svg
+                        width="13"
+                        height="13"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="var(--accent)"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                      </svg>
                     </div>
-                    <div className="flex items-center gap-1 py-3">
-                      <span className="w-2 h-2 bg-white/30 rounded-full animate-bounce [animation-delay:0ms]" />
-                      <span className="w-2 h-2 bg-white/30 rounded-full animate-bounce [animation-delay:150ms]" />
-                      <span className="w-2 h-2 bg-white/30 rounded-full animate-bounce [animation-delay:300ms]" />
+                    <div className="bg-surface border border-border rounded-2xl rounded-bl-md px-5 py-3.5 flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 bg-muted rounded-full animate-pulse" />
+                      <span className="w-1.5 h-1.5 bg-muted/60 rounded-full animate-pulse [animation-delay:200ms]" />
+                      <span className="w-1.5 h-1.5 bg-muted/30 rounded-full animate-pulse [animation-delay:400ms]" />
                     </div>
                   </div>
                 )}
@@ -254,10 +263,10 @@ export default function ChatPage() {
         </div>
       </main>
 
-      {/* Input area */}
-      <footer className="flex-shrink-0 border-t border-white/10 px-6 py-4">
-        <div className="max-w-3xl mx-auto">
-          <div className="flex items-end gap-3 bg-white/5 border border-white/10 rounded-2xl px-4 py-3 focus-within:border-emerald-500/50 transition-colors">
+      {/* Input area — fixed bottom */}
+      <footer className="fixed bottom-0 left-0 right-0 z-30 w-full border-t border-border bg-background px-5 py-3 sm:px-8 sm:py-4">
+        <div className="max-w-3xl mx-auto w-full">
+          <div className="flex items-end gap-3">
             <textarea
               ref={inputRef}
               value={input}
@@ -265,12 +274,12 @@ export default function ChatPage() {
               onKeyDown={handleKeyDown}
               placeholder="Ask about padel..."
               rows={1}
-              className="flex-1 bg-transparent text-sm text-white placeholder:text-white/30 resize-none outline-none max-h-32"
+              className="input-field flex-1 resize-none max-h-32 !py-2.5"
             />
             <button
               onClick={() => sendMessage()}
               disabled={!input.trim() || isLoading}
-              className="flex-shrink-0 w-8 h-8 rounded-lg bg-emerald-500 hover:bg-emerald-400 disabled:bg-white/10 disabled:text-white/20 text-black flex items-center justify-center transition-colors"
+              className="flex-shrink-0 w-10 h-10 rounded-full bg-accent hover:bg-accent-hover disabled:bg-raised disabled:text-dim text-white flex items-center justify-center transition-colors"
             >
               <svg
                 width="16"
@@ -286,7 +295,7 @@ export default function ChatPage() {
               </svg>
             </button>
           </div>
-          <p className="text-[10px] text-white/20 text-center mt-2">
+          <p className="text-[11px] text-dim text-center mt-2">
             Answers grounded in 100 expert padel articles. May not always be
             perfect.
           </p>
@@ -297,7 +306,7 @@ export default function ChatPage() {
 }
 
 /**
- * Minimal markdown → HTML for chat messages
+ * Minimal markdown to HTML for chat messages.
  * Handles: **bold**, *italic*, bullet points, line breaks
  */
 function formatMarkdown(text: string): string {
@@ -307,9 +316,18 @@ function formatMarkdown(text: string): string {
     .replace(/>/g, "&gt;")
     .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
     .replace(/\*(.+?)\*/g, "<em>$1</em>")
-    .replace(/`(.+?)`/g, '<code class="bg-white/10 px-1 rounded text-xs">$1</code>')
-    .replace(/^- (.+)$/gm, '<span class="flex gap-2"><span class="text-emerald-400">•</span><span>$1</span></span>')
-    .replace(/^(\d+)\. (.+)$/gm, '<span class="flex gap-2"><span class="text-emerald-400">$1.</span><span>$2</span></span>')
-    .replace(/\n\n/g, '<br/><br/>')
+    .replace(
+      /`(.+?)`/g,
+      '<code class="bg-[var(--surface)] px-1.5 py-0.5 rounded text-xs border border-[var(--border)]">$1</code>'
+    )
+    .replace(
+      /^- (.+)$/gm,
+      '<span class="flex gap-2"><span class="text-[var(--accent)]">&#8226;</span><span>$1</span></span>'
+    )
+    .replace(
+      /^(\d+)\. (.+)$/gm,
+      '<span class="flex gap-2"><span class="text-[var(--accent)]">$1.</span><span>$2</span></span>'
+    )
+    .replace(/\n\n/g, "<br/><br/>")
     .replace(/\n/g, "<br/>");
 }
