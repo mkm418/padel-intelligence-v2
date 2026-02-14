@@ -163,18 +163,10 @@ export default function ChatPage() {
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <a
-              href="/"
-              className="text-xs text-white/40 hover:text-white transition-colors"
-            >
-              Home
-            </a>
-            <a
-              href="/network"
-              className="text-xs text-white/40 hover:text-emerald-400 transition-colors"
-            >
-              Player Network
-            </a>
+            <a href="/" className="text-xs text-white/40 hover:text-white transition-colors">Home</a>
+            <a href="/network" className="text-xs text-white/40 hover:text-emerald-400 transition-colors">Network</a>
+            <a href="/rankings" className="text-xs text-white/40 hover:text-emerald-400 transition-colors">Rankings</a>
+            <a href="/h2h" className="text-xs text-white/40 hover:text-emerald-400 transition-colors">H2H</a>
           </div>
         </div>
       </header>

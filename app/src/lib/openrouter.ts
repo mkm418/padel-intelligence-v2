@@ -18,8 +18,14 @@ export const FREE_MODELS = {
   deepseek: "deepseek/deepseek-chat-v3-0324:free",
 } as const;
 
-// Default model — Gemini Flash is fast + good at following instructions
-const DEFAULT_MODEL = FREE_MODELS.deepseek;
+// Cheap paid models — more reliable than free tier
+export const CHEAP_MODELS = {
+  geminiFlash: "google/gemini-2.0-flash-001", // $0.10/M in, $0.40/M out
+  deepseek: "deepseek/deepseek-chat",          // $0.14/M in, $0.28/M out
+} as const;
+
+// Default model — Gemini Flash: fast, cheap ($0.10/M), reliable
+const DEFAULT_MODEL = CHEAP_MODELS.geminiFlash;
 
 interface ChatMessage {
   role: string;

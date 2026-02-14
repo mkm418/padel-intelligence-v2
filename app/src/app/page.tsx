@@ -37,16 +37,16 @@ export default async function Home() {
             Padel Passport
           </span>
           <div className="flex items-center gap-3">
-            <a
-              href="/network"
-              className="rounded-lg bg-accent/10 px-3 py-1.5 text-xs font-medium text-accent hover:bg-accent/20 transition-colors"
-            >
-              Player Network
+            <a href="/network" className="rounded-lg bg-accent/10 px-3 py-1.5 text-xs font-medium text-accent hover:bg-accent/20 transition-colors">
+              Network
             </a>
-            <a
-              href="/chat"
-              className="rounded-lg bg-accent/10 px-3 py-1.5 text-xs font-medium text-accent hover:bg-accent/20 transition-colors"
-            >
+            <a href="/rankings" className="rounded-lg bg-accent/10 px-3 py-1.5 text-xs font-medium text-accent hover:bg-accent/20 transition-colors">
+              Rankings
+            </a>
+            <a href="/h2h" className="rounded-lg bg-accent/10 px-3 py-1.5 text-xs font-medium text-accent hover:bg-accent/20 transition-colors">
+              H2H
+            </a>
+            <a href="/chat" className="rounded-lg bg-accent/10 px-3 py-1.5 text-xs font-medium text-accent hover:bg-accent/20 transition-colors">
               Coach AI
             </a>
             <span className="rounded-full bg-surface px-3 py-1 text-xs font-medium text-muted">

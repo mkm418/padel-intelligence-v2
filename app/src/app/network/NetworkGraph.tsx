@@ -377,12 +377,9 @@ export default function NetworkGraph() {
           <span className="text-muted/40">/</span>
           <h1 className="text-sm font-semibold">Player Network</h1>
           <span className="text-muted/40">|</span>
-          <a
-            href="/chat"
-            className="text-xs text-muted hover:text-accent transition-colors"
-          >
-            Coach AI
-          </a>
+          <a href="/rankings" className="text-xs text-muted hover:text-accent transition-colors">Rankings</a>
+          <a href="/h2h" className="text-xs text-muted hover:text-accent transition-colors">H2H</a>
+          <a href="/chat" className="text-xs text-muted hover:text-accent transition-colors">Coach AI</a>
         </div>
         <div className="flex items-center gap-4">
           {/* View mode toggle */}
