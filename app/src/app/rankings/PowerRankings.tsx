@@ -103,7 +103,6 @@ export default function PowerRankings() {
   const [club, setClub] = useState("");
   const [levelRange, setLevelRange] = useState<[number, number]>([0, 8]);
   const [search, setSearch] = useState("");
-  // Cache the full club list from the first unfiltered fetch so it persists
   const [allClubs, setAllClubs] = useState<string[]>([]);
   const debounceRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
@@ -125,8 +124,8 @@ export default function PowerRankings() {
         .then((d) => {
           if (d.error) throw new Error(d.error);
           setData(d);
-          // Only update club list from unfiltered results (no club selected)
-          if (!club && d.clubs?.length > 0) {
+          // API now always returns the full club list (fetched independently)
+          if (d.clubs?.length > 0) {
             setAllClubs(d.clubs);
           }
         })

@@ -115,6 +115,7 @@ function trimClub(name: string): string {
 /* ── Handler ──────────────────────────────────────────────────── */
 
 export async function GET(req: NextRequest) {
+  try {
   const url = req.nextUrl;
   const club = url.searchParams.get("club") ?? "";
   const minLevel = parseFloat(url.searchParams.get("minLevel") ?? "0");
@@ -212,10 +213,19 @@ export async function GET(req: NextRequest) {
     }
   }
 
-  // All clubs for filter from current result set
-  const clubSet = new Set<string>();
-  for (const p of allPlayers) {
-    for (const c of p.clubs ?? []) clubSet.add(c.trim());
+  // Always fetch full club list from DB (independent of current filters)
+  // so the dropdown never collapses
+  const { data: clubRows } = await supabase.rpc("get_distinct_clubs");
+  let allClubNames: string[] = [];
+  if (clubRows && Array.isArray(clubRows)) {
+    allClubNames = clubRows.map((r: { club_name: string }) => r.club_name).sort();
+  } else {
+    // Fallback: extract from current result set
+    const clubSet = new Set<string>();
+    for (const p of allPlayers) {
+      for (const c of p.clubs ?? []) clubSet.add(c.trim());
+    }
+    allClubNames = Array.from(clubSet).sort();
   }
 
   return NextResponse.json({
@@ -226,8 +236,15 @@ export async function GET(req: NextRequest) {
       risingStars,
     },
     brackets,
-    clubs: Array.from(clubSet).sort(),
+    clubs: allClubNames,
   }, {
     headers: { "Cache-Control": "public, s-maxage=300, stale-while-revalidate=600" },
   });
+  } catch (err) {
+    console.error("[rankings] Unhandled error:", err);
+    return NextResponse.json(
+      { error: err instanceof Error ? err.message : "Unknown server error" },
+      { status: 500 },
+    );
+  }
 }
