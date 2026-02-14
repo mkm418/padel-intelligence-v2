@@ -17,12 +17,13 @@ export async function GET(req: NextRequest) {
     });
   }
 
+  // No minMatches filter — every player in the DB should be findable
   const { data, error } = await supabase
     .from("players")
     .select("user_id, name, level_value, picture, matches_played, wins, losses")
     .ilike("name", `%${q}%`)
     .order("matches_played", { ascending: false })
-    .limit(15);
+    .limit(50);
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });

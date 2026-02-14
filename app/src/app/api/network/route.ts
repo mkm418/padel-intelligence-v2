@@ -55,10 +55,12 @@ function isRealPlayer(name: string): boolean {
 
 export async function GET(req: NextRequest) {
   const url = req.nextUrl;
-  const minMatches = parseInt(url.searchParams.get("minMatches") ?? "5", 10);
-  const minWeight = parseInt(url.searchParams.get("minWeight") ?? "2", 10);
   const club = url.searchParams.get("club") ?? "";
   const search = url.searchParams.get("search") ?? "";
+  // When searching, include all players so anyone can find themselves
+  const defaultMin = search ? 1 : 5;
+  const minMatches = parseInt(url.searchParams.get("minMatches") ?? String(defaultMin), 10);
+  const minWeight = parseInt(url.searchParams.get("minWeight") ?? "2", 10);
   const minLevel = parseFloat(url.searchParams.get("minLevel") ?? "0");
   const maxLevel = parseFloat(url.searchParams.get("maxLevel") ?? "8");
 

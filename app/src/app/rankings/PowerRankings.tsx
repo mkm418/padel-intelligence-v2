@@ -109,12 +109,12 @@ export default function PowerRankings() {
       setLoading(true);
       setError(null);
       const params = new URLSearchParams({
-        minMatches: "5",
         minLevel: String(levelRange[0]),
         maxLevel: String(levelRange[1]),
       });
       if (club) params.set("club", club);
       if (search.trim()) params.set("search", search.trim());
+      // Don't send minMatches — API defaults to 5 for leaderboard, 1 when searching
 
       fetch(`/api/rankings?${params}`)
         .then((r) => r.json())

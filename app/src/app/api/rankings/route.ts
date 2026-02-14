@@ -121,7 +121,10 @@ export async function GET(req: NextRequest) {
   const search = url.searchParams.get("search") ?? "";
   const minLevel = parseFloat(url.searchParams.get("minLevel") ?? "0");
   const maxLevel = parseFloat(url.searchParams.get("maxLevel") ?? "8");
-  const minMatches = parseInt(url.searchParams.get("minMatches") ?? "5", 10);
+  // When searching, include ALL players (even 1 match) so anyone can find themselves.
+  // Default leaderboard view still requires 5+ matches for a clean ranking.
+  const defaultMin = search ? 1 : 5;
+  const minMatches = parseInt(url.searchParams.get("minMatches") ?? String(defaultMin), 10);
 
   // Paginate through all matching players
   const PAGE = 1000;
@@ -140,7 +143,6 @@ export async function GET(req: NextRequest) {
     if (minLevel > 0) q = q.gte("level_value", minLevel);
     if (maxLevel < 8) q = q.lte("level_value", maxLevel);
     if (club) q = q.contains("clubs", [club]);
-    // Server-side name search using case-insensitive pattern match
     if (search) q = q.ilike("name", `%${search}%`);
 
     const { data, error } = await q;
