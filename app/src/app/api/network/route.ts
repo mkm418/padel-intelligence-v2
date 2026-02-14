@@ -1,99 +1,37 @@
 /**
- * GET /api/network?minMatches=5&minWeight=2
+ * GET /api/network?minMatches=5&minWeight=2&minLevel=0&maxLevel=8&club=&search=
  *
- * Serves filtered player network data from reprocessed JSON files.
+ * Serves filtered player network data from Supabase.
  * Returns { nodes, links, meta, clubs, leaderboard }.
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { readFileSync, existsSync, statSync } from "fs";
-import { join } from "path";
+import { supabase } from "@/lib/supabase";
+import type { SupabaseClient } from "@supabase/supabase-js";
 
-const DATA_DIR = join(process.cwd(), "../output/miami_network");
+// ── Helpers ──────────────────────────────────────────────────────────────
 
-// In-memory cache with mtime tracking for auto-invalidation
-let rawPlayers: PlayerRaw[] | null = null;
-let rawEdges: EdgeRaw[] | null = null;
-let adjacency: Map<string, PartnerEdge[]> | null = null;
-let cachedMtime: number = 0;
-
-interface PlayerRaw {
-  user_id: string;
-  name: string;
-  gender: string;
-  level_value: number | null;
-  level_confidence: number | null;
-  preferred_position: string | null;
-  is_premium: boolean;
-  picture: string | null;
-  clubs: string[];
-  matches_played: number;
-  total_bookings: number;
-  wins: number;
-  losses: number;
-  win_rate: number | null;
-  sets_won: number;
-  sets_lost: number;
-  games_won: number;
-  games_lost: number;
-  first_match: string;
-  last_match: string;
-  unique_teammates: number;
-  unique_opponents: number;
-  competitive_matches: number;
-  friendly_matches: number;
-}
-
-interface EdgeRaw {
-  source: string;
-  target: string;
-  weight: number;
-  clubs: string[];
-  last_played: string;
-  relationship: "teammate" | "opponent" | "mixed";
-}
-
-interface PartnerEdge {
-  partnerId: string;
-  weight: number;
-  clubs: string[];
-  lastPlayed: string;
-  relationship: string;
-}
-
-function loadData() {
-  const pFile = join(DATA_DIR, "players.json");
-  const eFile = join(DATA_DIR, "edges.json");
-  if (!existsSync(pFile) || !existsSync(eFile)) return false;
-
-  // Check if files changed (invalidate cache on file update)
-  const mtime = statSync(pFile).mtimeMs;
-  if (!rawPlayers || mtime > cachedMtime) {
-    cachedMtime = mtime;
-    rawPlayers = JSON.parse(readFileSync(pFile, "utf-8"));
-    rawEdges = JSON.parse(readFileSync(eFile, "utf-8"));
-
-    adjacency = new Map();
-    for (const e of rawEdges!) {
-      if (!adjacency.has(e.source)) adjacency.set(e.source, []);
-      if (!adjacency.has(e.target)) adjacency.set(e.target, []);
-      adjacency.get(e.source)!.push({
-        partnerId: e.target,
-        weight: e.weight,
-        clubs: e.clubs,
-        lastPlayed: e.last_played,
-        relationship: e.relationship,
-      });
-      adjacency.get(e.target)!.push({
-        partnerId: e.source,
-        weight: e.weight,
-        clubs: e.clubs,
-        lastPlayed: e.last_played,
-        relationship: e.relationship,
-      });
-    }
+/** Paginate through all rows for a Supabase query (bypasses 1000 row limit) */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function fetchAll<T = any>(
+  buildQuery: (
+    sb: SupabaseClient,
+    from: number,
+    to: number,
+  ) => ReturnType<ReturnType<SupabaseClient["from"]>["select"]>,
+  pageSize = 1000,
+): Promise<T[]> {
+  const all: T[] = [];
+  let from = 0;
+  while (true) {
+    const { data, error } = await buildQuery(supabase, from, from + pageSize - 1);
+    if (error) throw new Error(error.message);
+    if (!data || data.length === 0) break;
+    all.push(...(data as T[]));
+    if (data.length < pageSize) break; // last page
+    from += pageSize;
   }
-  return true;
+  return all;
 }
 
 function isRealPlayer(name: string): boolean {
@@ -111,14 +49,9 @@ function isRealPlayer(name: string): boolean {
   );
 }
 
-export async function GET(req: NextRequest) {
-  if (!loadData()) {
-    return NextResponse.json(
-      { error: "Network data not found. Run the scrape script first." },
-      { status: 404 },
-    );
-  }
+// ── Main handler ─────────────────────────────────────────────────────────
 
+export async function GET(req: NextRequest) {
   const url = req.nextUrl;
   const minMatches = parseInt(url.searchParams.get("minMatches") ?? "5", 10);
   const minWeight = parseInt(url.searchParams.get("minWeight") ?? "2", 10);
@@ -127,61 +60,118 @@ export async function GET(req: NextRequest) {
   const minLevel = parseFloat(url.searchParams.get("minLevel") ?? "0");
   const maxLevel = parseFloat(url.searchParams.get("maxLevel") ?? "8");
 
-  // Name lookup
+  // ── Fetch players from Supabase (paginated) ─────────────────────────
+
+  let rawPlayers;
+  try {
+    rawPlayers = await fetchAll((sb, from, to) => {
+      let q = sb
+        .from("players")
+        .select("*")
+        .gte("matches_played", minMatches)
+        .order("matches_played", { ascending: false })
+        .range(from, to);
+
+      if (minLevel > 0) q = q.gte("level_value", minLevel);
+      if (maxLevel < 8) q = q.lte("level_value", maxLevel);
+      if (club) q = q.contains("clubs", [club]);
+      if (search) q = q.ilike("name", `%${search}%`);
+
+      return q;
+    });
+  } catch (e) {
+    return NextResponse.json(
+      { error: (e as Error).message },
+      { status: 500 },
+    );
+  }
+
+  // Filter system accounts client-side (complex regex patterns)
+  const players = (rawPlayers ?? []).filter((p) => isRealPlayer(p.name));
+  const playerIds = new Set(players.map((p) => p.user_id));
+
+  // Name map for edge lookups
   const nameMap = new Map<string, string>();
-  for (const p of rawPlayers!) nameMap.set(p.user_id, p.name);
+  for (const p of players) nameMap.set(p.user_id, p.name);
 
-  // Set of real players for partner filter
-  const realIds = new Set<string>();
-  for (const p of rawPlayers!) {
-    if (isRealPlayer(p.name)) realIds.add(p.user_id);
-  }
+  // Real player IDs set (for partner filtering)
+  const realIds = playerIds;
 
-  // Filter players
-  let players = rawPlayers!.filter((p) => {
-    if (p.matches_played < minMatches) return false;
-    if (club && !p.clubs.includes(club)) return false;
-    if (!isRealPlayer(p.name)) return false;
-    // Level filter: if player has a level, it must be in range.
-    // Players with no level pass if range starts at 0 (include unknowns).
-    if (p.level_value != null) {
-      if (p.level_value < minLevel || p.level_value > maxLevel) return false;
-    } else if (minLevel > 0) {
-      return false; // Exclude unknown levels when min is raised
+  // ── Fetch edges via SQL function (fast server-side filtering) ─────
+
+  const playerIdArray = Array.from(playerIds);
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async function paginateRpc(name: string, params: Record<string, any>) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const all: any[] = [];
+    let from = 0;
+    const PAGE = 1000;
+    while (true) {
+      const { data, error } = await supabase
+        .rpc(name, params)
+        .range(from, from + PAGE - 1);
+      if (error) throw new Error(error.message);
+      if (!data || data.length === 0) break;
+      all.push(...data);
+      if (data.length < PAGE) break;
+      from += PAGE;
     }
-    return true;
-  });
-
-  if (search) {
-    const lc = search.toLowerCase();
-    players = players.filter((p) => p.name.toLowerCase().includes(lc));
+    return all;
   }
 
-  const ids = new Set(players.map((p) => p.user_id));
+  let edgesFromRpc;
+  try {
+    edgesFromRpc = await paginateRpc("get_network_edges", {
+      player_ids: playerIdArray,
+      min_weight: minWeight,
+      filter_club: club || null,
+    });
+  } catch (e) {
+    return NextResponse.json({ error: (e as Error).message }, { status: 500 });
+  }
 
-  // Filter edges
-  const edges = rawEdges!.filter(
-    (e) =>
-      e.weight >= minWeight &&
-      ids.has(e.source) &&
-      ids.has(e.target) &&
-      (!club || e.clubs.includes(club)),
-  );
+  const edgesArr = edgesFromRpc ?? [];
 
-  // Degree map
+  // ── Build adjacency from network edges (for top partners) ────────────
+
+  const adjacency = new Map<
+    string,
+    { partnerId: string; weight: number; relationship: string }[]
+  >();
+
+  for (const e of edgesArr) {
+    if (!adjacency.has(e.source)) adjacency.set(e.source, []);
+    if (!adjacency.has(e.target)) adjacency.set(e.target, []);
+    adjacency.get(e.source)!.push({
+      partnerId: e.target,
+      weight: e.weight,
+      relationship: e.relationship,
+    });
+    adjacency.get(e.target)!.push({
+      partnerId: e.source,
+      weight: e.weight,
+      relationship: e.relationship,
+    });
+  }
+
+  // ── Degree map ──────────────────────────────────────────────────────
+
   const degreeMap = new Map<string, number>();
-  for (const e of edges) {
+  for (const e of edgesArr) {
     degreeMap.set(e.source, (degreeMap.get(e.source) ?? 0) + 1);
     degreeMap.set(e.target, (degreeMap.get(e.target) ?? 0) + 1);
   }
 
-  // Top partners per player
+  // ── Top partners per player ─────────────────────────────────────────
+
   const topPartnersMap = new Map<
     string,
     { id: string; name: string; weight: number; relationship: string }[]
   >();
+
   for (const p of players) {
-    const neighbors = adjacency!.get(p.user_id) ?? [];
+    const neighbors = adjacency.get(p.user_id) ?? [];
     const sorted = [...neighbors]
       .filter((n) => realIds.has(n.partnerId))
       .sort((a, b) => b.weight - a.weight)
@@ -197,7 +187,8 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  // Nodes
+  // ── Build nodes ─────────────────────────────────────────────────────
+
   const nodes = players.map((p) => ({
     id: p.user_id,
     name: p.name,
@@ -214,49 +205,42 @@ export async function GET(req: NextRequest) {
     isPremium: p.is_premium,
     degree: degreeMap.get(p.user_id) ?? 0,
     topPartners: topPartnersMap.get(p.user_id) ?? [],
-    // W/L
     wins: p.wins,
     losses: p.losses,
     winRate: p.win_rate,
-    // Sets/games
     setsWon: p.sets_won,
     setsLost: p.sets_lost,
     gamesWon: p.games_won,
     gamesLost: p.games_lost,
-    // Social
     uniqueTeammates: p.unique_teammates,
     uniqueOpponents: p.unique_opponents,
-    // Match types
     competitiveMatches: p.competitive_matches,
     friendlyMatches: p.friendly_matches,
   }));
 
-  const links = edges.map((e) => ({
+  const links = edgesArr.map((e) => ({
     source: e.source,
     target: e.target,
     weight: e.weight,
     relationship: e.relationship,
   }));
 
-  // ── Leaderboard ──
+  // ── Leaderboard ─────────────────────────────────────────────────────
+
   const playersByMatches = [...nodes]
     .sort((a, b) => b.matchCount - a.matchCount)
     .slice(0, 20);
+
   const playersByConnections = [...nodes]
     .sort((a, b) => b.degree - a.degree)
     .slice(0, 20);
 
-  // Best win rate (min 10 W/L matches)
   const playersByWinRate = [...nodes]
     .filter((p) => p.wins + p.losses >= 10)
     .sort((a, b) => (b.winRate ?? 0) - (a.winRate ?? 0))
     .slice(0, 20);
 
-  // Top partner pairs
-  const topPairs = [...edges]
-    .filter(
-      (e) => realIds.has(e.source) && realIds.has(e.target),
-    )
+  const topPairs = [...edgesArr]
     .sort((a, b) => b.weight - a.weight)
     .slice(0, 20)
     .map((e) => ({
@@ -288,16 +272,29 @@ export async function GET(req: NextRequest) {
     }
   }
 
-  const allClubs = Array.from(
-    new Set(rawPlayers!.flatMap((p) => p.clubs)),
-  ).sort();
+  // All clubs (for filter dropdown) — extract from loaded players
+  const allClubsSet = new Set<string>();
+  for (const p of rawPlayers) {
+    for (const c of p.clubs) allClubsSet.add(c);
+  }
+  const allClubs = Array.from(allClubsSet).sort();
+
+  // ── Total counts ────────────────────────────────────────────────────
+
+  const { count: totalPlayers } = await supabase
+    .from("players")
+    .select("*", { count: "exact", head: true });
+
+  const { count: totalEdges } = await supabase
+    .from("edges")
+    .select("*", { count: "exact", head: true });
 
   return NextResponse.json({
     nodes,
     links,
     meta: {
-      totalPlayers: rawPlayers!.length,
-      totalEdges: rawEdges!.length,
+      totalPlayers: totalPlayers ?? 0,
+      totalEdges: totalEdges ?? 0,
       filteredPlayers: nodes.length,
       filteredEdges: links.length,
     },
