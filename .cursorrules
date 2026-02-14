@@ -1,0 +1,153 @@
+# AI Research Template - Cursor Rules
+
+This is a universal "magic box" template for building anything with AI assistance in Cursor.
+
+## Template Capabilities
+
+This template provides:
+
+1. **Research & Data Collection Tools**
+   - Firecrawl (web scraping, crawling, search)
+   - Apify (actors, web automation)
+   - Semrush (SEO, keywords, competitive analysis)
+   - Serper (Google search API)
+   - Perplexity (AI-powered research)
+   - Exa (semantic search, company discovery)
+
+2. **Frontend Development Skills**
+   - Frontend Design (distinctive, production-grade UI/UX)
+   - React Best Practices (performance optimization)
+
+3. **Integration Workflows**
+   - Research data → Dashboard visualization
+   - API integration → Frontend display
+   - Data collection → Analysis → Presentation
+
+## When Building Frontend Interfaces
+
+### Use Frontend Design Skill (`skills/frontend-design/SKILL.md`)
+
+**Apply when:**
+- Building web components, pages, or applications
+- Creating dashboards or data visualization interfaces
+- Designing landing pages or marketing sites
+- Any frontend work requiring exceptional aesthetics
+
+**Key principles:**
+1. **Design thinking first**: Understand purpose, choose bold aesthetic direction, define differentiation
+2. **Avoid generic AI aesthetics**: No Inter/Roboto fonts, no purple gradients, no cookie-cutter layouts
+3. **Commit to a tone**: Brutalist, maximalist, retro-futuristic, luxury, editorial, etc.
+4. **Focus on details**: Typography, color, motion, spatial composition, backgrounds
+5. **Match complexity to vision**: Maximalist needs elaborate code, minimalist needs precision
+
+### Use React Best Practices (`skills/react-best-practices/AGENTS.md`)
+
+**Apply when:**
+- Building or optimizing React/Next.js applications
+- Reviewing code for performance issues
+- Refactoring components
+
+**Priority order (CRITICAL first):**
+1. **Eliminate waterfalls** - Biggest performance gains
+2. **Reduce bundle size** - Avoid barrel imports, use dynamic imports
+3. **Optimize server-side** - Parallel data fetching, React.cache()
+4. **Minimize re-renders** - Memoization, lazy state initialization
+5. **Rendering performance** - Suspense boundaries, content-visibility
+
+## Integration Examples
+
+### Example 1: Research Dashboard
+```
+User: "Build a dashboard to visualize Semrush keyword data"
+
+Apply:
+- Frontend Design Skill: Choose aesthetic (e.g., data-focused brutalist)
+- React Best Practices: Eliminate waterfalls in data fetching
+- Semrush Tool: Fetch keyword data with proper API usage
+```
+
+### Example 2: Competitive Intelligence Tool
+```
+User: "Create a web scraper UI using Firecrawl"
+
+Apply:
+- Frontend Design Skill: Design scraper control interface
+- React Best Practices: Optimize bundle size, lazy load components
+- Firecrawl Tool: Implement scraping logic with rate limiting
+```
+
+### Example 3: SEO Opportunity Finder
+```
+User: "Build a webapp that finds SEO opportunities"
+
+Apply:
+- Frontend Design Skill: Create compelling, unique UI
+- React Best Practices: Performance optimization for data-heavy views
+- Semrush + Serper: Combine tools for comprehensive analysis
+```
+
+## Project Structure
+
+```
+ai-research-template/
+├── skills/              # Modular skill files for AI agents
+│   ├── frontend-design/ # UI/UX design guidelines
+│   └── react-best-practices/ # React performance optimization
+├── tools/               # Research & data collection tools
+│   ├── firecrawl/      # Web scraping
+│   ├── apify/          # Web automation
+│   ├── semrush/        # SEO research
+│   ├── serper/         # Google search
+│   ├── perplexity/     # AI research
+│   └── exa/            # Semantic search
+├── docs/               # Documentation
+│   ├── WORKFLOWS.md    # Common workflows
+│   └── API_REFERENCE.md # Tool API documentation
+└── output/             # Generated files, data, reports
+```
+
+## Code Quality Standards
+
+### TypeScript
+- Prefer TypeScript over JavaScript
+- Include helpful comments
+- Use proper types, avoid `any`
+
+### React/Next.js
+- Follow React Best Practices skill guidelines
+- Use Server Components by default
+- Optimize for performance from the start
+
+### Frontend Design
+- Avoid generic aesthetics (see Frontend Design skill)
+- Choose distinctive fonts and color palettes
+- Add meaningful animations and micro-interactions
+- Create cohesive, memorable interfaces
+
+### Research Tools
+- Always check API key availability before using tools
+- Implement proper error handling and rate limiting
+- Log API costs and usage
+- Export data to `output/` directory
+
+## Getting Started
+
+1. **For research tasks**: Check `docs/WORKFLOWS.md` for research workflows
+2. **For frontend tasks**: Reference `skills/frontend-design/SKILL.md`
+3. **For React optimization**: Reference `skills/react-best-practices/AGENTS.md`
+4. **For API usage**: Check `docs/API_REFERENCE.md`
+
+## Philosophy
+
+This template is designed to build **anything** with AI assistance:
+- Research tools
+- Web applications
+- Dashboards
+- GTM tools
+- Marketing sites
+- Data visualization
+- Competitive intelligence
+- SEO tools
+- And more...
+
+The key is combining the right skills and tools for each specific task.

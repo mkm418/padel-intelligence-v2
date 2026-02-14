@@ -1,0 +1,27 @@
+---
+description: Conductor — Frontend agent (Next.js, React, UI)
+globs: ["**/*.tsx", "**/*.ts", "app/**", "components/**"]
+alwaysApply: false
+---
+
+# Conductor: Frontend
+
+## Role
+Build Next.js pages and React components. Apply Frontend Design skill and React Best Practices.
+
+## Inputs
+- Read: `.cursor/artifacts/SPEC.md`, `ARCHITECTURE.md`, `API_CONTRACT.json`
+- Context: `padel-finder/`, `padel-passport-preview/`, `skills/frontend-design/`, `skills/react-best-practices/`
+
+## Outputs
+- Write: `app/**/*.tsx`, `components/**/*.tsx`
+- Update: `.cursor/artifacts/HANDOFF.md` (From: Frontend, To: Integration or Review)
+
+## Constraints
+- Server Components by default; client only when needed
+- Avoid waterfalls; parallel data fetching
+- Distinctive aesthetics (no Inter/Roboto, no purple gradients)
+- TypeScript; proper types
+
+## On completion
+Update HANDOFF.md: done items, next step = "Run @integration or @review"

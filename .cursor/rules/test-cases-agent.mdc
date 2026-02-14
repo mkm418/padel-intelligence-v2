@@ -1,0 +1,63 @@
+# Test Cases Agent — Auto-Trigger Rule
+
+**Trigger:** When the user asks to generate tests, write test cases, add test coverage, or validate code quality.
+
+**Keywords:** "test", "tests", "test cases", "coverage", "testing", "spec", "e2e", "unit test", "integration test"
+
+---
+
+## Activation
+
+When the user asks for test generation, follow this workflow:
+
+### Step 1: Read the Skill
+Read `skills/test-cases-agent/SKILL.md` for full architecture and methodology.
+
+### Step 2: Interview (Phase 1 & 2)
+Before generating, ask:
+1. What file(s)/module(s) to test?
+2. Target coverage? (default: 80%)
+3. Test framework? (vitest, jest, pytest, go-test)
+4. Include adversarial/fuzz tests? (default: yes)
+5. Output format? (JSON spec only, or executable code too?)
+
+### Step 3: Execute with Ralph Loop (Phase 3)
+
+Use the 5-phase pipeline from the skill:
+
+```
+ANALYZE → PLAN → GENERATE → VERIFY → REPORT
+```
+
+Key rules:
+- **Always use Chain-of-Symbol** for branch mapping (✓ ✗ ⚠ → ↳ ◆ 🔒)
+- **Always validate** output against schemas in `schemas.ts`
+- **Always grade** test quality using `graders.ts` rubric
+- **Iterate** until quality threshold met (score >= 10/15)
+- **Report** branch coverage and persona diversity gaps
+
+### Step 4: Output
+
+Generate to `output/test-cases/`:
+- `TEST_PLAN.json` — structured test plan
+- `TEST_REPORT.json` — quality grades and metrics
+- `*.test.{ts,py,go}` — executable test files
+
+---
+
+## Quality Gates
+
+Every generated test MUST pass:
+- [ ] Schema validation (all required fields, valid enums)
+- [ ] No vague assertions ("should work" → REJECTED)
+- [ ] Minimum quality score: 10/15
+- [ ] At least 3 of 5 adversarial personas represented
+- [ ] All branch symbols from analysis have coverage
+
+## Anti-Patterns
+
+❌ Single-shot generation without verification
+❌ Happy-path-only tests
+❌ Vague expected results ("it works correctly")
+❌ No error-path testing
+❌ Skipping the grading phase

@@ -1,0 +1,229 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://ai-research-template/prd-schema.json",
+  "title": "PRD Schema",
+  "description": "Product Requirements Document schema for AI PM agent coordination",
+  "type": "object",
+  "required": ["meta", "problem", "goals", "personas", "functional_requirements", "acceptance_criteria"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": ["id", "title", "owner", "status", "created_at"],
+      "properties": {
+        "id": { "type": "string", "description": "Unique PRD identifier" },
+        "title": { "type": "string" },
+        "owner": { "type": "string", "description": "PM / product owner" },
+        "status": { "type": "string", "enum": ["draft", "review", "approved", "in_progress", "shipped"] },
+        "created_at": { "type": "string", "format": "date-time" },
+        "updated_at": { "type": "string", "format": "date-time" },
+        "stakeholders": {
+          "type": "object",
+          "properties": {
+            "backend": { "type": "array", "items": { "type": "string" } },
+            "frontend": { "type": "array", "items": { "type": "string" } },
+            "qa": { "type": "array", "items": { "type": "string" } },
+            "sre": { "type": "array", "items": { "type": "string" } },
+            "data": { "type": "array", "items": { "type": "string" } },
+            "design": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      }
+    },
+    "problem": {
+      "type": "object",
+      "required": ["statement", "impact", "evidence"],
+      "properties": {
+        "statement": { "type": "string", "description": "1-2 sentence problem statement" },
+        "impact": { "type": "string", "description": "Who is affected and how" },
+        "evidence": { "type": "array", "items": { "type": "string" }, "description": "Data, feedback, or signals" }
+      }
+    },
+    "goals": {
+      "type": "object",
+      "required": ["primary", "success_metrics"],
+      "properties": {
+        "primary": { "type": "array", "items": { "type": "string" }, "minItems": 1, "maxItems": 3 },
+        "secondary": { "type": "array", "items": { "type": "string" } },
+        "success_metrics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["metric", "target", "measurement"],
+            "properties": {
+              "metric": { "type": "string" },
+              "target": { "type": "string" },
+              "measurement": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "non_goals": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Explicitly out of scope"
+    },
+    "personas": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "description", "needs"],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "needs": { "type": "array", "items": { "type": "string" } },
+          "pain_points": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "ux_flows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "steps", "entry_point"],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "persona_id": { "type": "string" },
+          "entry_point": { "type": "string" },
+          "steps": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["action", "outcome"],
+              "properties": {
+                "step": { "type": "integer" },
+                "action": { "type": "string" },
+                "outcome": { "type": "string" },
+                "system": { "type": "string", "enum": ["frontend", "backend", "data", "sre"] }
+              }
+            }
+          },
+          "happy_path": { "type": "boolean", "default": true }
+        }
+      }
+    },
+    "functional_requirements": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "description", "priority", "owner"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^FR-[0-9]+$" },
+          "description": { "type": "string" },
+          "priority": { "type": "string", "enum": ["P0", "P1", "P2"] },
+          "owner": { "type": "string", "enum": ["backend", "frontend", "qa", "sre", "data", "design"] },
+          "ux_flow_id": { "type": "string" },
+          "dependencies": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "nonfunctional_requirements": {
+      "type": "object",
+      "properties": {
+        "performance": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "metric": { "type": "string" },
+              "target": { "type": "string" }
+            }
+          }
+        },
+        "availability": { "type": "string" },
+        "security": { "type": "array", "items": { "type": "string" } },
+        "scalability": { "type": "string" },
+        "accessibility": { "type": "string", "description": "e.g. WCAG 2.1 AA" }
+      }
+    },
+    "analytics_telemetry": {
+      "type": "object",
+      "required": ["events", "dashboards"],
+      "properties": {
+        "events": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "trigger", "owner"],
+            "properties": {
+              "name": { "type": "string" },
+              "trigger": { "type": "string" },
+              "owner": { "type": "string", "enum": ["frontend", "backend", "data"] },
+              "properties": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        },
+        "dashboards": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "metrics": { "type": "array", "items": { "type": "string" } },
+              "owner": { "type": "string" }
+            }
+          }
+        },
+        "alerts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "condition": { "type": "string" },
+              "owner": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "rollout": {
+      "type": "object",
+      "properties": {
+        "strategy": { "type": "string", "enum": ["big_bang", "phased", "feature_flag", "canary"] },
+        "phases": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "phase": { "type": "integer" },
+              "scope": { "type": "string" },
+              "criteria": { "type": "string" }
+            }
+          }
+        },
+        "rollback_plan": { "type": "string" }
+      }
+    },
+    "risks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["description", "likelihood", "impact", "mitigation"],
+        "properties": {
+          "description": { "type": "string" },
+          "likelihood": { "type": "string", "enum": ["low", "medium", "high"] },
+          "impact": { "type": "string", "enum": ["low", "medium", "high", "critical"] },
+          "mitigation": { "type": "string" }
+        }
+      }
+    },
+    "acceptance_criteria": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "criterion", "verifiable_by"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^AC-[0-9]+$" },
+          "criterion": { "type": "string" },
+          "verifiable_by": { "type": "string", "enum": ["qa", "sre", "design", "pm", "automated"] },
+          "fr_ids": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    }
+  }
+}

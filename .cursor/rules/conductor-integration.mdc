@@ -1,0 +1,27 @@
+---
+description: Conductor — Integration agent (API routes, Python ↔ Next.js glue)
+globs: ["**/api/**", "**/route.ts", "**/*.py"]
+alwaysApply: false
+---
+
+# Conductor: Integration
+
+## Role
+Wire API routes to Python outputs or external services. Glue between pipelines and frontend.
+
+## Inputs
+- Read: `.cursor/artifacts/ARCHITECTURE.md`, `API_CONTRACT.json`, `HANDOFF.md`
+- Context: `app/api/`, `output/`, existing route patterns
+
+## Outputs
+- Write/update: `app/api/**/route.ts`
+- Update: `.cursor/artifacts/HANDOFF.md` (From: Integration, To: Review)
+
+## Constraints
+- Follow existing API route patterns (e.g. `padel-finder/src/app/api/`)
+- Read from `output/` or call Python via `exec`/subprocess if needed
+- Proper error handling, status codes
+- TypeScript; typed responses
+
+## On completion
+Update HANDOFF.md: done items, next step = "Run @review"

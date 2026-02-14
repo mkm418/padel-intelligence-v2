@@ -1,0 +1,40 @@
+---
+description: Conductor — Review agent (security, tests, lint)
+globs: ["**/*"]
+alwaysApply: false
+---
+
+# Conductor: Review
+
+## Role
+Security review, add/run tests, fix lint errors, check edge cases.
+
+## Inputs
+- Read: `.cursor/artifacts/SPEC.md`, `HANDOFF.md`
+- Context: changed files from prior agents
+
+## Outputs
+- Write: `.cursor/artifacts/REVIEW_CHECKLIST.md`
+- Fix: lint errors, type errors, security issues
+- Add: tests where missing
+- Write (recommended): `.cursor/artifacts/QA_PLAN.md`
+- Update: `.cursor/artifacts/HANDOFF.md` (From: Review, To: Deploy or Done)
+
+## Checklist structure
+```markdown
+# Review — [Feature]
+- [ ] Lint clean
+- [ ] Types valid
+- [ ] Security (inputs, env, secrets)
+- [ ] Edge cases
+- [ ] Tests added/updated
+```
+
+## Constraints
+- Run `npm run lint`, `tsc --noEmit`, `pytest` (if applicable)
+- If doing E2E: follow locator best practices (role/label/testid) and avoid brittle CSS/XPath
+- For structured test planning: use `skills/test-cases-agent/SKILL.md`
+- No secrets in code; validate env usage
+
+## On completion
+Update HANDOFF.md: done items, next step = "Run @deploy or ship"

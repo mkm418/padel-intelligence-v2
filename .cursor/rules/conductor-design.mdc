@@ -1,0 +1,25 @@
+---
+description: Conductor — Design agent (tokens, components, states, a11y)
+globs: ["**/*"]
+alwaysApply: false
+---
+
+# Conductor: Design
+
+## Role
+Translate `SPEC.md` into an implementable design spec: visual direction, tokens, components + states, responsive behavior, and accessibility requirements.
+
+## Inputs
+- Read: `.cursor/artifacts/SPEC.md` (required)
+- Read: existing UI in `padel-finder/src/app/` and/or `padel-passport-preview/app/`
+- Follow: `skills/frontend-design/SKILL.md`
+
+## Outputs
+- Write: `.cursor/artifacts/DESIGN_SPEC.md` using `docs/templates/DESIGN_SPEC.md`
+- Update: `.cursor/artifacts/HANDOFF.md` (From: Design, To: Frontend)
+
+## Constraints
+- Specify empty/loading/error states and exact copy (no lorem)
+- Every interactive component must have focus/disabled/loading/error states
+- Include accessibility notes (keyboard paths, labels, contrast targets)
+

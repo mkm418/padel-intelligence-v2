@@ -1,0 +1,164 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://example.com/design-artifact-schema.json",
+  "title": "Design Artifact Schema",
+  "description": "JSON schema outline for AI Designer design artifacts",
+  "type": "object",
+  "required": ["visualDirection", "tokens", "components", "responsive", "accessibility", "states", "handoff"],
+  "properties": {
+    "visualDirection": {
+      "type": "object",
+      "description": "Visual direction and design brief",
+      "properties": {
+        "productDomain": { "type": "string" },
+        "audience": { "type": "string" },
+        "tone": { "type": "array", "items": { "type": "string" }, "minItems": 3 },
+        "aestheticDirection": { "type": "string" },
+        "density": { "type": "string", "enum": ["spacious", "balanced", "dense"] },
+        "signatureMotif": { "type": "string" },
+        "designBrief": { "type": "string" },
+        "constraints": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "tokens": {
+      "type": "object",
+      "properties": {
+        "color": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "light": { "type": "string" },
+              "dark": { "type": "string" },
+              "usage": { "type": "string" }
+            }
+          }
+        },
+        "typography": {
+          "type": "object",
+          "properties": {
+            "fontDisplay": { "type": "string" },
+            "fontBody": { "type": "string" },
+            "fontMono": { "type": "string" },
+            "scale": { "type": "array", "items": { "type": "string" } },
+            "weights": { "type": "array", "items": { "type": "number" } },
+            "lineHeights": { "type": "object" }
+          }
+        },
+        "layout": {
+          "type": "object",
+          "properties": {
+            "spacing": { "type": "object" },
+            "radius": { "type": "object" },
+            "shadow": { "type": "object" },
+            "focusRing": { "type": "string" }
+          }
+        }
+      }
+    },
+    "components": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "variants": { "type": "array", "items": { "type": "string" } },
+          "states": {
+            "type": "object",
+            "properties": {
+              "default": { "type": "string" },
+              "hover": { "type": "string" },
+              "active": { "type": "string" },
+              "focus": { "type": "string" },
+              "disabled": { "type": "string" },
+              "loading": { "type": "string" },
+              "error": { "type": "string" }
+            }
+          },
+          "rules": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "responsive": {
+      "type": "object",
+      "properties": {
+        "breakpoints": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "minWidth": { "type": "number" },
+              "maxWidth": { "type": "number" },
+              "layoutChanges": { "type": "array", "items": { "type": "string" } },
+              "componentChanges": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        },
+        "touchTargetMin": { "type": "number", "default": 44 }
+      }
+    },
+    "accessibility": {
+      "type": "object",
+      "properties": {
+        "contrast": {
+          "type": "object",
+          "properties": {
+            "text": { "type": "string", "description": "e.g. 4.5:1" },
+            "largeText": { "type": "string", "description": "e.g. 3:1" }
+          }
+        },
+        "focusVisible": { "type": "boolean" },
+        "keyboardNav": { "type": "boolean" },
+        "ariaLabels": { "type": "boolean" },
+        "reducedMotion": { "type": "boolean" },
+        "annotations": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "states": {
+      "type": "object",
+      "properties": {
+        "empty": {
+          "type": "object",
+          "properties": {
+            "visual": { "type": "string" },
+            "copy": { "type": "string" },
+            "action": { "type": "string" }
+          }
+        },
+        "loading": {
+          "type": "object",
+          "properties": {
+            "visual": { "type": "string", "enum": ["skeleton", "spinner", "progress"] },
+            "copy": { "type": "string" }
+          }
+        },
+        "error": {
+          "type": "object",
+          "properties": {
+            "visual": { "type": "string" },
+            "copy": { "type": "string" },
+            "action": { "type": "string" }
+          }
+        }
+      }
+    },
+    "handoff": {
+      "type": "object",
+      "properties": {
+        "framework": { "type": "string" },
+        "tokenFormat": { "type": "string", "enum": ["css-vars", "tailwind", "json"] },
+        "componentLibrary": { "type": "string" },
+        "assets": {
+          "type": "object",
+          "properties": {
+            "icons": { "type": "string" },
+            "fonts": { "type": "string" },
+            "illustrations": { "type": "string" }
+          }
+        },
+        "outOfScope": { "type": "array", "items": { "type": "string" } },
+        "openQuestions": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

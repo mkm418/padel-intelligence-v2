@@ -1,0 +1,250 @@
+---
+description: Interview-First Planning - AskQuestion workflow before execution
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# Interview-First Planning (AskQuestion Workflow)
+
+**AskQuestion** = Interview-first planning before execution.
+
+Inspired by Claude Code's AskUserQuestion tool — pause and ask clarifying questions instead of making assumptions.
+
+---
+
+## The Problem
+
+AI agents often make technically correct but contextually wrong decisions because they:
+- Assume unstated requirements
+- Guess at design decisions
+- Skip edge case handling
+- Miss trade-off considerations
+
+**Solution:** Interview first, execute second.
+
+---
+
+## The Three-Phase Workflow
+
+### Phase 1: Deep Interview (MANDATORY)
+
+When you receive a plan, spec, or feature request:
+
+1. **Read the entire plan/spec carefully**
+2. **Generate 5-10 probing questions** covering:
+   - Technical implementation details
+   - UI/UX decisions and user flows
+   - Edge cases and error handling
+   - Data models and state management
+   - Dependencies and integration points
+   - Performance requirements
+   - Trade-offs the user has considered
+   - Things the plan is silent on
+
+3. **Ask one question at a time** using clear, direct language
+4. **Wait for each answer** before asking the next question
+5. **Keep interviewing** until you can write a complete implementation spec
+
+---
+
+### Interview Categories
+
+#### Technical Implementation
+- What framework/library versions?
+- Database schema specifics?
+- API contracts and endpoints?
+- Authentication/authorization approach?
+- Error handling strategy?
+
+#### UI/UX Decisions
+- Visual style and design system?
+- Responsive breakpoints?
+- Loading states and skeletons?
+- Empty states and zero-data states?
+- Micro-interactions and animations?
+
+#### Edge Cases
+- What happens when X fails?
+- What if the user does Y unexpectedly?
+- How do you handle network errors?
+- What about validation edge cases?
+
+#### Business Logic
+- Priority of features if time is limited?
+- Non-negotiable requirements vs nice-to-haves?
+- Success metrics for this feature?
+
+#### Architecture Trade-offs
+- Speed vs. completeness?
+- Build vs. buy for components?
+- Monolith vs. modular approach?
+
+---
+
+### Phase 2: Synthesis
+
+After the interview, **synthesize your understanding** into:
+
+1. **Clear requirements list** — numbered, testable items
+2. **Success criteria** — what "done" looks like
+3. **Technical approach** — high-level architecture
+4. **Unknowns/risks** — things that might need iteration
+
+Present this to the user and **get explicit approval** before Phase 3.
+
+---
+
+### Phase 3: Ralph Loop Execution
+
+Once requirements are locked, execute with the Ralph Loop methodology:
+
+- Iterate until completion criteria met
+- Self-test and fix automatically
+- Clear completion criteria
+- No human intervention needed
+
+See `ralph-loop.mdc` for full details.
+
+---
+
+## Good Examples
+
+### Example 1: Customer Dashboard
+
+**User says:** "Build a customer dashboard"
+
+**❌ Bad response:** *Starts building immediately*
+
+**✅ Good response:**
+```
+Before I start, I need to understand the specifics:
+
+1. What data should appear on this dashboard — tickets, conversations, 
+   resolution rates, something else?
+2. What's the primary user persona — support manager, individual agent, 
+   or executive?
+3. Should this be real-time or periodic refresh?
+4. What's your existing design system — colors, fonts, component library?
+5. Are there specific KPIs that must be above the fold?
+```
+
+---
+
+### Example 2: Voice Support
+
+**User says:** "Add voice support to the agent"
+
+**❌ Bad response:** *Starts implementing WebRTC*
+
+**✅ Good response:**
+```
+Voice is a significant addition. Let me understand the scope:
+
+1. Inbound only, outbound only, or both?
+2. What telephony provider — Twilio, Vonage, existing PBX?
+3. Should this integrate with the existing chat transcript or be separate?
+4. What's the expected concurrent call volume?
+5. Do you need call recording and transcription?
+6. How should handoff to human agents work?
+```
+
+---
+
+### Example 3: Competitive Intelligence
+
+**User says:** "Scrape competitor job postings"
+
+**❌ Bad response:** *Starts scraping immediately*
+
+**✅ Good response:**
+```
+Before I start, I need specifics:
+
+1. Which competitors? (List of domains or companies)
+2. What data to extract? (Title, location, salary, description, requirements?)
+3. How many jobs per company? (All, or limit to X?)
+4. Output format? (JSON, CSV, database?)
+5. Update frequency? (One-time or recurring scrape?)
+6. Budget constraints? (Max API cost?)
+7. How to handle rate limits? (Rotate keys, wait, skip?)
+```
+
+---
+
+## The Rule
+
+**Interview depth is proportional to implementation complexity.**
+
+- **Simple bug fix** → 1-2 clarifying questions
+- **New feature** → 5-10 detailed questions
+- **Major system change** → Full discovery session
+
+Never underestimate. When in doubt, ask more.
+
+---
+
+## Anti-Patterns (NEVER DO)
+
+❌ Start coding before interviewing
+❌ Assume unstated requirements
+❌ Skip to implementation because "it seems obvious"
+❌ Make design decisions without user input
+❌ Proceed with unclear success criteria
+❌ Build features the user didn't explicitly request
+
+---
+
+## Benefits of Interview-First
+
+### 1. Eliminates AI Assumptions
+Prevents "technically correct but contextually wrong" code.
+
+### 2. Reduces Back-and-Forth
+Forces clarity upfront rather than during development.
+
+### 3. Better Planning
+Dramatically increases spec precision by interrogating UI/UX, costs, storage, and workflow details.
+
+### 4. Faster Execution
+Once requirements are clear, Ralph Loop can execute autonomously without interruption.
+
+---
+
+## Interview-First Checklist
+
+Before executing any task, ensure:
+
+- [ ] All technical implementation details are clear
+- [ ] UI/UX decisions are explicitly defined
+- [ ] Edge cases and error handling are specified
+- [ ] Data models and state management are understood
+- [ ] Dependencies and integration points are mapped
+- [ ] Performance requirements are known
+- [ ] Trade-offs have been discussed
+- [ ] Success criteria are explicit and testable
+
+---
+
+## Integration with Ralph Loop
+
+Interview-First is **Phase 1 & 2** of the full workflow:
+
+1. **Phase 1: Interview** — Extract all decisions (this file)
+2. **Phase 2: Synthesis** — Build spec, get approval (this file)
+3. **Phase 3: Ralph Loop** — Execute autonomously (`ralph-loop.mdc`)
+
+Together, they create a complete "Interview-Then-Execute" workflow.
+
+---
+
+## Real-World Impact (2026)
+
+Interview-First planning is now recognized as a best practice for:
+- Building large features efficiently
+- Reducing AI hallucinations
+- Preventing costly rework
+- Improving spec precision
+
+---
+
+**Remember:** The time spent interviewing is always less than the time spent fixing assumptions.

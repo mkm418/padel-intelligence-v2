@@ -1,0 +1,963 @@
+{
+  "metadata": {
+    "project": "Padel Tennis Directory - Miami",
+    "generated": "2026-01-26",
+    "market_context": {
+      "market_position": "Miami is the #1 metro for padel searches in Florida, which leads all US states",
+      "growth_trend": "10x search growth since mid-2020, record volume in June 2025",
+      "market_size": "688 courts serving ~112,872 active players nationally",
+      "projection": "10x court growth and 5x player growth by 2030",
+      "competitive_landscape": "Major clubs include Reserve Padel, Ultra Padel, Urban Padel, Icon Padel, The Set Padel Haus"
+    }
+  },
+
+  "keyword_clusters": {
+    "primary_keywords": {
+      "description": "Highest volume, most competitive head terms",
+      "keywords": [
+        {
+          "keyword": "padel miami",
+          "search_intent": "mixed (informational + navigational)",
+          "estimated_volume": "high (top 7 US padel search)",
+          "competition": "high",
+          "priority": 1,
+          "notes": "#1 padel search term in Florida"
+        },
+        {
+          "keyword": "padel courts miami",
+          "search_intent": "transactional",
+          "estimated_volume": "high",
+          "competition": "high",
+          "priority": 1,
+          "notes": "Primary conversion keyword"
+        },
+        {
+          "keyword": "padel near me",
+          "search_intent": "transactional (local)",
+          "estimated_volume": "very high (geo-modified)",
+          "competition": "medium-high",
+          "priority": 1,
+          "notes": "Requires strong local SEO signals"
+        },
+        {
+          "keyword": "padel tennis miami",
+          "search_intent": "informational + navigational",
+          "estimated_volume": "medium-high",
+          "competition": "medium",
+          "priority": 2,
+          "notes": "Captures users unfamiliar with padel terminology"
+        },
+        {
+          "keyword": "padel clubs miami",
+          "search_intent": "transactional",
+          "estimated_volume": "medium-high",
+          "competition": "high",
+          "priority": 1,
+          "notes": "High commercial intent"
+        }
+      ],
+      "recommended_pages": [
+        {
+          "page_type": "homepage",
+          "target_keyword": "padel miami",
+          "url_slug": "/",
+          "title_template": "Padel Miami: Find Courts, Clubs & Players Near You",
+          "meta_description_template": "Discover 46+ padel courts across Miami. Compare clubs, book courts, find players at your level, and join the fastest-growing sport in South Florida.",
+          "h1_template": "Find Padel Courts in Miami",
+          "content_sections": [
+            "Hero with search/filter functionality",
+            "Featured clubs carousel",
+            "Miami padel map",
+            "Quick stats (courts, clubs, players)",
+            "Neighborhood quick links"
+          ]
+        },
+        {
+          "page_type": "directory",
+          "target_keyword": "padel courts miami",
+          "url_slug": "/courts",
+          "title_template": "All Padel Courts in Miami (46+ Locations) | 2026 Directory",
+          "meta_description_template": "Complete list of padel courts in Miami. Filter by neighborhood, amenities, pricing, and skill level. Indoor, outdoor, and rooftop courts available.",
+          "h1_template": "Padel Courts in Miami",
+          "content_sections": [
+            "Filterable court directory",
+            "Map view toggle",
+            "Court cards with key info",
+            "Comparison tool"
+          ]
+        }
+      ]
+    },
+
+    "long_tail_keywords": {
+      "description": "Lower competition, high intent keywords",
+      "keywords": [
+        {
+          "keyword": "padel lessons miami",
+          "search_intent": "transactional (service)",
+          "estimated_volume": "medium",
+          "competition": "medium",
+          "priority": 1,
+          "pricing_context": "$50-$120/hour for lessons",
+          "notes": "High commercial value"
+        },
+        {
+          "keyword": "padel courts miami beach",
+          "search_intent": "transactional (local)",
+          "estimated_volume": "medium",
+          "competition": "low-medium",
+          "priority": 1,
+          "notes": "Ultra Padel South Beach opening soon (9 courts)"
+        },
+        {
+          "keyword": "padel courts brickell",
+          "search_intent": "transactional (local)",
+          "estimated_volume": "medium",
+          "competition": "low",
+          "priority": 1,
+          "notes": "Ultra Padel Brickell opening soon (5 courts)"
+        },
+        {
+          "keyword": "padel courts coral gables",
+          "search_intent": "transactional (local)",
+          "estimated_volume": "medium",
+          "competition": "low",
+          "priority": 1,
+          "notes": "Ultra Padel Coral Gables opening soon (5 courts)"
+        },
+        {
+          "keyword": "padel courts doral",
+          "search_intent": "transactional (local)",
+          "estimated_volume": "medium",
+          "competition": "low",
+          "priority": 1,
+          "notes": "The Set Padel Haus, Urban Padel, Champions Padel Club"
+        },
+        {
+          "keyword": "padel courts aventura",
+          "search_intent": "transactional (local)",
+          "estimated_volume": "medium",
+          "competition": "low",
+          "priority": 1,
+          "notes": "Ultra Padel Aventura, Icon Padel"
+        },
+        {
+          "keyword": "best padel courts miami",
+          "search_intent": "commercial investigation",
+          "estimated_volume": "medium",
+          "competition": "medium",
+          "priority": 2,
+          "notes": "Listicle/comparison content opportunity"
+        },
+        {
+          "keyword": "indoor padel miami",
+          "search_intent": "transactional (specific)",
+          "estimated_volume": "low-medium",
+          "competition": "low",
+          "priority": 2,
+          "notes": "Magic City Ultra has 11 indoor courts"
+        },
+        {
+          "keyword": "outdoor padel miami",
+          "search_intent": "transactional (specific)",
+          "estimated_volume": "low-medium",
+          "competition": "low",
+          "priority": 3,
+          "notes": "Most Miami courts are outdoor"
+        },
+        {
+          "keyword": "padel courts design district",
+          "search_intent": "transactional (local)",
+          "estimated_volume": "low-medium",
+          "competition": "low",
+          "priority": 2,
+          "notes": "Reserve Padel, Ultra Padel opening soon"
+        },
+        {
+          "keyword": "rooftop padel miami",
+          "search_intent": "transactional (specific)",
+          "estimated_volume": "low",
+          "competition": "low",
+          "priority": 3,
+          "notes": "Icon Padel Aventura has rooftop courts"
+        },
+        {
+          "keyword": "private padel lessons miami",
+          "search_intent": "transactional (service)",
+          "estimated_volume": "low-medium",
+          "competition": "low",
+          "priority": 2,
+          "pricing_context": "$80-$120/hour"
+        },
+        {
+          "keyword": "padel clinics miami",
+          "search_intent": "transactional (service)",
+          "estimated_volume": "low-medium",
+          "competition": "low",
+          "priority": 2,
+          "pricing_context": "$50-$100/session"
+        },
+        {
+          "keyword": "padel membership miami",
+          "search_intent": "commercial investigation",
+          "estimated_volume": "low-medium",
+          "competition": "low",
+          "priority": 2,
+          "notes": "Reserve Padel is members-only"
+        }
+      ],
+      "recommended_pages": [
+        {
+          "page_type": "service",
+          "target_keyword": "padel lessons miami",
+          "url_slug": "/lessons",
+          "title_template": "Padel Lessons in Miami: Private Coaching from $50/Hour",
+          "meta_description_template": "Learn padel in Miami with certified coaches. Private lessons ($80-$120/hr), group clinics ($50/session), and beginner programs. All skill levels welcome.",
+          "h1_template": "Padel Lessons and Coaching in Miami",
+          "content_sections": [
+            "Lesson type comparison",
+            "Coach directory",
+            "Pricing guide",
+            "Beginner resources",
+            "FAQ"
+          ]
+        },
+        {
+          "page_type": "comparison",
+          "target_keyword": "best padel courts miami",
+          "url_slug": "/best-courts",
+          "title_template": "10 Best Padel Courts in Miami (2026 Rankings)",
+          "meta_description_template": "Expert-ranked guide to the best padel facilities in Miami. Compare amenities, court quality, pricing, and member reviews across 46+ locations.",
+          "h1_template": "Best Padel Courts in Miami",
+          "content_sections": [
+            "Ranking methodology",
+            "Top 10 with detailed reviews",
+            "Category winners (best for beginners, best value, etc.)",
+            "Comparison table"
+          ]
+        },
+        {
+          "page_type": "amenity",
+          "target_keyword": "indoor padel miami",
+          "url_slug": "/indoor-courts",
+          "title_template": "Indoor Padel Courts in Miami: Play Rain or Shine",
+          "meta_description_template": "Find climate-controlled indoor padel courts in Miami. Ultra Padel Magic City offers 11 indoor courts. Book online and beat the Florida heat.",
+          "h1_template": "Indoor Padel Courts in Miami",
+          "content_sections": [
+            "Indoor court directory",
+            "Benefits of indoor play",
+            "Climate control info",
+            "Booking links"
+          ]
+        }
+      ]
+    },
+
+    "question_keywords": {
+      "description": "Featured snippet and voice search opportunities",
+      "keywords": [
+        {
+          "keyword": "where to play padel in miami",
+          "search_intent": "informational + navigational",
+          "estimated_volume": "medium",
+          "competition": "low",
+          "priority": 1,
+          "snippet_opportunity": "listicle or map",
+          "answer_format": "Numbered list of top locations with addresses"
+        },
+        {
+          "keyword": "how much does padel cost in miami",
+          "search_intent": "commercial investigation",
+          "estimated_volume": "medium",
+          "competition": "low",
+          "priority": 1,
+          "snippet_opportunity": "table or paragraph",
+          "answer_format": "Court rental: $20-$60/hour. Lessons: $50-$120/hour. Memberships: $99-$300/month."
+        },
+        {
+          "keyword": "is padel popular in miami",
+          "search_intent": "informational",
+          "estimated_volume": "low-medium",
+          "competition": "low",
+          "priority": 2,
+          "snippet_opportunity": "paragraph",
+          "answer_format": "Yes, Miami is the #1 city for padel in the US with 46+ clubs and growing demand."
+        },
+        {
+          "keyword": "what is padel tennis",
+          "search_intent": "informational",
+          "estimated_volume": "high",
+          "competition": "high",
+          "priority": 3,
+          "snippet_opportunity": "paragraph + video",
+          "answer_format": "Padel is a racquet sport combining tennis and squash, played on an enclosed court."
+        },
+        {
+          "keyword": "padel vs pickleball",
+          "search_intent": "informational (comparison)",
+          "estimated_volume": "medium",
+          "competition": "medium",
+          "priority": 2,
+          "snippet_opportunity": "comparison table",
+          "answer_format": "Side-by-side comparison of court size, equipment, rules, and popularity"
+        },
+        {
+          "keyword": "how to book padel court miami",
+          "search_intent": "transactional (how-to)",
+          "estimated_volume": "low-medium",
+          "competition": "low",
+          "priority": 2,
+          "snippet_opportunity": "numbered steps",
+          "answer_format": "Step-by-step booking guide with platform links"
+        },
+        {
+          "keyword": "do you need a membership for padel miami",
+          "search_intent": "informational",
+          "estimated_volume": "low",
+          "competition": "low",
+          "priority": 3,
+          "snippet_opportunity": "paragraph",
+          "answer_format": "Some clubs (Reserve) require membership, others offer pay-per-play"
+        },
+        {
+          "keyword": "best time to play padel miami",
+          "search_intent": "informational",
+          "estimated_volume": "low",
+          "competition": "low",
+          "priority": 3,
+          "snippet_opportunity": "paragraph",
+          "answer_format": "Early morning or evening to avoid heat. Indoor courts available year-round."
+        }
+      ],
+      "recommended_pages": [
+        {
+          "page_type": "guide",
+          "target_keyword": "where to play padel in miami",
+          "url_slug": "/guide/where-to-play",
+          "title_template": "Where to Play Padel in Miami: Complete Guide (2026)",
+          "meta_description_template": "Find the best places to play padel in Miami. 46+ courts across Brickell, Miami Beach, Doral, Coral Gables, and more. Maps, pricing, and booking info.",
+          "h1_template": "Where to Play Padel in Miami",
+          "schema_markup": "FAQPage",
+          "content_sections": [
+            "Overview paragraph (snippet target)",
+            "Interactive map",
+            "Neighborhood breakdowns",
+            "Booking platforms",
+            "FAQ section"
+          ]
+        },
+        {
+          "page_type": "guide",
+          "target_keyword": "how much does padel cost in miami",
+          "url_slug": "/guide/pricing",
+          "title_template": "Padel Pricing in Miami: Courts, Lessons & Memberships (2026)",
+          "meta_description_template": "What does padel cost in Miami? Court rental $20-$60/hr, lessons $50-$120/hr, memberships $99-$300/mo. Complete pricing breakdown by club.",
+          "h1_template": "How Much Does Padel Cost in Miami?",
+          "schema_markup": "FAQPage",
+          "content_sections": [
+            "Quick answer paragraph (snippet target)",
+            "Pricing comparison table",
+            "Court rental prices by club",
+            "Lesson pricing breakdown",
+            "Membership options",
+            "Budget tips"
+          ]
+        },
+        {
+          "page_type": "educational",
+          "target_keyword": "what is padel tennis",
+          "url_slug": "/guide/what-is-padel",
+          "title_template": "What is Padel? The Complete Beginner's Guide",
+          "meta_description_template": "Learn what padel is, how it differs from tennis and pickleball, and why Miami has become the US capital of this fast-growing sport.",
+          "h1_template": "What is Padel Tennis?",
+          "schema_markup": "FAQPage, HowTo",
+          "content_sections": [
+            "Quick definition (snippet target)",
+            "History and origin",
+            "Rules overview",
+            "Padel vs tennis vs pickleball comparison",
+            "Why Miami loves padel",
+            "How to get started"
+          ]
+        }
+      ]
+    },
+
+    "player_intent_keywords": {
+      "description": "Keywords from users looking to connect with other players",
+      "keywords": [
+        {
+          "keyword": "find padel players miami",
+          "search_intent": "transactional (community)",
+          "estimated_volume": "medium",
+          "competition": "low",
+          "priority": 1,
+          "notes": "Core value proposition for directory"
+        },
+        {
+          "keyword": "padel partners miami",
+          "search_intent": "transactional (community)",
+          "estimated_volume": "medium",
+          "competition": "low",
+          "priority": 1,
+          "notes": "High-value user acquisition keyword"
+        },
+        {
+          "keyword": "padel leagues miami",
+          "search_intent": "transactional (community)",
+          "estimated_volume": "medium",
+          "competition": "low",
+          "priority": 1,
+          "notes": "Miami Padel League, National Padel League active",
+          "pricing_context": "$99-$169/season"
+        },
+        {
+          "keyword": "padel tournaments miami",
+          "search_intent": "transactional (events)",
+          "estimated_volume": "medium-high",
+          "competition": "medium",
+          "priority": 1,
+          "notes": "Premier Padel Miami is top trending search",
+          "pricing_context": "$42-$150/tournament"
+        },
+        {
+          "keyword": "padel meetup miami",
+          "search_intent": "transactional (community)",
+          "estimated_volume": "low-medium",
+          "competition": "low",
+          "priority": 2,
+          "notes": "Social play opportunity"
+        },
+        {
+          "keyword": "beginner padel miami",
+          "search_intent": "transactional (entry-level)",
+          "estimated_volume": "low-medium",
+          "competition": "low",
+          "priority": 1,
+          "notes": "Onboarding funnel opportunity"
+        },
+        {
+          "keyword": "padel groups miami",
+          "search_intent": "transactional (community)",
+          "estimated_volume": "low",
+          "competition": "low",
+          "priority": 2,
+          "notes": "Social connection intent"
+        },
+        {
+          "keyword": "padel mixer miami",
+          "search_intent": "transactional (events)",
+          "estimated_volume": "low",
+          "competition": "low",
+          "priority": 3,
+          "notes": "Urban Padel hosts mixers"
+        },
+        {
+          "keyword": "play padel with friends miami",
+          "search_intent": "transactional",
+          "estimated_volume": "low",
+          "competition": "low",
+          "priority": 3,
+          "notes": "Group booking intent"
+        }
+      ],
+      "recommended_pages": [
+        {
+          "page_type": "community",
+          "target_keyword": "find padel players miami",
+          "url_slug": "/players",
+          "title_template": "Find Padel Players in Miami: Match with Players at Your Level",
+          "meta_description_template": "Connect with 2,000+ padel players in Miami. Filter by skill level, location, and availability. Find doubles partners and join the community.",
+          "h1_template": "Find Padel Players in Miami",
+          "content_sections": [
+            "Player directory with filters",
+            "Skill level matching",
+            "Availability calendar",
+            "Message/connect functionality"
+          ]
+        },
+        {
+          "page_type": "events",
+          "target_keyword": "padel tournaments miami",
+          "url_slug": "/tournaments",
+          "title_template": "Padel Tournaments in Miami: 2026 Schedule & Registration",
+          "meta_description_template": "Find padel tournaments in Miami for all skill levels. Weekly events from $42, major tournaments with $15K+ prizes. Register online.",
+          "h1_template": "Padel Tournaments in Miami",
+          "schema_markup": "Event",
+          "content_sections": [
+            "Upcoming tournaments calendar",
+            "Registration links",
+            "Skill level categories",
+            "Prize information",
+            "Past results"
+          ]
+        },
+        {
+          "page_type": "community",
+          "target_keyword": "padel leagues miami",
+          "url_slug": "/leagues",
+          "title_template": "Padel Leagues in Miami: Join a Team for 2026 Season",
+          "meta_description_template": "Join a padel league in Miami. Miami Padel League and National Padel League offer 5 skill levels, team matching, and seasonal play from $99.",
+          "h1_template": "Padel Leagues in Miami",
+          "content_sections": [
+            "Active leagues directory",
+            "Season schedules",
+            "Skill level breakdown",
+            "Registration links",
+            "Team formation help"
+          ]
+        }
+      ]
+    },
+
+    "location_specific_keywords": {
+      "description": "Neighborhood and city-specific keywords for local SEO",
+      "miami_neighborhoods": [
+        {
+          "location": "Miami Beach",
+          "keyword": "padel courts miami beach",
+          "url_slug": "/miami-beach",
+          "priority": 1,
+          "clubs": ["Point Miami Beach", "Ultra Padel South Beach (coming soon)"],
+          "title_template": "Padel Courts in Miami Beach: 9+ Courts Coming 2026",
+          "meta_description_template": "Play padel in Miami Beach. Ultra Padel South Beach opening with 9 outdoor courts. Find beachside padel clubs and book courts online."
+        },
+        {
+          "location": "Brickell",
+          "keyword": "padel courts brickell",
+          "url_slug": "/brickell",
+          "priority": 1,
+          "clubs": ["Ultra Padel Brickell (coming soon)"],
+          "title_template": "Padel Courts in Brickell: Downtown Miami's Newest Courts",
+          "meta_description_template": "Padel is coming to Brickell. Ultra Padel opening 5 outdoor courts in downtown Miami. Perfect for after-work games and corporate events."
+        },
+        {
+          "location": "Coral Gables",
+          "keyword": "padel courts coral gables",
+          "url_slug": "/coral-gables",
+          "priority": 1,
+          "clubs": ["Ultra Padel Coral Gables (coming soon)"],
+          "title_template": "Padel Courts in Coral Gables: 5 New Courts Opening 2026",
+          "meta_description_template": "Play padel in Coral Gables. Ultra Padel opening 5 outdoor courts. Premium facilities in the heart of the Gables."
+        },
+        {
+          "location": "Doral",
+          "keyword": "padel courts doral",
+          "url_slug": "/doral",
+          "priority": 1,
+          "clubs": ["The Set Padel Haus", "Urban Padel", "Champions Padel Club"],
+          "title_template": "Padel Courts in Doral: 3 Clubs, 20+ Courts",
+          "meta_description_template": "Doral is Miami's padel hotspot with 3 major clubs. The Set Padel Haus (12 courts), Urban Padel, and Champions Padel Club. Book now."
+        },
+        {
+          "location": "Aventura",
+          "keyword": "padel courts aventura",
+          "url_slug": "/aventura",
+          "priority": 1,
+          "clubs": ["Ultra Padel Aventura", "Icon Padel"],
+          "title_template": "Padel Courts in Aventura: Premium Rooftop & Outdoor Courts",
+          "meta_description_template": "Play padel in Aventura at Ultra Padel (11 courts) or Icon Padel's luxury rooftop facility. Book courts and lessons online."
+        },
+        {
+          "location": "Design District",
+          "keyword": "padel courts design district",
+          "url_slug": "/design-district",
+          "priority": 2,
+          "clubs": ["Reserve Padel Design District", "Ultra Padel (coming soon)"],
+          "title_template": "Padel Courts in Design District: Members-Only & Public Courts",
+          "meta_description_template": "Play padel in Miami's Design District. Reserve Padel offers exclusive membership. Ultra Padel opening 4 public courts soon."
+        },
+        {
+          "location": "North Miami",
+          "keyword": "padel courts north miami",
+          "url_slug": "/north-miami",
+          "priority": 2,
+          "clubs": ["Pepper Padel Miami", "Pulse Padel Hub"],
+          "title_template": "Padel Courts in North Miami: Pepper Padel & Pulse Padel Hub",
+          "meta_description_template": "Find padel courts in North Miami. Pepper Padel and Pulse Padel Hub offer quality courts, lessons, and leagues."
+        },
+        {
+          "location": "Wynwood",
+          "keyword": "padel courts wynwood",
+          "url_slug": "/wynwood",
+          "priority": 2,
+          "clubs": ["Magic City Ultra (nearby)"],
+          "title_template": "Padel Courts Near Wynwood: Magic City Ultra 5 Min Away",
+          "meta_description_template": "Looking for padel near Wynwood? Magic City Ultra is 5 minutes away with 27 courts. Miami's largest padel facility."
+        },
+        {
+          "location": "Kendall",
+          "keyword": "padel courts kendall",
+          "url_slug": "/kendall",
+          "priority": 2,
+          "clubs": [],
+          "title_template": "Padel Courts in Kendall: Nearest Courts & Upcoming Locations",
+          "meta_description_template": "Find padel courts near Kendall. View the closest facilities and stay updated on new courts opening in South Miami."
+        },
+        {
+          "location": "Coconut Grove",
+          "keyword": "padel courts coconut grove",
+          "url_slug": "/coconut-grove",
+          "priority": 3,
+          "clubs": [],
+          "title_template": "Padel Courts Near Coconut Grove: Closest Playing Options",
+          "meta_description_template": "Looking for padel near Coconut Grove? Find the closest courts and clubs in the Miami area."
+        },
+        {
+          "location": "Key Biscayne",
+          "keyword": "padel courts key biscayne",
+          "url_slug": "/key-biscayne",
+          "priority": 2,
+          "clubs": ["Ritz-Carlton Key Biscayne (planned)"],
+          "title_template": "Padel Courts in Key Biscayne: Ritz-Carlton Courts Coming Soon",
+          "meta_description_template": "Padel is coming to Key Biscayne. The Ritz-Carlton is planning exclusive padel courts. Stay updated on opening dates."
+        },
+        {
+          "location": "Homestead",
+          "keyword": "padel courts homestead",
+          "url_slug": "/homestead",
+          "priority": 3,
+          "clubs": [],
+          "title_template": "Padel Courts Near Homestead: South Miami-Dade Options",
+          "meta_description_template": "Find padel courts near Homestead and South Miami-Dade. View the closest facilities in the greater Miami area."
+        }
+      ],
+      "nearby_cities": [
+        {
+          "location": "Fort Lauderdale",
+          "keyword": "padel courts fort lauderdale",
+          "url_slug": "/fort-lauderdale",
+          "priority": 2,
+          "title_template": "Padel Courts in Fort Lauderdale: Broward County Directory",
+          "meta_description_template": "Find padel courts in Fort Lauderdale and Broward County. Complete directory of clubs, courts, and lessons north of Miami."
+        },
+        {
+          "location": "Hollywood",
+          "keyword": "padel courts hollywood fl",
+          "url_slug": "/hollywood",
+          "priority": 3,
+          "title_template": "Padel Courts in Hollywood, FL: Between Miami & Fort Lauderdale",
+          "meta_description_template": "Play padel in Hollywood, Florida. Find courts between Miami and Fort Lauderdale with easy access from I-95."
+        },
+        {
+          "location": "West Palm Beach",
+          "keyword": "padel courts west palm beach",
+          "url_slug": "/west-palm-beach",
+          "priority": 3,
+          "title_template": "Padel Courts in West Palm Beach: Palm Beach County Directory",
+          "meta_description_template": "Find padel courts in West Palm Beach and Palm Beach County. Growing padel scene north of Miami."
+        }
+      ]
+    },
+
+    "club_specific_keywords": {
+      "description": "Brand name keywords for major clubs",
+      "clubs": [
+        {
+          "club": "Reserve Padel",
+          "keyword": "reserve padel miami",
+          "url_slug": "/clubs/reserve-padel",
+          "priority": 1,
+          "locations": ["Design District", "Seaplane Base", "Sole Mia"],
+          "title_template": "Reserve Padel Miami: Membership, Pricing & Court Info",
+          "meta_description_template": "Reserve Padel Miami is an exclusive members-only padel club. 3 locations, premium amenities, cold plunge, steam room. See membership options."
+        },
+        {
+          "club": "Ultra Padel",
+          "keyword": "ultra padel miami",
+          "url_slug": "/clubs/ultra-padel",
+          "priority": 1,
+          "locations": ["Magic City", "Aventura", "Brickell (soon)", "Coral Gables (soon)", "South Beach (soon)", "Design District (soon)"],
+          "title_template": "Ultra Padel Miami: 27+ Courts Across 6 Locations",
+          "meta_description_template": "Ultra Padel is Miami's largest padel network. 27 courts open now at Magic City and Aventura. 4 new locations coming 2026."
+        },
+        {
+          "club": "Urban Padel",
+          "keyword": "urban padel doral",
+          "url_slug": "/clubs/urban-padel",
+          "priority": 1,
+          "locations": ["Doral"],
+          "title_template": "Urban Padel Doral: Courts, Lessons & Tournaments",
+          "meta_description_template": "Urban Padel in Doral offers professional courts, coaching, and tournaments. Host of ADIM tournaments with $15K prizes. Book online."
+        },
+        {
+          "club": "Icon Padel",
+          "keyword": "icon padel aventura",
+          "url_slug": "/clubs/icon-padel",
+          "priority": 2,
+          "locations": ["Aventura"],
+          "title_template": "Icon Padel Aventura: Luxury Rooftop Padel Club",
+          "meta_description_template": "Icon Padel is Aventura's premier rooftop padel facility. World-class courts, all-level clinics, and exclusive tournaments."
+        },
+        {
+          "club": "The Set Padel Haus",
+          "keyword": "the set padel haus doral",
+          "url_slug": "/clubs/set-padel-haus",
+          "priority": 1,
+          "locations": ["Doral"],
+          "title_template": "The Set Padel Haus Doral: 12 Courts + Wellness Center",
+          "meta_description_template": "The Set Padel Haus in Doral features 12 panoramic courts, cold plunge recovery, gym access, and pickleball. Premium padel experience."
+        },
+        {
+          "club": "Real Padel Miami",
+          "keyword": "real padel miami",
+          "url_slug": "/clubs/real-padel",
+          "priority": 2,
+          "locations": ["Miami"],
+          "title_template": "Real Padel Miami: Weekly Tournaments & Open Play",
+          "meta_description_template": "Real Padel Miami hosts weekly tournaments for intermediate and advanced players. $42-$50 entry. Evening games at 5PM and 7PM."
+        },
+        {
+          "club": "Padel Fever Miami",
+          "keyword": "padel fever miami",
+          "url_slug": "/clubs/padel-fever",
+          "priority": 2,
+          "locations": ["Miami"],
+          "title_template": "Padel Fever Miami: Lessons & Court Rental Rates",
+          "meta_description_template": "Padel Fever Miami offers private lessons from $55/hr and group coaching. Quality courts and professional instruction."
+        },
+        {
+          "club": "Padel X Miami",
+          "keyword": "padel x miami",
+          "url_slug": "/clubs/padel-x",
+          "priority": 2,
+          "locations": ["Miami"],
+          "title_template": "Padel X Miami: Beginner Clinics & Court Booking",
+          "meta_description_template": "Padel X Miami offers $50 beginner clinics and flexible court booking. Great for new players learning the sport."
+        }
+      ]
+    },
+
+    "skill_level_keywords": {
+      "description": "Keywords segmented by player skill level",
+      "levels": [
+        {
+          "level": "Beginner",
+          "keywords": [
+            "beginner padel miami",
+            "padel for beginners miami",
+            "learn padel miami",
+            "first time padel miami",
+            "padel introduction miami"
+          ],
+          "url_slug": "/skill-level/beginner",
+          "priority": 1,
+          "title_template": "Beginner Padel in Miami: Where to Start Playing",
+          "meta_description_template": "New to padel? Find beginner-friendly courts, intro lessons from $50, and patient coaches in Miami. Equipment included at most clubs."
+        },
+        {
+          "level": "Intermediate",
+          "keywords": [
+            "intermediate padel miami",
+            "padel drills miami",
+            "improve padel game miami"
+          ],
+          "url_slug": "/skill-level/intermediate",
+          "priority": 2,
+          "title_template": "Intermediate Padel in Miami: Level Up Your Game",
+          "meta_description_template": "Take your padel game to the next level. Find intermediate leagues, advanced clinics, and competitive play in Miami."
+        },
+        {
+          "level": "Advanced",
+          "keywords": [
+            "advanced padel miami",
+            "competitive padel miami",
+            "padel training miami"
+          ],
+          "url_slug": "/skill-level/advanced",
+          "priority": 2,
+          "title_template": "Advanced Padel in Miami: Competitive Play & Training",
+          "meta_description_template": "Find advanced padel competition in Miami. High-level leagues, tournaments with cash prizes, and pro-level coaching."
+        }
+      ]
+    }
+  },
+
+  "page_structure_recommendations": {
+    "homepage": {
+      "url": "/",
+      "primary_keyword": "padel miami",
+      "page_title": "Padel Miami: Find Courts, Clubs & Players Near You",
+      "meta_description": "Discover 46+ padel courts across Miami. Compare clubs, book courts, find players at your level, and join the fastest-growing sport in South Florida.",
+      "h1": "Find Padel Courts in Miami",
+      "content_structure": [
+        "Hero section with search functionality",
+        "Quick stats (46+ clubs, 100+ courts, 2000+ players)",
+        "Featured clubs carousel",
+        "Neighborhood quick links grid",
+        "Interactive Miami padel map",
+        "Recent activity/bookings social proof",
+        "FAQ section for featured snippets"
+      ]
+    },
+    "directory_pages": {
+      "courts_list": {
+        "url": "/courts",
+        "template": "filterable directory"
+      },
+      "location_pages": {
+        "url": "/{neighborhood}",
+        "template": "location-specific directory"
+      },
+      "club_pages": {
+        "url": "/clubs/{club-slug}",
+        "template": "club profile with booking"
+      }
+    },
+    "content_pages": {
+      "guides": {
+        "url": "/guide/{topic}",
+        "template": "long-form content with FAQ schema"
+      },
+      "comparisons": {
+        "url": "/compare/{topic}",
+        "template": "comparison table with pros/cons"
+      }
+    },
+    "community_pages": {
+      "players": {
+        "url": "/players",
+        "template": "player directory with filters"
+      },
+      "tournaments": {
+        "url": "/tournaments",
+        "template": "event calendar with registration"
+      },
+      "leagues": {
+        "url": "/leagues",
+        "template": "league directory with signup"
+      }
+    }
+  },
+
+  "seo_templates": {
+    "title_templates": {
+      "homepage": "{Keyword}: Find Courts, Clubs & Players Near You",
+      "location_page": "Padel Courts in {Location}: {Count}+ Courts & Clubs",
+      "club_page": "{Club Name}: Courts, Pricing & Reviews | Miami Padel",
+      "guide_page": "{Question} | Complete Guide (2026)",
+      "comparison_page": "{Count} Best {Topic} in Miami (2026 Rankings)",
+      "service_page": "{Service} in Miami: {Benefit/Price Point}"
+    },
+    "meta_description_templates": {
+      "homepage": "Discover {count}+ padel courts across Miami. Compare clubs, book courts, find players at your level, and join the fastest-growing sport in South Florida.",
+      "location_page": "Find padel courts in {location}. {count} clubs including {top_clubs}. Book courts, find lessons, and connect with local players.",
+      "club_page": "{club_name} offers {court_count} courts, {amenities}. Read reviews, see pricing, and book online. Located in {location}.",
+      "guide_page": "{answer_preview}. Complete guide with {details}. Updated for 2026.",
+      "comparison_page": "Expert-ranked guide to {topic} in Miami. Compare {criteria} across {count}+ options. Find your perfect match.",
+      "service_page": "{service} in Miami from ${price}. {benefit}. {cta}."
+    },
+    "h1_templates": {
+      "homepage": "Find Padel Courts in Miami",
+      "location_page": "Padel Courts in {Location}",
+      "club_page": "{Club Name}",
+      "guide_page": "{Question}",
+      "comparison_page": "Best {Topic} in Miami",
+      "service_page": "{Service} in Miami"
+    }
+  },
+
+  "url_structure": {
+    "pattern": "/{category}/{slug}",
+    "examples": {
+      "homepage": "/",
+      "all_courts": "/courts",
+      "neighborhood": "/miami-beach",
+      "club": "/clubs/reserve-padel",
+      "guide": "/guide/where-to-play",
+      "service": "/lessons",
+      "player_directory": "/players",
+      "tournaments": "/tournaments",
+      "leagues": "/leagues",
+      "skill_level": "/skill-level/beginner"
+    },
+    "guidelines": [
+      "Use lowercase with hyphens",
+      "Keep URLs short and descriptive",
+      "Include primary keyword when natural",
+      "Avoid dates in evergreen content URLs",
+      "Use canonical tags for similar content"
+    ]
+  },
+
+  "technical_seo_checklist": {
+    "schema_markup": [
+      "LocalBusiness for each club",
+      "SportsActivityLocation for courts",
+      "Event for tournaments",
+      "FAQPage for guide pages",
+      "BreadcrumbList on all pages"
+    ],
+    "local_seo": [
+      "Google Business Profile optimization for directory",
+      "NAP consistency across all club listings",
+      "Local keywords in title tags and H1s",
+      "Miami-specific internal linking",
+      "Mobile-first indexing optimization"
+    ],
+    "performance": [
+      "Core Web Vitals optimization",
+      "Image optimization for court photos",
+      "Lazy loading for directory listings",
+      "Caching for frequently accessed pages"
+    ]
+  },
+
+  "content_calendar_priorities": {
+    "phase_1_foundation": [
+      "Homepage",
+      "Main courts directory",
+      "Top 5 neighborhood pages (Doral, Aventura, Miami Beach, Brickell, Coral Gables)",
+      "Major club pages (Reserve, Ultra, Urban, Set, Icon)",
+      "Pricing guide",
+      "Where to play guide"
+    ],
+    "phase_2_expansion": [
+      "All remaining neighborhood pages",
+      "All club pages",
+      "Player directory",
+      "Tournament calendar",
+      "League directory",
+      "Lessons page"
+    ],
+    "phase_3_content": [
+      "Best courts comparison",
+      "What is padel guide",
+      "Padel vs pickleball comparison",
+      "Skill level pages",
+      "Indoor/outdoor filter pages",
+      "Beginner resources"
+    ]
+  },
+
+  "competitor_analysis": {
+    "direct_competitors": [
+      {
+        "name": "PadelDir",
+        "url": "padeldir.com",
+        "strength": "46 Miami listings, international presence",
+        "weakness": "Generic listings, no local depth"
+      },
+      {
+        "name": "Playtomic",
+        "url": "playtomic.com",
+        "strength": "Booking integration, player matching",
+        "weakness": "Not Miami-focused, cluttered UX"
+      },
+      {
+        "name": "PadelMapUSA",
+        "url": "padelmapusa.com",
+        "strength": "Court details, US-focused",
+        "weakness": "Basic design, limited features"
+      }
+    ],
+    "differentiation_opportunities": [
+      "Miami-first content depth",
+      "Local player community features",
+      "Neighborhood-specific guides",
+      "Real-time availability",
+      "Skill-level matching",
+      "Tournament/league integration"
+    ]
+  }
+}

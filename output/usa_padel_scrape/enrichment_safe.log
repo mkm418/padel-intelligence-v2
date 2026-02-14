@@ -1,0 +1,1076 @@
+
+======================================================================
+
+🔥 FIRECRAWL SAFE ENRICHMENT WITH CHECKPOINTING
+
+======================================================================
+
+📊 Loading court database...
+
+📋 Status:
+   Total courts: 1026
+   Already processed: 0
+   Remaining: 1026
+   Parallel workers: 10
+   Max pages per court: 10
+
+🚀 Starting enrichment...
+
+   ✅ [4/1026] Caswell Tennis Center                              | 10 pages | 2,984 words
+   ✅ [2/1026] Arlington Tennis Center                            |  1 pages | 93 words
+   ✅ [8/1026] High Point Tennis Center                           | 10 pages | 3,467 words
+   ✅ [7/1026] McLeland Tennis and Pickleball Center              | 10 pages | 1,282 words
+   ✅ [5/1026] Fretz Tennis & PickleBall Center                   | 10 pages | 3,143 words
+   ✅ [9/1026] Giammalva Racquet Club & Elite Tennis Academy      | 10 pages | 20,257 words
+   ✅ [3/1026] Pharr Tennis Center                                | 10 pages | 11,629 words
+   ✅ [10/1026] PALA Pickleball                                    | 10 pages | 3,853 words
+   ✅ [16/1026] Samuell Grand Tennis & Pickleball Center           |  2 pages | 535 words
+   ✅ [12/1026] Madison Ace Racquet Sports                         | 10 pages | 3,246 words
+
+   💾 Checkpoint saved: 10/1026 courts processed
+
+   ✅ [17/1026] Green Tree Tennis Club                             | 10 pages | 3,358 words
+   ✅ [19/1026] Bay Area Racquet Club                              | 10 pages | 2,442 words
+   💳 [21/1026] Padel& Greenpoint                                  | Key out of credits
+   💳 [22/1026] iPadel Houston                                     | Key out of credits
+   💳 [23/1026] Padel Haus Williamsburg                            | Key out of credits
+   💳 [24/1026] Reserve Padel NYC                                  | Key out of credits
+   💳 [26/1026] Padel39                                            | Key out of credits
+   💳 [25/1026] McFarlin Tennis Center                             | Key out of credits
+   💳 [28/1026] Pura Padel                                         | Key out of credits
+   💳 [27/1026] TEMPO Padel & Pickleball Club                      | Key out of credits
+   💳 [29/1026] Bitsy Grant Tennis Center                          | Key out of credits
+   💳 [30/1026] Padel Up - Culver City                             | Key out of credits
+   💳 [31/1026] Padel Up - Century City                            | Key out of credits
+   💳 [32/1026] United States Padel Association                    | Key out of credits
+   💳 [33/1026] The Padel Courts                                   | Key out of credits
+   💳 [34/1026] Skokie Country Club Paddle Hut                     | Key out of credits
+   💳 [36/1026] SB Padel Houston                                   | Key out of credits
+   💳 [35/1026] Camelback Padel Club                               | Key out of credits
+   💳 [38/1026] Houston Padel Indoor                               | Key out of credits
+   💳 [37/1026] Padel Country Club Katy                            | Key out of credits
+   💳 [40/1026] Houston Indoor Tennis Houstonian Club              | Key out of credits
+   💳 [39/1026] Racket Social Club                                 | Key out of credits
+   💳 [42/1026] Padel Country Club Memorial                        | Key out of credits
+   💳 [41/1026] PADELphia                                          | Key out of credits
+   💳 [43/1026] Cube Padel Houston                                 | Key out of credits
+   💳 [44/1026] Club Pickle & Padel                                | Key out of credits
+   💳 [45/1026] West43 Padel                                       | Key out of credits
+   💳 [46/1026] Padel Clube                                        | Key out of credits
+   💳 [47/1026] LB Houston Tennis & Pickleball                     | Key out of credits
+   💳 [48/1026] Houston Racquet Club                               | Key out of credits
+   💳 [49/1026] Union Padel Club                                   | Key out of credits
+   💳 [50/1026] Cube Padel Chicago                                 | Key out of credits
+   💳 [51/1026] Alma Padel                                         | Key out of credits
+   💳 [52/1026] Court 16 Philadelphia - Tennis & Pickleball        | Key out of credits
+   💳 [54/1026] On The Rise Tennis                                 | Key out of credits
+   💳 [53/1026] Proximo Padel                                      | Key out of credits
+   💳 [55/1026] Just Tennis                                        | Key out of credits
+   💳 [56/1026] The Pickleball Hall                                | Key out of credits
+   💳 [57/1026] Pick and Padel San Antonio                         | Key out of credits
+   💳 [58/1026] U-Padel Club                                       | Key out of credits
+   💳 [59/1026] Slice Padel                                        | Key out of credits
+   💳 [60/1026] The King of Padel                                  | Key out of credits
+   💳 [61/1026] Shavano Park Tennis Club                           | Key out of credits
+   💳 [62/1026] Del Mar Racket and Paddle                          | Key out of credits
+   💳 [63/1026] Player's Edge Tennis School                        | Key out of credits
+   💳 [64/1026] Chira Tennis Academy                               | Key out of credits
+   💳 [65/1026] Lake Murray Tennis Club                            | Key out of credits
+   💳 [66/1026] Ideal Tennis Academy                               | Key out of credits
+   💳 [67/1026] Rancho Peñasquitos Tennis Center                   | Key out of credits
+   💳 [68/1026] PADEL CLUB AUSTIN (PCATX)                          | Key out of credits
+   💳 [69/1026] The John Newcombe Tennis Ranch                     | Key out of credits
+   💳 [70/1026] Dallas Padel Club                                  | Key out of credits
+   💳 [71/1026] Kraken Padel Club                                  | Key out of credits
+   💳 [72/1026] Kiest Tennis Center                                | Key out of credits
+   💳 [73/1026] Pacific Beach Tennis Club                          | Key out of credits
+   💳 [74/1026] San Diego Tennis Center - Point Loma               | Key out of credits
+   💳 [75/1026] Paddle Club                                        | Key out of credits
+   💳 [76/1026] Padel California                                   | Key out of credits
+   💳 [77/1026] Decathlon Sporting Goods                           | Key out of credits
+   💳 [78/1026] University City Racquet Club                       | Key out of credits
+   💳 [79/1026] Little Italy Pickleball Court                      | Key out of credits
+   💳 [80/1026] On The Rise Tennis Carmel Valley                   | Key out of credits
+   💳 [81/1026] San Diego Tennis Racquet Club                      | Key out of credits
+   💳 [82/1026] Peninsula Tennis Club                              | Key out of credits
+   💳 [83/1026] Del Cerro Tennis Club and Pickleball Hub           | Key out of credits
+   💳 [84/1026] Balboa Tennis Club                                 | Key out of credits
+   💳 [85/1026] San Diego Pickleball                               | Key out of credits
+   💳 [86/1026] Padel N9NE                                         | Key out of credits
+   💳 [87/1026] Taktika Padel                                      | Key out of credits
+   💳 [88/1026] Kingdom of Padel                                   | Key out of credits
+   💳 [89/1026] Barnes Tennis Center                               | Key out of credits
+   💳 [90/1026] Equinox Westwood                                   | Key out of credits
+   💳 [91/1026] High Performance Tennis Academy                    | Key out of credits
+   💳 [92/1026] DICK'S Sporting Goods                              | Key out of credits
+   💳 [93/1026] Portres Sports Club                                | Key out of credits
+   💳 [94/1026] AFC Fitness                                        | Key out of credits
+   💳 [95/1026] Big 5 Sporting Goods                               | Key out of credits
+   💳 [96/1026] Ballers                                            | Key out of credits
+   💳 [98/1026] davestennis                                        | Key out of credits
+   💳 [97/1026] Lake Worth Pickleball Courts                       | Key out of credits
+   ✅ [1/1026] Mink Padel                                         | 10 pages | 1,075 words
+   ✅ [11/1026] Southlake Tennis Center                            | 10 pages | 6,108 words
+   💳 [99/1026] California Yacht Club                              | Key out of credits
+   💳 [101/1026] The Tennis Garage: Rackets | Restringing | Balls | | Key out of credits
+   💳 [100/1026] Marin Tennis Club                                  | Key out of credits
+   💳 [102/1026] San Marino Tennis Center                           | Key out of credits
+   💳 [103/1026] iTennis/iPickle Arroyo Seco                        | Key out of credits
+   💳 [104/1026] Rancho Cienega Tennis Shop                         | Key out of credits
+   💳 [105/1026] Echo Park Tennis Courts                            | Key out of credits
+   💳 [106/1026] Serve It Up Tennis                                 | Key out of credits
+   💳 [107/1026] Vermont Canyon Tennis Courts                       | Key out of credits
+   💳 [108/1026] West End Racquet & Health Club                     | Key out of credits
+   💳 [109/1026] Santa Monica Tennis Center                         | Key out of credits
+   💳 [110/1026] Montclair Sports Tennis                            | Key out of credits
+   💳 [111/1026] PGA TOUR Superstore Cupertino                      | Key out of credits
+   ✅ [20/1026] FIT High Performance Tennis Academy (& Pickleball  | 10 pages | 2,144 words
+   💳 [112/1026] Tennis Station                                     | Key out of credits
+   💳 [113/1026] Racket Doctor                                      | Key out of credits
+   💳 [114/1026] Westwood Sporting Goods                            | Key out of credits
+   💳 [115/1026] ELITE RACQUET SPORTS                               | Key out of credits
+   💳 [116/1026] Tiburon Peninsula Club                             | Key out of credits
+   💳 [117/1026] Tennacity                                          | Key out of credits
+   💳 [118/1026] Westwood Tennis Center                             | Key out of credits
+   💳 [119/1026] Xisle Sports                                       | Key out of credits
+   💳 [120/1026] Griffin Club Los Angeles                           | Key out of credits
+   💳 [121/1026] Mulholland Tennis Club                             | Key out of credits
+   💳 [122/1026] South End Racquet & Health Club                    | Key out of credits
+   💳 [123/1026] Los Angeles Tennis Club                            | Key out of credits
+   💳 [124/1026] Venice Beach Paddle Tennis Courts                  | Key out of credits
+   💳 [125/1026] Cheviot Hills Tennis Center                        | Key out of credits
+   💳 [126/1026] Racket Supply Cupertino 羽乒網專賣店                     | Key out of credits
+   💳 [127/1026] Life Long Tennis Academy                           | Key out of credits
+   💳 [128/1026] Johnson Ranch Sports Club- South                   | Key out of credits
+   💳 [129/1026] Pickleball Courts | Sunnyvale                      | Key out of credits
+   💳 [130/1026] iTennis/iPickle Hollywood                          | Key out of credits
+   💳 [131/1026] Lisa & Douglas Goldman Tennis Center               | Key out of credits
+   💳 [132/1026] Tennis Town & Country                              | Key out of credits
+   💳 [133/1026] PGA TOUR Superstore East Palo Alto                 | Key out of credits
+   💳 [134/1026] P1 Padel Las Vegas                                 | Key out of credits
+   💳 [135/1026] Bay Club South San Francisco Tennis and Pickleball | Key out of credits
+   💳 [136/1026] Sports Warehouse                                   | Key out of credits
+   💳 [138/1026] Lifetime Activities - Sunnyvale                    | Key out of credits
+   💳 [137/1026] Zalles Racquet Sports                              | Key out of credits
+   💳 [139/1026] Bay Club Broadway Tennis and Pickleball            | Key out of credits
+   💳 [140/1026] Bay Padel - Dogpatch                               | Key out of credits
+   💳 [141/1026] Bay Padel - Treasure Island                        | Key out of credits
+   💳 [142/1026] Villa Sport Athletic Club                          | Key out of credits
+   💳 [143/1026] Philadelphia Tennis Club                           | Key out of credits
+   💳 [144/1026] Conquer Padel Phoenix                              | Key out of credits
+   💳 [145/1026] Hamlin Tennis Center                               | Key out of credits
+   💳 [146/1026] Premier Courts                                     | Key out of credits
+   💳 [148/1026] Viva Flourtown Padel & Pickleball                  | Key out of credits
+   💳 [147/1026] Everyone's Racquet                                 | Key out of credits
+   💳 [149/1026] Blossom Tennis Center                              | Key out of credits
+   💳 [150/1026] Harbor Bay Club                                    | Key out of credits
+   💳 [151/1026] UIW Tennis Center                                  | Key out of credits
+   💳 [153/1026] Pickleball Social                                  | Key out of credits
+   💳 [152/1026] VIVA Padel & Pickleball                            | Key out of credits
+   💳 [154/1026] Elite Pickleball Club                              | Key out of credits
+   💳 [155/1026] Woodlands Padel                                    | Key out of credits
+   💳 [156/1026] Seger Park                                         | Key out of credits
+   💳 [157/1026] Casa Pickle | Houston’s Home of Pickleball & Event | Key out of credits
+   💳 [158/1026] The Pickleball Spot                                | Key out of credits
+   💳 [159/1026] Toss and Spin                                      | Key out of credits
+   💳 [160/1026] Winchester Indoor Tennis                           | Key out of credits
+   💳 [161/1026] Racquet Club of Chicago                            | Key out of credits
+   💳 [163/1026] The Racquet Club of Philadelphia                   | Key out of credits
+   💳 [162/1026] Northshore Tennis                                  | Key out of credits
+   💳 [164/1026] Manchester Athletic Club                           | Key out of credits
+   💳 [166/1026] Lakeshore Sport & Fitness                          | Key out of credits
+   💳 [165/1026] Woburn Racquet Club                                | Key out of credits
+   💳 [167/1026] Racquet Club of Columbus                           | Key out of credits
+   💳 [168/1026] The Rowdy Pickle                                   | Key out of credits
+   💳 [169/1026] Kinetic Indoor Racquet Club                        | Key out of credits
+   💳 [170/1026] Scarborough East Tennis Club                       | Key out of credits
+   💳 [172/1026] Charlotte Padel Club                               | Key out of credits
+   💳 [171/1026] Charlotte Padel Club                               | Key out of credits
+   💳 [173/1026] PGA TOUR Superstore Jacksonville                   | Key out of credits
+   💳 [174/1026] Epic Padel Inc                                     | Key out of credits
+   💳 [177/1026] The Racquet Doctor                                 | Key out of credits
+   💳 [176/1026] Cuba Hunter Community Center                       | Key out of credits
+   💳 [175/1026] The Hamlet Golf & Country Club                     | Key out of credits
+   💳 [178/1026] Lakeshore Sport & Fitness                          | Key out of credits
+   💳 [179/1026] Jacksonville Beach Tennis Center                   | Key out of credits
+   💳 [182/1026] Go Pro Tennis & Pickleball                         | Key out of credits
+   💳 [180/1026] CC Tennis                                          | Key out of credits
+   💳 [181/1026] The Seawane Club                                   | Key out of credits
+   💳 [183/1026] Deerwood Tennis                                    | Key out of credits
+   💳 [184/1026] The Paddle Lands Pickleball Club                   | Key out of credits
+   💳 [185/1026] Go Pro Tennis & Pickleball                         | Key out of credits
+   💳 [186/1026] Platinum Padel Club                                | Key out of credits
+   💳 [187/1026] Clanzel T Brown Park Tennis                        | Key out of credits
+   💳 [188/1026] Southside Park Tennis                              | Key out of credits
+   💳 [189/1026] One Padel Indoor Club                              | Key out of credits
+   💳 [191/1026] Miami Padel Federation                             | Key out of credits
+   💳 [190/1026] Urban Padel                                        | Key out of credits
+   💳 [192/1026] Open Padel Club by Lasaigues                       | Key out of credits
+   💳 [193/1026] i95 Padel Club Miami                               | Key out of credits
+   💳 [194/1026] Padel X Boca Raton                                 | Key out of credits
+   💳 [198/1026] Boone Park Tennis Complex                          | Key out of credits
+   💳 [195/1026] Wynwood Padel Club                                 | Key out of credits
+   💳 [197/1026] Reilly Green Mountain Platform Tennis              | Key out of credits
+   💳 [196/1026] Pulse Padel Hub                                    | Key out of credits
+   💳 [199/1026] Real Padel Miami                                   | Key out of credits
+   💳 [202/1026] Racket Supply Milpitas 羽乒網專賣店                      | Key out of credits
+   💳 [201/1026] Ultra Padel Club                                   | Key out of credits
+   💳 [200/1026] Padel Social                                       | Key out of credits
+   💳 [203/1026] Play It Again Sports - Jacksonville East           | Key out of credits
+   💳 [204/1026] Central Park Tennis Center                         | Key out of credits
+   💳 [206/1026] Park Padel                                         | Key out of credits
+   💳 [207/1026] California Tennis Club                             | Key out of credits
+   💳 [205/1026] Palm Beach Gardens Tennis & Pickleball Center      | Key out of credits
+   💳 [208/1026] Park Padel                                         | Key out of credits
+   💳 [209/1026] Bay Padel - Sunnyvale                              | Key out of credits
+   💳 [210/1026] Olympic Indoor Tennis                              | Key out of credits
+   💳 [211/1026] Bayard H. Friedman Tennis Center                   | Key out of credits
+   💳 [213/1026] Tampa Palms Country Club                           | Key out of credits
+   💳 [212/1026] Indoor Pickleball Now - Fort Worth                 | Key out of credits
+   💳 [214/1026] Racquet & Tennis Club                              | Key out of credits
+   💳 [215/1026] Padel Haus                                         | Key out of credits
+   💳 [218/1026] Padel Boston                                       | Key out of credits
+   💳 [216/1026] Sensa Padel                                        | Key out of credits
+   💳 [217/1026] PADELHUB - BOSTON                                  | Key out of credits
+   💳 [219/1026] Padel Up                                           | Key out of credits
+   💳 [220/1026] Denver Racquets Club                               | Key out of credits
+   💳 [222/1026] Padel Haus Nashville                               | Key out of credits
+   💳 [221/1026] Racket Social Club                                 | Key out of credits
+   💳 [223/1026] Padel Haus - Dumbo                                 | Key out of credits
+   💳 [225/1026] Padel Club El Paso                                 | Key out of credits
+   💳 [224/1026] Sensa Padel                                        | Key out of credits
+   💳 [227/1026] The Pad | Toronto Padel Club                       | Key out of credits
+   💳 [228/1026] The Pad Tucson                                     | Key out of credits
+   💳 [226/1026] Sierra Sport & Racquet Club                        | Key out of credits
+   💳 [229/1026] Padel AZ                                           | Key out of credits
+   💳 [230/1026] Padel Alley                                        | Key out of credits
+   💳 [232/1026] La Casa del Padel                                  | Key out of credits
+   💳 [231/1026] Park Padel                                         | Key out of credits
+   💳 [233/1026] New Albany Country Club                            | Key out of credits
+   💳 [234/1026] Parker Racquet Club                                | Key out of credits
+   💳 [235/1026] Mesa Padel Club                                    | Key out of credits
+   💳 [236/1026] Padel Pals Club - East Valley Mesa/Gilbert         | Key out of credits
+   💳 [237/1026] Olympus Padel                                      | Key out of credits
+   💳 [238/1026] North Hills Club                                   | Key out of credits
+   💳 [240/1026] Centre Court Omaha                                 | Key out of credits
+   💳 [239/1026] Pickleball Virginia Beach                          | Key out of credits
+   💳 [241/1026] Virginia Beach Tennis & Country Club               | Key out of credits
+   💳 [242/1026] AQUA LANE PICKLEBALL                               | Key out of credits
+   💳 [243/1026] Cape Henry Racquet Club                            | Key out of credits
+   💳 [245/1026] Racket Social Club                                 | Key out of credits
+   💳 [244/1026] Millbrook Exchange Tennis Center                   | Key out of credits
+   💳 [246/1026] ITP Training Academy                               | Key out of credits
+   💳 [247/1026] Sandy Springs Racquet Center                       | Key out of credits
+   💳 [248/1026] Atlanta Pickleball Center                          | Key out of credits
+   💳 [250/1026] PATL                                               | Key out of credits
+   💳 [249/1026] Raleigh Racquet Club Inc                           | Key out of credits
+   💳 [251/1026] Chabot Canyon Racquet Club                         | Key out of credits
+   💳 [252/1026] Kenwood Park Tennis Courts                         | Key out of credits
+   💳 [253/1026] Virginia Beach Sports Center                       | Key out of credits
+   💳 [254/1026] George P. Mitchell '40 Tennis Center               | Key out of credits
+   💳 [255/1026] Philcrest Hills Tennis & Pickleball Club           | Key out of credits
+   💳 [256/1026] LaFortune Park Tennis Center                       | Key out of credits
+   💳 [257/1026] Diadem Pickleball Complex Tulsa                    | Key out of credits
+   💳 [258/1026] Tennis Express                                     | Key out of credits
+   💳 [260/1026] Styslinger / Altec Tennis Complex (at SMU)         | Key out of credits
+   💳 [259/1026] Miami Padel Center                                 | Key out of credits
+   💳 [261/1026] Reserve Padel                                      | Key out of credits
+   💳 [262/1026] Reserve Padel                                      | Key out of credits
+   💳 [263/1026] Reserve Padel                                      | Key out of credits
+   💳 [264/1026] Padel Point Miami                                  | Key out of credits
+   💳 [265/1026] Padel X Miami                                      | Key out of credits
+   💳 [266/1026] Sunset Padel                                       | Key out of credits
+   💳 [267/1026] Washington Park Racquet Center                     | Key out of credits
+   💳 [268/1026] Pickleball Courts | Leisure World                  | Key out of credits
+   💳 [270/1026] Fred Wells Tennis & Education Center               | Key out of credits
+   💳 [269/1026] Minneapolis Pickleball Club                        | Key out of credits
+   💳 [271/1026] Tulsa Tennis Club                                  | Key out of credits
+   💳 [272/1026] InnerCity Tennis                                   | Key out of credits
+   💳 [273/1026] College Estates Park                               | Key out of credits
+   💳 [274/1026] The Heights Racquet & Social Club                  | Key out of credits
+   💳 [275/1026] Baseline Tennis Center                             | Key out of credits
+   💳 [276/1026] Veterans Park Pickleball Courts LB                 | Key out of credits
+   💳 [277/1026] Long Beach Table Tennis Club                       | Key out of credits
+   💳 [278/1026] PublicIndoorTennis.com                             | Key out of credits
+   💳 [279/1026] PowerPlay Pickleball                               | Key out of credits
+   💳 [280/1026] Galaxy Park                                        | Key out of credits
+   💳 [282/1026] TENNIS LONG BEACH                                  | Key out of credits
+   💳 [281/1026] Southern California Tennis Academy                 | Key out of credits
+   💳 [283/1026] Valter Paiva Tennis Academy at the Billie Jean Kin | Key out of credits
+   💳 [284/1026] Seal Beach Tennis & Pickleball Center              | Key out of credits
+   💳 [285/1026] DeForest Park Pickleball Courts                    | Key out of credits
+   💳 [287/1026] Padel Haus Atlanta                                 | Key out of credits
+   💳 [286/1026] Pickleball Badminton Center                        | Key out of credits
+   💳 [288/1026] Billie Jean King Tennis Center                     | Key out of credits
+   💳 [289/1026] El Dorado Tennis & Pickleball Center               | Key out of credits
+   💳 [290/1026] The Underground Pickleball and Recovery Cave       | Key out of credits
+   💳 [292/1026] Somerset Park                                      | Key out of credits
+   💳 [291/1026] TeachMe.To Pickleball Lessons - Long Beach         | Key out of credits
+   💳 [293/1026] Lakewood Tennis Center                             | Key out of credits
+   💳 [294/1026] El Dorado Park West                                | Key out of credits
+   💳 [295/1026] UTA Tennis Center                                  | Key out of credits
+   💳 [297/1026] Abrie Du Plooy Tennis Academy                      | Key out of credits
+   💳 [296/1026] Atkinson-Stern Tennis Center                       | Key out of credits
+   💳 [298/1026] University of New Orleans Tennis Center            | Key out of credits
+   💳 [299/1026] First St. Racquet Club                             | Key out of credits
+   💳 [300/1026] Pickle N Pins                                      | Key out of credits
+   💳 [301/1026] New Orleans Lawn Tennis Club                       | Key out of credits
+   💳 [302/1026] XULA Tennis Center                                 | Key out of credits
+   ✅ [18/1026] First Serve Tennis                                 | 11 pages | 1,729 words
+   ✅ [14/1026] Mainland Sports Complex                            | 10 pages | 2,550 words
+   💳 [303/1026] The Exchange Pickleball + Bar                      | Key out of credits
+   💳 [304/1026] City Park / Pepsi Tennis Center                    | Key out of credits
+   💳 [305/1026] Audubon Tennis Courts                              | Key out of credits
+   ✅ [15/1026] Banner House at T Bar M                            | 10 pages | 6,877 words
+   💳 [306/1026] The Flats Platform Tennis Center                   | Key out of credits
+   💳 [307/1026] Padel Square                                       | Key out of credits
+   💳 [308/1026] Cleveland Pickleball Center                        | Key out of credits
+   💳 [310/1026] The Picklr Aurora                                  | Key out of credits
+   💳 [309/1026] Cleveland Premier Pickleball                       | Key out of credits
+   💳 [311/1026] Bakersfield Racquet Club                           | Key out of credits
+   💳 [313/1026] Centre Court, Inc.                                 | Key out of credits
+   💳 [312/1026] Matchpoint Tennis Academy at Cabrillo              | Key out of credits
+   💳 [314/1026] St Paul Indoor Tennis Club                         | Key out of credits
+   💳 [315/1026] Oak Park Tennis Center                             | Key out of credits
+   💳 [316/1026] Corpus Christi Tennis Association                  | Key out of credits
+   💳 [317/1026] Golden Padel                                       | Key out of credits
+   💳 [318/1026] Tennis Success Community Courts & Center           | Key out of credits
+   💳 [319/1026] Dripping Springs Racquet Club                      | Key out of credits
+   💳 [320/1026] Al Kruse Tennis & Pickleball Center                | Key out of credits
+   💳 [321/1026] Tennis Up llc.                                     | Key out of credits
+   💳 [322/1026] H-E-B Tennis Center                                | Key out of credits
+   💳 [323/1026] Talalay Tennis                                     | Key out of credits
+   💳 [324/1026] Rad Padel | Powered by Padel California            | Key out of credits
+   💳 [325/1026] Corpus Christi Athletic Club                       | Key out of credits
+   💳 [326/1026] Tuloso-Midway High School Tennis Courts            | Key out of credits
+   💳 [327/1026] iTennis/iPickle Riverside                          | Key out of credits
+   💳 [328/1026] Shamel Park                                        | Key out of credits
+   💳 [329/1026] Corpus Christi Country Club                        | Key out of credits
+   💳 [330/1026] Club Padel Newtown                                 | Key out of credits
+   💳 [331/1026] The Greater Pittsburgh Sports Complex              | Key out of credits
+   💳 [332/1026] Schenley Oval                                      | Key out of credits
+   💳 [333/1026] Mt. Lebanon Platform Tennis Hut                    | Key out of credits
+   💳 [334/1026] Upper St. Clair Tennis Courts                      | Key out of credits
+   💳 [335/1026] GAMMA Sports                                       | Key out of credits
+   💳 [336/1026] American Platform Tennis Association               | Key out of credits
+   💳 [337/1026] The Pickleball Warehouse                           | Key out of credits
+   💳 [339/1026] Dunham's Sports                                    | Key out of credits
+   💳 [338/1026] Glen Creek Tennis Club                             | Key out of credits
+   💳 [340/1026] Carnegie Mellon University Tennis Courts           | Key out of credits
+   💳 [341/1026] Highland Park Tennis Club                          | Key out of credits
+   💳 [342/1026] East End Pickleball Pittsburgh                     | Key out of credits
+   💳 [343/1026] Frick Park Clay Courts                             | Key out of credits
+   💳 [344/1026] Paddle Pro                                         | Key out of credits
+   💳 [345/1026] Mt. Lebanon Tennis Center                          | Key out of credits
+   💳 [346/1026] Alpha Tennis and Fitness of Pittsburgh             | Key out of credits
+   💳 [347/1026] Tennis Village                                     | Key out of credits
+   💳 [348/1026] Mellon Park Tennis Center                          | Key out of credits
+   💳 [349/1026] Fox Chapel Racquet Club                            | Key out of credits
+   💳 [351/1026] Highland Tennis Park                               | Key out of credits
+   💳 [350/1026] Matt's Pickle and Padel                            | Key out of credits
+   💳 [353/1026] Guilford Regional Tennis Association               | Key out of credits
+   💳 [354/1026] Peak Pickleball                                    | Key out of credits
+   💳 [352/1026] Ridgewood Swim and Tennis Club                     | Key out of credits
+   💳 [355/1026] Plano West Tennis Courts                           | Key out of credits
+   💳 [356/1026] Lake Jeanette Swim and Tennis Club (Private Swim & | Key out of credits
+   💳 [357/1026] Proehlific Park                                    | Key out of credits
+   💳 [358/1026] Green Valley Swim & Racquet Club                   | Key out of credits
+   💳 [359/1026] Hamilton Lakes Swim and Tennis Club                | Key out of credits
+   💳 [360/1026] Cardinal Swim and Tennis Club                      | Key out of credits
+   💳 [364/1026] Sherwood Swim & Racquet Club                       | Key out of credits
+   💳 [361/1026] The Lawndale Club                                  | Key out of credits
+   💳 [362/1026] Pinetop Neighborhood Resort                        | Key out of credits
+   💳 [363/1026] Greensboro Tennis Foundation                       | Key out of credits
+   💳 [365/1026] Grandover Swim & Racquet Club                      | Key out of credits
+   💳 [366/1026] Simkins Indoor Sports Pavilion                     | Key out of credits
+   💳 [368/1026] Pine Lake Golf & Tennis                            | Key out of credits
+   💳 [367/1026] Latham Park Tennis Center                          | Key out of credits
+   💳 [369/1026] Love Too Par                                       | Key out of credits
+   💳 [370/1026] Racquet Club of Irvine                             | Key out of credits
+   💳 [372/1026] East Lake Padel Club                               | Key out of credits
+   💳 [371/1026] Croasdaile Tennis Pro Shop                         | Key out of credits
+   💳 [373/1026] Play It Again Sports                               | Key out of credits
+   💳 [374/1026] That Padel Club - Newark                           | Key out of credits
+   💳 [376/1026] Going, Going, Gone!                                | Key out of credits
+   💳 [375/1026] Destination Pickleball                             | Key out of credits
+   💳 [378/1026] Peter Pan Park Tennis Courts                       | Key out of credits
+   💳 [379/1026] Kinetic Sports Complex                             | Key out of credits
+   💳 [377/1026] Lincoln Sports Foundation                          | Key out of credits
+   💳 [380/1026] Irvingdale Park Pickleball Courts                  | Key out of credits
+   💳 [381/1026] UPCO Park Pickleball Courts                        | Key out of credits
+   💳 [382/1026] Air Park Community Center                          | Key out of credits
+   💳 [384/1026] Irvingdale Park Tennis Courts                      | Key out of credits
+   💳 [383/1026] Eden Park Pickleball Courts                        | Key out of credits
+   💳 [385/1026] Let's Pickle                                       | Key out of credits
+   💳 [387/1026] Seng Park Pickleball and Tennis Courts             | Key out of credits
+   💳 [386/1026] Racquet Corner                                     | Key out of credits
+   💳 [388/1026] Roberts Park Pickleball and Tennis Court           | Key out of credits
+   💳 [389/1026] Sid and Hazel Dillon Tennis Center                 | Key out of credits
+   💳 [390/1026] Peterson Park Pickleball Courts                    | Key out of credits
+   💳 [391/1026] Genesis Health Clubs - Racquet Club                | Key out of credits
+   💳 [392/1026] Woods Tennis Center                                | Key out of credits
+   💳 [393/1026] Towpath Tennis Center                              | Key out of credits
+   💳 [394/1026] Tennis Outlet                                      | Key out of credits
+   💳 [395/1026] Bluegrass Yacht & Country Club                     | Key out of credits
+   💳 [396/1026] Meadowcroft Park Pickleball Courts                 | Key out of credits
+   💳 [397/1026] Verona Pickleball - Free Public Courts at Riverban | Key out of credits
+   💳 [398/1026] LevelUp Pickleball Camps                           | Key out of credits
+   💳 [399/1026] Pennsylvania Tennis Academy                        | Key out of credits
+   💳 [400/1026] Pittsburgh Oakland Table Tennis Club               | Key out of credits
+   💳 [401/1026] LTC                                                | Key out of credits
+   💳 [403/1026] Inner-City Tennis Project ( Triangle Tennis Courts | Key out of credits
+   💳 [402/1026] Sawyer Point Pickleball & Tennis Courts            | Key out of credits
+   💳 [404/1026] Camargo Racquet Club                               | Key out of credits
+   💳 [405/1026] Cincinnati Tennis Club                             | Key out of credits
+   💳 [406/1026] Queen City Racquet Club and Fitness Center         | Key out of credits
+   💳 [408/1026] Western Athletic Club                              | Key out of credits
+   💳 [407/1026] Hyde Park Tennis Club                              | Key out of credits
+   💳 [409/1026] The Indoor Club                                    | Key out of credits
+   💳 [410/1026] Forest Oaks Tennis Shop                            | Key out of credits
+   💳 [412/1026] Orange Lawn Tennis Club                            | Key out of credits
+   💳 [411/1026] Try Tennis                                         | Key out of credits
+   💳 [416/1026] Centercourt Athletic Club of Chatham               | Key out of credits
+   💳 [413/1026] West Orange Tennis Club                            | Key out of credits
+   💳 [414/1026] Centercourt Morristown                             | Key out of credits
+   💳 [415/1026] Rally Zone                                         | Key out of credits
+   💳 [417/1026] Sodo Padel                                         | Key out of credits
+   💳 [420/1026] HiPadel                                            | Key out of credits
+   💳 [419/1026] Padel In Orlando                                   | Key out of credits
+   💳 [418/1026] RaxNJ                                              | Key out of credits
+   💳 [421/1026] Padel Plus Indoor Racquet Club                     | Key out of credits
+   💳 [422/1026] Maplewood Club                                     | Key out of credits
+   💳 [423/1026] Glen Ridge Paddle Courts                           | Key out of credits
+   💳 [424/1026] ACCESS PADEL                                       | Key out of credits
+   💳 [426/1026] Padel United Sports Club                           | Key out of credits
+   💳 [425/1026] Essex Fells Country Club Paddle Facility           | Key out of credits
+   💳 [427/1026] Golden Dome Athletic Center                        | Key out of credits
+   💳 [428/1026] Oak Hollow Tennis Center                           | Key out of credits
+   💳 [429/1026] The Cardinal by Pete Dye                           | Key out of credits
+   💳 [430/1026] Orlando Padel Club Indoor                          | Key out of credits
+   💳 [431/1026] Play it Again Sports Greensboro                    | Key out of credits
+   💳 [432/1026] Friendly Park Swim & Tennis                        | Key out of credits
+   💳 [433/1026] North Carolina Tennis Association                  | Key out of credits
+   💳 [435/1026] Toledo Tennis Club                                 | Key out of credits
+   💳 [436/1026] Launchpad Tennis                                   | Key out of credits
+   💳 [434/1026] Toledo Pickleball Club Courts                      | Key out of credits
+   💳 [437/1026] Toledo Pickle Company                              | Key out of credits
+   💳 [438/1026] Laredo Athletic Complex                            | Key out of credits
+   💳 [439/1026] Market Street Tennis Courts                        | Key out of credits
+   💳 [441/1026] Twos Athletic Club                                 | Key out of credits
+   💳 [440/1026] Zmash Padel                                        | Key out of credits
+   💳 [443/1026] Deuces Padel Club                                  | Key out of credits
+   💳 [444/1026] Toledo Club                                        | Key out of credits
+   💳 [442/1026] Laredo Padel Club                                  | Key out of credits
+   💳 [446/1026] Big 5 Sporting Goods                               | Key out of credits
+   💳 [445/1026] Lincoln Park Tennis Center                         | Key out of credits
+   💳 [447/1026] Big 5 Sporting Goods                               | Key out of credits
+   💳 [448/1026] Chandler Tennis Center                             | Key out of credits
+   💳 [450/1026] Kotofit 3rd St (Badminton) / French American Acade | Key out of credits
+   💳 [449/1026] PingPod                                            | Key out of credits
+   💳 [452/1026] Padeland                                           | Key out of credits
+   💳 [451/1026] Pershing Field Tennis Courts                       | Key out of credits
+   💳 [453/1026] Kotofit Brunswick St (Badminton, Pickleball and Pi | Key out of credits
+   💳 [454/1026] Parkcrest Swim & Tennis Club                       | Key out of credits
+   💳 [455/1026] Garner Park Pickleball Courts                      | Key out of credits
+   💳 [456/1026] DICK'S Sporting Goods                              | Key out of credits
+   💳 [457/1026] DICK'S Sporting Goods                              | Key out of credits
+   💳 [458/1026] https://wpadel.us/                                 | Key out of credits
+   💳 [460/1026] Milwaukee Ridge Tennis & BasketBall Courts (privat | Key out of credits
+   💳 [459/1026] McLeod Tennis Center                               | Key out of credits
+   💳 [462/1026] Premier Sportsplex                                 | Key out of credits
+   💳 [461/1026] North Texas Racquet Club                           | Key out of credits
+   💳 [463/1026] Teko Courts & Outdoor Living                       | Key out of credits
+   💳 [464/1026] Lubbock Indoor Pickleball                          | Key out of credits
+   💳 [465/1026] The Falls Tennis & Athletic Club                   | Key out of credits
+   💳 [466/1026] Burgess-Rushing Tennis Center                      | Key out of credits
+   💳 [467/1026] Woodlands W-Padel & Pickleball (Woodcourt)         | Key out of credits
+   💳 [468/1026] Shorewood Hills Tennis and Pickleball Courts       | Key out of credits
+   💳 [471/1026] Rennebohm Tennis Court 1                           | Key out of credits
+   💳 [470/1026] Reindahl Park tennis courts                        | Key out of credits
+   💳 [472/1026] Dill Dinkers Pickleball                            | Key out of credits
+   💳 [469/1026] Madison Squash Workshop                            | Key out of credits
+   💳 [473/1026] Pickle Pro Courts                                  | Key out of credits
+   💳 [474/1026] John Powless Tennis Center                         | Key out of credits
+   💳 [475/1026] Brittingham Park Tennis and Pickleball Courts      | Key out of credits
+   💳 [476/1026] Nielsen Tennis Stadium                             | Key out of credits
+   💳 [480/1026] Center Court Pickleball Club Glendale              | Key out of credits
+   💳 [477/1026] The Pickleball Space                               | Key out of credits
+   💳 [479/1026] Paseo Racquet Center                               | Key out of credits
+   💳 [478/1026] Tennis & Pickleball Cabana                         | Key out of credits
+   💳 [481/1026] Southern Highlands Racquets                        | Key out of credits
+   💳 [482/1026] Tennis Star Academy                                | Key out of credits
+   💳 [483/1026] Desert Palm Tennis Club                            | Key out of credits
+   💳 [484/1026] Scottsdale Ranch Park & Tennis Center              | Key out of credits
+   💳 [485/1026] All About Tennis and Pickleball                    | Key out of credits
+   💳 [487/1026] Scottsdale Ranch Park Squash & Racquetball Courts  | Key out of credits
+   💳 [488/1026] Village Glen Tennis & Pickleball                   | Key out of credits
+   💳 [486/1026] Darling Tennis Center                              | Key out of credits
+   💳 [490/1026] Miller Tennis Center                               | Key out of credits
+   💳 [489/1026] Courtside Outfitters - Racquet and Paddle          | Key out of credits
+   💳 [491/1026] Saturn Club                                        | Key out of credits
+   💳 [492/1026] Buffalo Tennis & Squash Club                       | Key out of credits
+   💳 [493/1026] Buffalo Racquet Club                               | Key out of credits
+   💳 [494/1026] Thompson Peak Park-Pickleball Court                | Key out of credits
+   💳 [496/1026] Paiute Park Tennis Court                           | Key out of credits
+   💳 [495/1026] Indian Bend Wash Visitor Center Racquetball Court  | Key out of credits
+   💳 [497/1026] Indian School Park Racquetball Courts              | Key out of credits
+   💳 [498/1026] The Picklr Scottsdale North                        | Key out of credits
+   💳 [499/1026] Racquet Club at Scottsdale Ranch                   | Key out of credits
+   💳 [500/1026] The Orchard Indoor Pickleball Courts               | Key out of credits
+   💳 [502/1026] Pickle City Scottsdale                             | Key out of credits
+   💳 [501/1026] Scottsdale Ranch Park Racquetball Court            | Key out of credits
+   💳 [503/1026] DC Ranch Village Tennis & Pickleball Center        | Key out of credits
+   💳 [504/1026] Center Court Pickleball Club Scottsdale            | Key out of credits
+   💳 [505/1026] Washoe Tennis Club                                 | Key out of credits
+   💳 [506/1026] South Reno Tennis                                  | Key out of credits
+   💳 [507/1026] 3rd Shot Pickleball                                | Key out of credits
+   💳 [508/1026] Tennis Nation Racquet Sports                       | Key out of credits
+   💳 [510/1026] Tennis courts                                      | Key out of credits
+   💳 [509/1026] Reno Tennis Center                                 | Key out of credits
+   💳 [511/1026] Cyan Park                                          | Key out of credits
+   💳 [513/1026] Cavalier Tennis Pro Shop                           | Key out of credits
+   💳 [512/1026] SuperStringer, LLC/Bowling Bigger LLC              | Key out of credits
+   💳 [514/1026] DICK'S Sporting Goods                              | Key out of credits
+   💳 [515/1026] Play It Again Sports - Chesapeake, VA              | Key out of credits
+   💳 [516/1026] Great Bridge Swim & Racquet Club                   | Key out of credits
+   💳 [519/1026] Gilbert Regional Park-Tennis Courts                | Key out of credits
+   💳 [517/1026] Deep Creek Community Center                        | Key out of credits
+   💳 [518/1026] Pickleball Backyard                                | Key out of credits
+   💳 [520/1026] Indian School Park & Tennis Center                 | Key out of credits
+   💳 [521/1026] Delaware Park Tennis Courts                        | Key out of credits
+   💳 [522/1026] Raising a Racquet, LLC                             | Key out of credits
+   💳 [524/1026] Folkes / Stevens Indoor Tennis Center              | Key out of credits
+   💳 [523/1026] Fremont Tennis Center                              | Key out of credits
+   💳 [526/1026] Padel Plant                                        | Key out of credits
+   💳 [528/1026] Northside Park Tennis                              | Key out of credits
+   💳 [527/1026] Center Court Pickleball Club Gilbert               | Key out of credits
+   💳 [525/1026] CoVA Tennis & Sports Center                        | Key out of credits
+   💳 [529/1026] Racket & Paddle Club                               | Key out of credits
+   💳 [530/1026] Lakewood Park                                      | Key out of credits
+   💳 [531/1026] Lafayette Park                                     | Key out of credits
+   💳 [532/1026] Canas Racket Padel                                 | Key out of credits
+   💳 [535/1026] Goodlet Tennis Center                              | Key out of credits
+   💳 [533/1026] Tropical Park Tennis Center                        | Key out of credits
+   💳 [537/1026] The Press Pickleball Club                          | Key out of credits
+   💳 [534/1026] SMART PADEL HOUSE                                  | Key out of credits
+   💳 [536/1026] Arena Sports                                       | Key out of credits
+   💳 [539/1026] Brenda Athletic Clubs - Modesto                    | Key out of credits
+   💳 [540/1026] Play It Again Sports                               | Key out of credits
+   💳 [538/1026] Spokane Racquet Club                               | Key out of credits
+   💳 [541/1026] Big 5 Sporting Goods                               | Key out of credits
+   💳 [542/1026] Roosevelt Park Tennis Courts                       | Key out of credits
+   💳 [543/1026] Del Rio Tennis Courts                              | Key out of credits
+   💳 [544/1026] McDermott Sports Complex                           | Key out of credits
+   💳 [545/1026] WynTennis                                          | Key out of credits
+   💳 [546/1026] Pickleball Courts                                  | Key out of credits
+   💳 [548/1026] Perris Hill Pickleball and Tennis Center           | Key out of credits
+   💳 [547/1026] Pickleball Courts                                  | Key out of credits
+   💳 [550/1026] The Paseo Club                                     | Key out of credits
+   💳 [549/1026] Big 5 Sporting Goods                               | Key out of credits
+   💳 [552/1026] Jack Bulik Park & Multi-Purpose Rink               | Key out of credits
+   💳 [553/1026] Koehler Park                                       | Key out of credits
+   💳 [551/1026] Perris Hill Park                                   | Key out of credits
+   💳 [554/1026] Going, Going, Gone!                                | Key out of credits
+   💳 [555/1026] DICK'S Sporting Goods                              | Key out of credits
+   💳 [556/1026] Oxnard Tennis Center                               | Key out of credits
+   💳 [557/1026] Vestavia Tennis Shop                               | Key out of credits
+   💳 [558/1026] DICK'S Sporting Goods                              | Key out of credits
+   💳 [559/1026] The Country Club of Birmingham                     | Key out of credits
+   💳 [561/1026] PGA TOUR Superstore Birmingham                     | Key out of credits
+   💳 [560/1026] Player's Choice Tennis, Inc.                       | Key out of credits
+   💳 [562/1026] Hoover Met Tennis                                  | Key out of credits
+   💳 [563/1026] Inverness Junior Tennis Academy                    | Key out of credits
+   💳 [564/1026] Weinacker Tennis Academy                           | Key out of credits
+   💳 [565/1026] Samford Tennis Center                              | Key out of credits
+   💳 [566/1026] Birmingham Tennis Academy                          | Key out of credits
+   💳 [567/1026] Homewood Tennis Club                               | Key out of credits
+   💳 [569/1026] Highland Park Tennis Center                        | Key out of credits
+   💳 [570/1026] James Lewis Tennis Center                          | Key out of credits
+   💳 [568/1026] Brook Highland Racquet Club                        | Key out of credits
+   💳 [571/1026] Trussville Racquet Club                            | Key out of credits
+   💳 [572/1026] George Ward Tennis Center                          | Key out of credits
+   💳 [574/1026] Huntsville Tennis Center                           | Key out of credits
+   💳 [573/1026] St Lucie Trail Tennis Club                         | Key out of credits
+   💳 [575/1026] SLC PADEL CLUB                                     | Key out of credits
+   💳 [576/1026] RoofTop Pickleball                                 | Key out of credits
+   💳 [577/1026] Ace Pickleball Club - Grand Rapids, MI             | Key out of credits
+   💳 [578/1026] Athletic Club Alabama                              | Key out of credits
+   💳 [579/1026] Florida Tennis Center                              | Key out of credits
+   💳 [580/1026] Grand Rapids Racquet and Fitness                   | Key out of credits
+   💳 [581/1026] Roberts Wesleyan University Tennis Courts          | Key out of credits
+   💳 [582/1026] Thomas P Ryan Recreation Center                    | Key out of credits
+   💳 [583/1026] Play It Again Sports                               | Key out of credits
+   💳 [586/1026] Carter Street R-Center                             | Key out of credits
+   💳 [585/1026] Bell Racquet Sports                                | Key out of credits
+   💳 [584/1026] Country Club of Rochester                          | Key out of credits
+   💳 [587/1026] Tennis Courts                                      | Key out of credits
+   💳 [588/1026] Outdoor Tennis Courts                              | Key out of credits
+   💳 [589/1026] Peter Lyman Tennis Center                          | Key out of credits
+   💳 [590/1026] Empire Tennis Academy                              | Key out of credits
+   💳 [591/1026] Mendon Racquet & Pool Club                         | Key out of credits
+   💳 [593/1026] Tennis Club of Rochester Inc                       | Key out of credits
+   💳 [594/1026] Amarillo National Tennis Center                    | Key out of credits
+   💳 [592/1026] Midtown Athletic Club                              | Key out of credits
+   💳 [596/1026] Huntington Beach Pickleball                        | Key out of credits
+   💳 [595/1026] SPORTIME Pro Shop                                  | Key out of credits
+   💳 [598/1026] The Racquet Club on Park Hill 🎾                    | Key out of credits
+   💳 [599/1026] Yonkers Tennis Center                              | Key out of credits
+   💳 [597/1026] Fox Meadow Tennis Club                             | Key out of credits
+   💳 [600/1026] Farmington Park                                    | Key out of credits
+   💳 [601/1026] Tennis Club of Hastings                            | Key out of credits
+   💳 [602/1026] Court 16 Ridge Hill - Tennis & Pickleball          | Key out of credits
+   💳 [603/1026] Inverness Country Club Tennis Center               | Key out of credits
+   💳 [604/1026] Canepa Tennis Center                               | Key out of credits
+   💳 [605/1026] Genesee Valley Club                                | Key out of credits
+   💳 [606/1026] The Courts McKinney Pickleball and Tennis Center   | Key out of credits
+   💳 [607/1026] 1to4 Pickleball                                    | Key out of credits
+   💳 [608/1026] Dink'd Pickleball                                  | Key out of credits
+   💳 [610/1026] Petersburg Racquet Club                            | Key out of credits
+   💳 [609/1026] Newman Tennis Center                               | Key out of credits
+   💳 [611/1026] Fleming Tennis Center                              | Key out of credits
+   💳 [612/1026] Mitchell Johnson Pickleball                        | Key out of credits
+   💳 [613/1026] Columbia County Racquet Center                     | Key out of credits
+   💳 [614/1026] Montclair pickleball courts PRIVATE                | Key out of credits
+   💳 [615/1026] Maplewood Park                                     | Key out of credits
+   💳 [617/1026] Aspen Racquet Club                                 | Key out of credits
+   💳 [616/1026] Genesee Valley Park                                | Key out of credits
+   💳 [618/1026] Akron Rotary Camp                                  | Key out of credits
+   💳 [619/1026] Balch Street Fitness Center                        | Key out of credits
+   💳 [621/1026] North Canton Racquet Club                          | Key out of credits
+   💳 [623/1026] Ed Davis Community Center                          | Key out of credits
+   💳 [622/1026] Lawton Street Community Center                     | Key out of credits
+   💳 [620/1026] Ellet Community Center                             | Key out of credits
+   💳 [625/1026] Patterson Park                                     | Key out of credits
+   💳 [624/1026] BALCH STREET COMMUNITY CENTER                      | Key out of credits
+   💳 [626/1026] Fairlawn Swim & Tennis Club                        | Key out of credits
+   💳 [627/1026] Patterson Park Community Center                    | Key out of credits
+   💳 [628/1026] Rubber City Sports                                 | Key out of credits
+   💳 [629/1026] Reservoir Park Community Center                    | Key out of credits
+   💳 [630/1026] Joy Park Community Center                          | Key out of credits
+   💳 [631/1026] Summit Sports & Social                             | Key out of credits
+   💳 [632/1026] Prentiss Park                                      | Key out of credits
+   💳 [633/1026] Green Tennis Club                                  | Key out of credits
+   💳 [634/1026] Mason Park Community Center                        | Key out of credits
+   💳 [635/1026] The Pad Sarasota                                   | Key out of credits
+   💳 [637/1026] Waters Park                                        | Key out of credits
+   💳 [636/1026] Fort Myers Racquet Club                            | Key out of credits
+   💳 [639/1026] Padel Club Palm Beach                              | Key out of credits
+   💳 [638/1026] Palm Beach Padel                                   | Key out of credits
+   💳 [640/1026] Hancock Tennis Center                              | Key out of credits
+   💳 [643/1026] CourtCo                                            | Key out of credits
+   💳 [641/1026] Play It Again Sports                               | Key out of credits
+   💳 [642/1026] Cape Coral Racquet Club                            | Key out of credits
+   💳 [645/1026] Pickleball Courts at Camelot Park                  | Key out of credits
+   💳 [644/1026] The Courts Cape Coral (Formerly Lake Kennedy Racqu | Key out of credits
+   💳 [648/1026] The Fitness Court                                  | Key out of credits
+   💳 [646/1026] Jim Jeffers Park                                   | Key out of credits
+   💳 [649/1026] Splash Factory                                     | Key out of credits
+   💳 [647/1026] Pavillion of Pickleball                            | Key out of credits
+   💳 [650/1026] GameTime Tennis                                    | Key out of credits
+   💳 [651/1026] Knoxville Racquet Club                             | Key out of credits
+   💳 [653/1026] Tennessee Tennis Pickleball Club and Academy       | Key out of credits
+   💳 [655/1026] Grand Prairie Parks, Arts & Recreation             | Key out of credits
+   💳 [654/1026] Grand Central Park                                 | Key out of credits
+   💳 [657/1026] Premier Pickleball Club Knoxville                  | Key out of credits
+   💳 [656/1026] The Pickleball Playground                          | Key out of credits
+   💳 [652/1026] Cedar Bluff Racquet Club                           | Key out of credits
+   💳 [658/1026] Tony Shotwell Life Center                          | Key out of credits
+   💳 [659/1026] Charley Taylor Recreation Center                   | Key out of credits
+   💳 [661/1026] Racket Club Indoors (Tennis)                       | Key out of credits
+   💳 [663/1026] Padel + Play                                       | Key out of credits
+   💳 [660/1026] Dalworth Recreation Center                         | Key out of credits
+   💳 [664/1026] Pierremont Oaks Tennis Club                        | Key out of credits
+   💳 [665/1026] Querbes Tennis Center                              | Key out of credits
+   💳 [666/1026] Southern Hills Tennis Center                       | Key out of credits
+   💳 [662/1026] Manker Patten Tennis Club                          | Key out of credits
+   💳 [667/1026] Westwind Community Center                          | Key out of credits
+   💳 [670/1026] Fox Fitness at Eola                                | Key out of credits
+   💳 [671/1026] Fox Valley Table Tennis Club                       | Key out of credits
+   💳 [669/1026] Play It Again Sports                               | Key out of credits
+   💳 [668/1026] Chicken N Pickle - Grand Prairie                   | Key out of credits
+   💳 [673/1026] MTJ Sports Chicago                                 | Key out of credits
+   💳 [672/1026] Tennis Ballerz Pro Shop                            | Key out of credits
+   💳 [674/1026] The Picklr Naperville                              | Key out of credits
+   💳 [675/1026] Prisco Community Center                            | Key out of credits
+   💳 [677/1026] Five Star Tennis Center                            | Key out of credits
+   💳 [676/1026] Holder & Son Tennis                                | Key out of credits
+   💳 [680/1026] Eola Tennis Academy                                | Key out of credits
+   💳 [681/1026] Vaughan Athletic Center                            | Key out of credits
+   💳 [679/1026] Eola Community Center                              | Key out of credits
+   💳 [682/1026] Little Rock Racquet Club                           | Key out of credits
+   💳 [678/1026] Glen Oak Country Club Sports Complex (Platform/Pad | Key out of credits
+   💳 [683/1026] Green Island Racquets                              | Key out of credits
+   💳 [684/1026] Elite Tennis and Wellness | Pickleball & Tennis    | Key out of credits
+   💳 [685/1026] Northside Recreation Center                        | Key out of credits
+   💳 [687/1026] Eola Community Center Park                         | Key out of credits
+   💳 [688/1026] Cross Court Sports                                 | Key out of credits
+   💳 [686/1026] Overland Park Racquet Club                         | Key out of credits
+   💳 [689/1026] Columbus Sports & Training Complex                 | Key out of credits
+   💳 [690/1026] CORTA (Columbus Regional Tennis Association)       | Key out of credits
+   💳 [691/1026] Blue Zone Courts                                   | Key out of credits
+   💳 [694/1026] Matchpoint Tennis & MatchpointStore                | Key out of credits
+   💳 [693/1026] The Supreme Court Tennis Club                      | Key out of credits
+   💳 [695/1026] Double Churches Park                               | Key out of credits
+   💳 [696/1026] Squash Outaouais                                   | Key out of credits
+   💳 [698/1026] Milton Tennis Club                                 | Key out of credits
+   💳 [697/1026] Club Atwater                                       | Key out of credits
+   💳 [699/1026] DICK'S Sporting Goods                              | Key out of credits
+   💳 [701/1026] Sports Circuit Inc | Sports                        | Key out of credits
+   💳 [700/1026] Burlington Pickleball                              | Key out of credits
+   💳 [703/1026] Corte KW                                           | Key out of credits
+   💳 [702/1026] HISPORTS Oshawa                                    | Key out of credits
+   💳 [705/1026] Padel & Friends                                    | Key out of credits
+   💳 [704/1026] Kingsway Platform Tennis Club                      | Key out of credits
+   💳 [706/1026] Padel Junction                                     | Key out of credits
+   💳 [707/1026] North Padel Club | Indoor Padel Courts Toronto     | Key out of credits
+   💳 [708/1026] Dunham's Sports                                    | Key out of credits
+   💳 [709/1026] tennis courts                                      | Key out of credits
+   💳 [710/1026] Goodfriend Tennis Center                           | Key out of credits
+   💳 [711/1026] Hattie Perry Recreation Center                     | Key out of credits
+   💳 [712/1026] Magna Centre                                       | Key out of credits
+   💳 [713/1026] Padel Ontario                                      | Key out of credits
+   💳 [714/1026] Northwest Louisiana Community Tennis Association   | Key out of credits
+   💳 [715/1026] Bossier Tennis Center Pro Shop                     | Key out of credits
+   💳 [718/1026] Pickle Pen                                         | Key out of credits
+   💳 [716/1026] T.10 Padel | Toronto Padel Club                    | Key out of credits
+   💳 [717/1026] Querbes Park Recreation Center                     | Key out of credits
+   💳 [719/1026] RacquetGuys                                        | Key out of credits
+   💳 [720/1026] Bill Cockrell Recreation Center                    | Key out of credits
+   💳 [692/1026] Elmdale Tennis Club                                | Key out of credits
+   💳 [721/1026] Valencia Recreation Center                         | Key out of credits
+   💳 [722/1026] Foxcroft Park                                      | Key out of credits
+   💳 [723/1026] David Raines Recreation Center                     | Key out of credits
+   💳 [725/1026] UTC Tennis Courts                                  | Key out of credits
+   💳 [724/1026] Batter's Place Pickleball Complex                  | Key out of credits
+   💳 [726/1026] Warner Park Tennis Courts                          | Key out of credits
+   💳 [727/1026] Bill Cockrell Metro Park & Community Center        | Key out of credits
+   💳 [728/1026] Maclellan Tennis Center                            | Key out of credits
+   💳 [729/1026] Play It Again Sports - East Ridge                  | Key out of credits
+   💳 [730/1026] Community Pickleball Club on Progress Avenue       | Key out of credits
+   💳 [731/1026] Chattanooga Parks & Outdoors                       | Key out of credits
+   💳 [732/1026] Chattanooga Tennis Association                     | Key out of credits
+   💳 [734/1026] East Ridge Country Club                            | Key out of credits
+   💳 [733/1026] Front Runner Athletics                             | Key out of credits
+   💳 [735/1026] Cooper Creek Tennis Center                         | Key out of credits
+   💳 [736/1026] Champions Club Tennis Complex                      | Key out of credits
+   💳 [737/1026] 10by20 Padel Fort Lauderdale                       | Key out of credits
+   💳 [738/1026] TT4 Padel Center                                   | Key out of credits
+   💳 [740/1026] Brownsville Tennis Center                          | Key out of credits
+   💳 [739/1026] PADEL LIFE & SOCCER                                | Key out of credits
+   💳 [742/1026] La Cantera Racquet & Swim Club                     | Key out of credits
+   💳 [741/1026] Padel Quattro                                      | Key out of credits
+   💳 [743/1026] Miramar - Silver Lakes Tennis Center               | Key out of credits
+   💳 [744/1026] Eugene Family YMCA Tennis & Pickleball Center      | Key out of credits
+   💳 [745/1026] Casas Padel Club Aventura                          | Key out of credits
+   💳 [746/1026] Casely Tennis Academy @ Brian Piccolo Tennis Cente | Key out of credits
+   💳 [748/1026] Rancho Cucamonga Sports Center                     | Key out of credits
+   💳 [747/1026] Towngate Tennis Center                             | Key out of credits
+   💳 [749/1026] Tienda PadelPoint                                  | Key out of credits
+   💳 [750/1026] Casely Tennis Academy @ Maxwell Park Tennis Center | Key out of credits
+   💳 [751/1026] Pembroke Lakes Tennis Center                       | Key out of credits
+   💳 [752/1026] Padball USA                                        | Key out of credits
+   💳 [753/1026] Paul J Maxwell Park                                | Key out of credits
+   💳 [754/1026] Big 5 Sporting Goods                               | Key out of credits
+   💳 [755/1026] RCW Athletic Club                                  | Key out of credits
+   💳 [756/1026] City Of Palmdale Parks and Recreation Department   | Key out of credits
+   💳 [757/1026] Big 5 Sporting Goods                               | Key out of credits
+   💳 [758/1026] Joshua Hills Park                                  | Key out of credits
+   💳 [760/1026] Foothill Park                                      | Key out of credits
+   💳 [759/1026] Yellen Dog Park                                    | Key out of credits
+   💳 [761/1026] Melville J. Courson Park                           | Key out of credits
+   💳 [762/1026] Excel Tennis                                       | Key out of credits
+   💳 [763/1026] DICK'S Sporting Goods                              | Key out of credits
+   💳 [764/1026] Antelope Valley Country Club                       | Key out of credits
+   💳 [765/1026] Palmdale Oasis Park Recreation Center              | Key out of credits
+   💳 [766/1026] DICK'S Sporting Goods                              | Key out of credits
+   💳 [768/1026] William J. McAdam Park                             | Key out of credits
+   💳 [767/1026] Claremont Manor Park                               | Key out of credits
+   💳 [769/1026] Desert Sands Park                                  | Key out of credits
+   💳 [770/1026] Sherwood Tennis Center                             | Key out of credits
+   💳 [771/1026] Arnie Quinones Park                                | Key out of credits
+   💳 [773/1026] Newport News Parks, Recreation & Tourism           | Key out of credits
+   💳 [772/1026] Pelona Vista Park                                  | Key out of credits
+   💳 [774/1026] Newport News Circuit Court                         | Key out of credits
+   💳 [776/1026] DICK'S Sporting Goods                              | Key out of credits
+   💳 [775/1026] Play It Again Sports                               | Key out of credits
+   💳 [777/1026] Beechwood Recreation Association                   | Key out of credits
+   💳 [779/1026] Denbigh Community Center                           | Key out of credits
+   💳 [778/1026] Hilton Tennis Club Inc                             | Key out of credits
+   💳 [781/1026] An Achievable Dream Tennis Center                  | Key out of credits
+   💳 [780/1026] Huntington Park Tennis Center                      | Key out of credits
+   💳 [782/1026] Hampton Roads Pickleball Club                      | Key out of credits
+   💳 [785/1026] M&M Tennis Services                                | Key out of credits
+   💳 [783/1026] Indoor Tennis Court                                | Key out of credits
+   💳 [784/1026] Jose P. Rizal Community Center                     | Key out of credits
+   💳 [786/1026] Bosse Sports                                       | Key out of credits
+   💳 [787/1026] Play It Again Sports                               | Key out of credits
+   💳 [789/1026] PGA TOUR Superstore Peabody                        | Key out of credits
+   💳 [788/1026] New Canaan Field Club                              | Key out of credits
+   💳 [790/1026] PGA TOUR Superstore Natick                         | Key out of credits
+   💳 [792/1026] DICK'S Sporting Goods                              | Key out of credits
+   💳 [793/1026] Cosumnes CSD Parks & Recreation Department         | Key out of credits
+   💳 [791/1026] Hardscrabble Club                                  | Key out of credits
+   💳 [797/1026] Courtside Tennis & Pickleball - Sacramento         | Key out of credits
+   💳 [794/1026] Big 5 Sporting Goods                               | Key out of credits
+   💳 [796/1026] Park Terrace Swimming & Tennis                     | Key out of credits
+   💳 [798/1026] Spare Time Indoors Pickleball and Tennis           | Key out of credits
+   💳 [795/1026] King-Lincoln Park                                  | Key out of credits
+   💳 [800/1026] Pedersen Park                                      | Key out of credits
+   💳 [799/1026] Pinkerton Park                                     | Key out of credits
+   💳 [801/1026] Batey Park                                         | Key out of credits
+   💳 [802/1026] David A. Simpson Park                              | Key out of credits
+   💳 [803/1026] Stephenson Family Park                             | Key out of credits
+   💳 [804/1026] Van Doren Park                                     | Key out of credits
+   💳 [805/1026] Oasis Recreation Center                            | Key out of credits
+   💳 [806/1026] Elaine and Jim Wright Park                         | Key out of credits
+   💳 [808/1026] Jan Rau Community Park                             | Key out of credits
+   💳 [809/1026] Courtside Tennis & Pickleball - Gold River         | Key out of credits
+   💳 [807/1026] Oasis Park Elk Grove CA                            | Key out of credits
+   💳 [810/1026] Laguna Creek Sports Club                           | Key out of credits
+   💳 [811/1026] Wackman Park                                       | Key out of credits
+   💳 [812/1026] Mix Park                                           | Key out of credits
+   💳 [813/1026] A1 STRINGING ONTARIO                               | Key out of credits
+   💳 [814/1026] Rancho Cucamonga Superior Court                    | Key out of credits
+   💳 [815/1026] DICK'S Sporting Goods                              | Key out of credits
+   💳 [817/1026] Gillenwater Park & Tennis Complex                  | Key out of credits
+   💳 [816/1026] Big 5 Sporting Goods                               | Key out of credits
+   💳 [818/1026] Cooper Tennis Complex                              | Key out of credits
+   💳 [820/1026] Tennis Courts                                      | Key out of credits
+   💳 [819/1026] Harry Taylor Tennis Center                         | Key out of credits
+   💳 [822/1026] Big 5 Sporting Goods                               | Key out of credits
+   💳 [821/1026] Central Texas Athletic Club                        | Key out of credits
+   💳 [823/1026] Play it Again Sports                               | Key out of credits
+   💳 [825/1026] Pasadena Park Maintenance                          | Key out of credits
+   💳 [826/1026] Human Services & Recreation Department: City of Pa | Key out of credits
+   💳 [824/1026] Pasadena Table Tennis Club                         | Key out of credits
+   💳 [827/1026] Hugo Reid Park                                     | Key out of credits
+   💳 [828/1026] Padel Point                                        | Key out of credits
+   💳 [829/1026] Old Fort Park Tennis Courts                        | Key out of credits
+   💳 [830/1026] Boro Pickleball                                    | Key out of credits
+   💳 [831/1026] Apex Pickleball                                    | Key out of credits
+   💳 [833/1026] Adams Tennis Complex                               | Key out of credits
+   💳 [832/1026] Blackman Community Club                            | Key out of credits
+   💳 [835/1026] Bush Tennis Center                                 | Key out of credits
+   💳 [834/1026] SportsCom                                          | Key out of credits
+   💳 [836/1026] U-Padel Woodlands                                  | Key out of credits
+   💳 [837/1026] RGV Padel Club                                     | Key out of credits
+   💳 [838/1026] Padel 956                                          | Key out of credits
+   💳 [839/1026] Boylan Tennis Center                               | Key out of credits
+   💳 [844/1026] Trumbull Racquet Club | Trumbull Tennis            | Key out of credits
+   💳 [840/1026] Fairfield Tennis                                   | Key out of credits
+   💳 [841/1026] Patterson Park Community Center                    | Key out of credits
+   💳 [845/1026] Milford Indoor Tennis                              | Key out of credits
+   💳 [842/1026] Erie Canal Pickleball                              | Key out of credits
+   💳 [843/1026] The Sports Haus                                    | Key out of credits
+   💳 [846/1026] SquashBridge                                       | Key out of credits
+   💳 [847/1026] Serve & Smash Pickleball & Padel Club              | Key out of credits
+   💳 [852/1026] Surprise Tennis & Racquet Complex                  | Key out of credits
+   💳 [850/1026] Went Field                                         | Key out of credits
+   💳 [848/1026] Patterson Park                                     | Key out of credits
+   💳 [853/1026] Westport Longshore Club Park                       | Key out of credits
+   💳 [849/1026] Westport Tennis Club                               | Key out of credits
+   💳 [851/1026] Bridgeport Parks & Recreation                      | Key out of credits
+   💳 [854/1026] Ace Pickleball Club                                | Key out of credits
+   💳 [855/1026] Quail Run Racquet Club                             | Key out of credits
+   💳 [856/1026] Dayton Metro Pickleball                            | Key out of credits
+   💳 [857/1026] OC Sports Equipment                                | Key out of credits
+   💳 [859/1026] Waco Regional Tennis & Fitness Center              | Key out of credits
+   💳 [858/1026] Palisades Tennis Club                              | Key out of credits
+   💳 [860/1026] Laguna Woods Village Pickleball & Paddle Tennis Co | Key out of credits
+   💳 [861/1026] The Rally Shop                                     | Key out of credits
+   💳 [862/1026] Laguna Niguel Racquet Club                         | Key out of credits
+   💳 [863/1026] B&T Racket                                         | Key out of credits
+   💳 [864/1026] South Lake Tennis Club                             | Key out of credits
+   💳 [865/1026] Nellie Gail Ranch Tennis Club                      | Key out of credits
+   💳 [866/1026] Tennis Academy at Woodbridge                       | Key out of credits
+   💳 [867/1026] Newport Beach Tennis Club                          | Key out of credits
+   💳 [869/1026] Zaino Tennis Courts Inc                            | Key out of credits
+   💳 [868/1026] Orange County Table Tennis Academy                 | Key out of credits
+   💳 [870/1026] Anaheim Tennis and Pickleball Center               | Key out of credits
+   💳 [871/1026] Costa Mesa Tennis Center                           | Key out of credits
+   💳 [872/1026] Tustin Hills Racquet Club                          | Key out of credits
+   💳 [873/1026] The Tennis and Pickleball Club at Newport Beach    | Key out of credits
+   💳 [874/1026] Tustin Sports Park                                 | Key out of credits
+   💳 [877/1026] City of Fullerton Parks & Rec                      | Key out of credits
+   💳 [875/1026] iTennis La Habra                                   | Key out of credits
+   💳 [876/1026] Play It Again Sports                               | Key out of credits
+   💳 [878/1026] Modern Tennis                                      | Key out of credits
+   💳 [879/1026] Fullerton Tennis Center                            | Key out of credits
+   💳 [880/1026] Fullerton Community Center                         | Key out of credits
+   💳 [881/1026] Academy Sports + Outdoors                          | Key out of credits
+   💳 [882/1026] Bash Pickleball Club                               | Key out of credits
+   💳 [883/1026] Eastside Tennis and Fitness Club                   | Key out of credits
+   💳 [885/1026] LEGIO GP PADEL WORLD                               | Key out of credits
+   💳 [884/1026] Coral Springs Park & Recreation                    | Key out of credits
+   💳 [886/1026] Cypress Park Tennis Center                         | Key out of credits
+   💳 [887/1026] Dixson Pickleball Club                             | Key out of credits
+   💳 [888/1026] Dunham's Sports                                    | Key out of credits
+   💳 [890/1026] Paddle Tap Pickleball                              | Key out of credits
+   💳 [889/1026] Westlake Sports Center                             | Key out of credits
+   💳 [891/1026] Tennis Center of Coral Springs                     | Key out of credits
+   💳 [893/1026] Warren Community Center                            | Key out of credits
+   💳 [892/1026] USTA National Campus                               | Key out of credits
+   💳 [894/1026] Pickleball America                                 | Key out of credits
+   💳 [895/1026] Elmora Racquet Club                                | Key out of credits
+   💳 [896/1026] Pickleball Courts                                  | Key out of credits
+   💳 [897/1026] Greater Vallejo Tennis Association                 | Key out of credits
+   💳 [898/1026] Big 5 Sporting Goods                               | Key out of credits
+   💳 [899/1026] Frindsbury Tennis and Padel Club                   | Key out of credits
+   💳 [901/1026] PadelStars Folkestone                              | Key out of credits
+   💳 [902/1026] Smash Padel Whitstable                             | Key out of credits
+   💳 [900/1026] Play Padel Club : Deal                             | Key out of credits
+   💳 [903/1026] Square One Padel Club                              | Key out of credits
+   💳 [904/1026] Sevenoaks Padel Club                               | Key out of credits
+   💳 [906/1026] Greater Vallejo Recreation District                | Key out of credits
+   💳 [905/1026] GVRD Sports Gym                                    | Key out of credits
+   💳 [907/1026] John F Cunningham Aquatic Complex                  | Key out of credits
+   💳 [908/1026] Setterquist Park                                   | Key out of credits
+   💳 [909/1026] Glen Cove School Park                              | Key out of credits
+   💳 [910/1026] Glen Cove Tennis Courts                            | Key out of credits
+   💳 [911/1026] Amador Park Tennis Courts                          | Key out of credits
+   💳 [912/1026] Westwood Tennis Center                             | Key out of credits
+   💳 [913/1026] Lexington County Tennis Complex                    | Key out of credits
+   💳 [915/1026] DD&J JUNIOR TENNIS FOUNDATION                      | Key out of credits
+   💳 [914/1026] Saluda Shoals Tennis Courts                        | Key out of credits
+   💳 [916/1026] Children's Wonderland Park                         | Key out of credits
+   💳 [917/1026] Cayce Pickleball Complex                           | Key out of credits
+   💳 [918/1026] Carolina Tennis Center                             | Key out of credits
+   💳 [919/1026] Greenview Park                                     | Key out of credits
+   💳 [920/1026] The Creek at Mungo Park Tennis & Swim              | Key out of credits
+   💳 [921/1026] Amador Park                                        | Key out of credits
+   💳 [922/1026] The Courts at Saluda Shoals Park                   | Key out of credits
+   💳 [923/1026] Carolina Indoor Tennis Center                      | Key out of credits
+   💳 [924/1026] D's Tennis & Fitness, LLC                          | Key out of credits
+   💳 [925/1026] Break Point Cola                                   | Key out of credits
+   💳 [927/1026] Richland County Tennis Center                      | Key out of credits
+   💳 [926/1026] Cayce Tennis & Fitness Center                      | Key out of credits
+   💳 [928/1026] Columbia Tennis Center                             | Key out of credits
+   💳 [929/1026] USC Recreational Tennis Courts                     | Key out of credits
+   💳 [930/1026] Earlewood Park                                     | Key out of credits
+   💳 [931/1026] Southeast Park                                     | Key out of credits
+   💳 [932/1026] Pickleball Athletic Club - PAC                     | Key out of credits
+   💳 [933/1026] South Coast Racquet Club Apartments                | Key out of credits
+   💳 [934/1026] DICK'S Sporting Goods                              | Key out of credits
+   💳 [935/1026] Play It Again Sports - Topeka, KS                  | Key out of credits
+   💳 [936/1026] Academy Sports + Outdoors                          | Key out of credits
+   💳 [937/1026] Big 5 Sporting Goods                               | Key out of credits
+   💳 [938/1026] Westlake Athletic Club                             | Key out of credits
+   💳 [939/1026] Tennis Shop                                        | Key out of credits
+   💳 [940/1026] Washburn University Tennis Courts                  | Key out of credits
+   💳 [941/1026] Ritter Stringing Services                          | Key out of credits
+   💳 [942/1026] Topeka Country Club                                | Key out of credits
+   💳 [943/1026] TCC Tennis Center                                  | Key out of credits
+   💳 [944/1026] Shawnee County Parks Admin Office                  | Key out of credits
+   💳 [945/1026] Matrix Club                                        | Key out of credits
+   💳 [946/1026] Central Park Community Center                      | Key out of credits
+   💳 [947/1026] Family Park - Pickbleball Courts, Playground + Aqu | Key out of credits
+   💳 [948/1026] Jayhawk Tennis Center                              | Key out of credits
+   💳 [949/1026] Genesis Health Clubs - Topeka Southwest            | Key out of credits
+   💳 [950/1026] Kossover Tennis Center                             | Key out of credits
+   💳 [951/1026] Lifetime Activities - Santa Clara                  | Key out of credits
+   💳 [952/1026] Hughes Pickleball Courts                           | Key out of credits
+   💳 [953/1026] Play It Again Sports                               | Key out of credits
+   💳 [954/1026] Sport Court of Southern California                 | Key out of credits
+   💳 [955/1026] Rancho Tapo Community Park                         | Key out of credits
+   💳 [956/1026] Deerhill Park                                      | Key out of credits
+   💳 [957/1026] Rancho Simi Recreation & Park                      | Key out of credits
+   💳 [958/1026] Rancho Simi Recreation and Park District Activity  | Key out of credits
+   💳 [959/1026] Sports Center                                      | Key out of credits
+   💳 [960/1026] Hook Community Center                              | Key out of credits
+   💳 [961/1026] Big 5 Sporting Goods                               | Key out of credits
+   💳 [962/1026] DICK'S Sporting Goods                              | Key out of credits
+   💳 [963/1026] Doris Davies Park                                  | Key out of credits
+   💳 [965/1026] Eagle Ranch Park                                   | Key out of credits
+   💳 [964/1026] Rancho Madera Community Park                       | Key out of credits
+   💳 [966/1026] Victorville Mojave Riverwalk                       | Key out of credits
+   💳 [968/1026] Hook Park                                          | Key out of credits
+   💳 [970/1026] Berkeley Tennis Club                               | Key out of credits
+   💳 [967/1026] Rancho Simi Community Park                         | Key out of credits
+   💳 [969/1026] Eva Dell Park                                      | Key out of credits
+   💳 [971/1026] Mill Creek Park Tennis Courts                      | Key out of credits
+   💳 [973/1026] Padel + Pickle                                     | Key out of credits
+   💳 [972/1026] Sports Activity Center                             | Key out of credits
+   💳 [975/1026] Beaumont Municipal Tennis Center                   | Key out of credits
+   💳 [977/1026] Play It Again Sports                               | Key out of credits
+   💳 [976/1026] DICK'S Sporting Goods                              | Key out of credits
+   💳 [974/1026] Apex Pickleball Coaching                           | Key out of credits
+   💳 [978/1026] Independence Athletic Complex                      | Key out of credits
+   💳 [979/1026] APEX Sports Hub                                    | Key out of credits
+   💳 [980/1026] Racquetball and Fitness Center                     | Key out of credits
+   💳 [981/1026] Apex Pickleball Courts                             | Key out of credits
+   💳 [982/1026] Apex Tennis Center                                 | Key out of credits
+   💳 [985/1026] Smash Padel                                        | Key out of credits
+   💳 [983/1026] Downtown Recreation Center                         | Key out of credits
+   💳 [984/1026] Halecrest Park                                     | Key out of credits
+   💳 [986/1026] North Ridge Racket & Paddle                        | Key out of credits
+   💳 [987/1026] Lakewood Park Tennis Center                        | Key out of credits
+   💳 [988/1026] Mondo Padel                                        | Key out of credits
+   💳 [989/1026] Tennis                                             | Key out of credits
+   💳 [990/1026] NSU Tennis Courts                                  | Key out of credits
+   💳 [993/1026] Rochester Tennis League                            | Key out of credits
+   💳 [992/1026] Tennis On The Go                                   | Key out of credits
+   💳 [994/1026] Pierpont Racquet Club                              | Key out of credits
+   💳 [991/1026] South Florida Pickleball Academy                   | Key out of credits
+   💳 [995/1026] Thrive                                             | Key out of credits
+   💳 [997/1026] Cooke Park                                         | Key out of credits
+   💳 [996/1026] Scott Perlstein Tennis Enterprises                 | Key out of credits
+   💳 [998/1026] Tennis Courts | Los Prados Park                    | Key out of credits
+   💳 [1001/1026] RCTC Field House                                   | Key out of credits
+   💳 [1000/1026] Slatterly Park                                     | Key out of credits
+   💳 [999/1026] Tennis Courts | Central Park                       | Key out of credits
+   💳 [1002/1026] Cook Park Pickleball Court                         | Key out of credits
+   💳 [1003/1026] Rochester Regional Sports Center                   | Key out of credits
+   💳 [1004/1026] Tennis Courts | Beresford Park                     | Key out of credits
+   💳 [1005/1026] Chip Shots                                         | Key out of credits
+   💳 [1006/1026] Rochester Tennis Connection                        | Key out of credits
+   💳 [1007/1026] Tennis/Pickleball Courts                           | Key out of credits
+   💳 [1010/1026] Scheels                                            | Key out of credits
+   💳 [1008/1026] Rochester Athletic Club                            | Key out of credits
+   💳 [1009/1026] Rochester Tennis Connection Outdoor Site           | Key out of credits
+   💳 [1011/1026] Bamford Sports Complex                             | Key out of credits
+   💳 [1012/1026] For Life Tennis Academy [Spokane]                  | Key out of credits
+   💳 [1013/1026] PARKFIT Athletic Club, Central Park                | Key out of credits
+   💳 [1014/1026] Power Pickleball Club                              | Key out of credits
+   💳 [1016/1026] H2O Zone Splash Pad                                | Key out of credits
+   💳 [1015/1026] Tuscaloosa Tennis Center                           | Key out of credits
+   💳 [1017/1026] Elite Tennis Academy                               | Key out of credits
+   💳 [1018/1026] Westland Rotary Canine Corral                      | Key out of credits
+   💳 [1019/1026] Dunham's Sports                                    | Key out of credits
+   💳 [1020/1026] Hix Park                                           | Key out of credits
+   💳 [1021/1026] Jefferson-Barns Community Vitality Center          | Key out of credits
+   💳 [1022/1026] Plymouth Pickleball Club                           | Key out of credits
+   💳 [1024/1026] Curtis Woods Park                                  | Key out of credits
+   💳 [1023/1026] Pick US Pickleball Club                            | Key out of credits
+   💳 [1026/1026] Hines Park of Westland                             | Key out of credits
+   💳 [1025/1026] Tattan Park                                        | Key out of credits
+   ✅ [6/1026] Wagon Wheel Tennis and Pickleball Center           |  0 pages | 0 words
+   ✅ [13/1026] The Courthouse                                     | 10 pages | 6,172 words
+
+   💾 Checkpoint saved: 20/1026 courts processed
+
+
+======================================================================
+
+🎉 ENRICHMENT COMPLETE!
+
+======================================================================
+
+📊 FINAL STATISTICS:
+
+   Total courts: 1026
+   ✅ Successfully enriched: 20
+   ❌ Failed: 0
+   📄 Total pages scraped: 174
+   📝 Total words: 82,944
+   📈 Avg pages/court: 8.7
+   📈 Avg words/court: 4147
+   ⏱️  Total time: 1.6 minutes
+
+💾 OUTPUT FILES:
+
+   Master: usa_padel_courts_ENRICHED_INCREMENTAL.json
+   Size: 1.8 MB
+   Progress: progress.json
+
+======================================================================
+

@@ -1,0 +1,45 @@
+---
+description: Conductor — Architect agent (system design, API contract)
+globs: ["**/*"]
+alwaysApply: false
+---
+
+# Conductor: Architect
+
+## Role
+Design system flow, data models, and API contracts. Bridge Python pipelines and Next.js app.
+
+## Inputs
+- Read: `.cursor/artifacts/SPEC.md`
+- Context: `padel-finder/`, `padel-passport-preview/`, existing `scrape_*.py`
+
+## Outputs
+- Write: `.cursor/artifacts/ARCHITECTURE.md`
+- Write: `.cursor/artifacts/API_CONTRACT.json`
+- Update: `.cursor/artifacts/HANDOFF.md` (From: Architect, To: Python or Frontend)
+
+## Architecture doc structure
+```markdown
+# Architecture — [Feature]
+## Data flow
+## Pipeline → API → Frontend
+## Schema / types
+## Dependencies
+```
+
+## API_CONTRACT.json structure
+```json
+{
+  "endpoints": [
+    { "path": "/api/...", "method": "GET", "query": {}, "response": {} }
+  ]
+}
+```
+
+## Constraints
+- Python outputs to `output/` or structured JSON
+- Next.js API routes in `app/api/`
+- Follow existing patterns in repo
+
+## On completion
+Update HANDOFF.md: done items, next step = "Run @python or @frontend"

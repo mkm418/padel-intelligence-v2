@@ -1,0 +1,624 @@
+{
+  "meta": {
+    "name": "PadelPassport Tablet Design Specification",
+    "version": "1.0.0",
+    "author": "UI/UX Design System",
+    "created": "2026-01-26",
+    "description": "Comprehensive tablet optimization spec for PadelPassport app (768px-1199px)",
+    "designPrinciples": [
+      "Maximize screen real estate with 2-column layouts",
+      "Hybrid navigation combining sidebar and bottom tabs",
+      "Larger touch targets optimized for finger interaction",
+      "Reduced scrolling through visible information density",
+      "Maintain visual consistency with mobile design language"
+    ]
+  },
+
+  "breakpoints": {
+    "tablet": {
+      "min": "768px",
+      "max": "1199px",
+      "tailwindPrefix": "md:",
+      "orientations": {
+        "portrait": {
+          "width": "768px-900px",
+          "columns": 2,
+          "sidebarWidth": "280px"
+        },
+        "landscape": {
+          "width": "900px-1199px",
+          "columns": 3,
+          "sidebarWidth": "320px"
+        }
+      }
+    }
+  },
+
+  "navigation": {
+    "pattern": "hybrid-sidebar-with-contextual-header",
+    "description": "Collapsible sidebar on left + contextual header actions",
+    
+    "sidebar": {
+      "width": {
+        "expanded": "280px",
+        "collapsed": "72px",
+        "tailwind": {
+          "expanded": "md:w-70",
+          "collapsed": "md:w-18"
+        }
+      },
+      "position": "fixed left-0 top-0 h-full",
+      "background": "bg-slate-900/95 backdrop-blur-xl",
+      "border": "border-r border-slate-800",
+      "zIndex": "z-40",
+      "transition": "transition-all duration-300 ease-in-out",
+      
+      "items": [
+        {
+          "id": "courts",
+          "icon": "🏟️",
+          "label": "Courts",
+          "activeClass": "bg-emerald-600 text-white",
+          "inactiveClass": "text-slate-400 hover:bg-slate-800 hover:text-white"
+        },
+        {
+          "id": "players",
+          "icon": "👥",
+          "label": "Players",
+          "activeClass": "bg-emerald-600 text-white",
+          "inactiveClass": "text-slate-400 hover:bg-slate-800 hover:text-white"
+        },
+        {
+          "id": "coaches",
+          "icon": "🎓",
+          "label": "Coaches",
+          "activeClass": "bg-emerald-600 text-white",
+          "inactiveClass": "text-slate-400 hover:bg-slate-800 hover:text-white"
+        },
+        {
+          "id": "tournaments",
+          "icon": "🏆",
+          "label": "Events",
+          "activeClass": "bg-emerald-600 text-white",
+          "inactiveClass": "text-slate-400 hover:bg-slate-800 hover:text-white"
+        },
+        {
+          "id": "deals",
+          "icon": "💰",
+          "label": "Deals",
+          "activeClass": "bg-emerald-600 text-white",
+          "inactiveClass": "text-slate-400 hover:bg-slate-800 hover:text-white"
+        }
+      ],
+      
+      "itemStyles": {
+        "expanded": "flex items-center gap-3 px-4 py-3 rounded-xl mx-2 my-1 text-base font-medium",
+        "collapsed": "flex items-center justify-center w-12 h-12 rounded-xl mx-auto my-2 text-xl"
+      },
+      
+      "logo": {
+        "expanded": {
+          "container": "px-4 py-6 border-b border-slate-800",
+          "icon": "text-3xl",
+          "text": "text-xl font-bold text-white ml-2"
+        },
+        "collapsed": {
+          "container": "py-6 flex justify-center border-b border-slate-800",
+          "icon": "text-2xl"
+        }
+      },
+      
+      "toggleButton": {
+        "position": "absolute -right-3 top-8",
+        "size": "w-6 h-6",
+        "style": "bg-slate-700 rounded-full flex items-center justify-center text-xs text-slate-400 hover:bg-emerald-600 hover:text-white cursor-pointer shadow-lg border border-slate-600"
+      }
+    },
+    
+    "header": {
+      "height": "64px",
+      "tailwind": "h-16",
+      "position": "sticky top-0",
+      "background": "bg-black/95 backdrop-blur-xl",
+      "border": "border-b border-slate-800",
+      "padding": "px-6",
+      "layout": "flex items-center justify-between",
+      
+      "leftContent": "flex items-center gap-4",
+      "centerContent": "flex-1 max-w-md mx-auto",
+      "rightContent": "flex items-center gap-3",
+      
+      "searchBar": {
+        "visible": true,
+        "width": "max-w-md w-full",
+        "style": "px-4 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder:text-slate-500"
+      }
+    },
+    
+    "mobileTabBar": {
+      "hidden": "md:hidden",
+      "description": "Hide bottom tab bar on tablet, use sidebar instead"
+    }
+  },
+
+  "layout": {
+    "mainContainer": {
+      "description": "Content area that accounts for sidebar",
+      "tailwind": {
+        "mobile": "ml-0",
+        "tablet": "md:ml-70",
+        "tabletCollapsed": "md:ml-18"
+      },
+      "transition": "transition-all duration-300"
+    },
+    
+    "contentWrapper": {
+      "maxWidth": "max-w-6xl",
+      "padding": {
+        "mobile": "px-4",
+        "tablet": "md:px-8"
+      },
+      "margin": "mx-auto"
+    },
+    
+    "twoColumnLayout": {
+      "description": "Master-detail pattern for lists with detail views",
+      "grid": "md:grid md:grid-cols-12 md:gap-6",
+      
+      "masterPanel": {
+        "columns": "md:col-span-5 lg:col-span-4",
+        "style": "md:border-r md:border-slate-800 md:pr-6",
+        "maxHeight": "md:max-h-[calc(100vh-80px)]",
+        "overflow": "md:overflow-y-auto"
+      },
+      
+      "detailPanel": {
+        "columns": "md:col-span-7 lg:col-span-8",
+        "style": "md:pl-2",
+        "sticky": "md:sticky md:top-20"
+      }
+    },
+    
+    "splitView": {
+      "description": "Side-by-side panels for map + list views",
+      "grid": "md:grid md:grid-cols-2 md:gap-4",
+      
+      "leftPanel": {
+        "height": "md:h-[calc(100vh-120px)]",
+        "overflow": "md:overflow-y-auto"
+      },
+      
+      "rightPanel": {
+        "height": "md:h-[calc(100vh-120px)]",
+        "sticky": "md:sticky md:top-20"
+      }
+    }
+  },
+
+  "components": {
+    "cardGrid": {
+      "description": "Grid layouts for cards (courts, cities, players)",
+      
+      "courtsGrid": {
+        "mobile": "grid-cols-1",
+        "tablet": "md:grid-cols-2",
+        "largTablet": "lg:grid-cols-3",
+        "gap": "gap-4",
+        "tailwind": "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+      },
+      
+      "citiesGrid": {
+        "mobile": "grid-cols-2",
+        "tablet": "md:grid-cols-3",
+        "largeTablet": "lg:grid-cols-4",
+        "gap": "gap-3",
+        "tailwind": "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3"
+      },
+      
+      "playersGrid": {
+        "mobile": "grid-cols-1",
+        "tablet": "md:grid-cols-2",
+        "gap": "gap-3",
+        "tailwind": "grid grid-cols-1 md:grid-cols-2 gap-3"
+      },
+      
+      "statsGrid": {
+        "mobile": "grid-cols-3",
+        "tablet": "md:grid-cols-4 lg:grid-cols-6",
+        "gap": "gap-3",
+        "tailwind": "grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3"
+      }
+    },
+    
+    "courtCard": {
+      "mobile": {
+        "layout": "flex items-center gap-3",
+        "image": "w-12 h-12 rounded-lg",
+        "padding": "p-3"
+      },
+      "tablet": {
+        "layout": "flex flex-col",
+        "image": "w-full h-32 rounded-xl mb-3",
+        "padding": "p-4",
+        "tailwind": "md:flex-col md:p-4"
+      },
+      "hover": "hover:bg-slate-700/50 hover:border-emerald-500/30 transition-all duration-200"
+    },
+    
+    "playerCard": {
+      "mobile": {
+        "layout": "flex items-center gap-3",
+        "avatar": "w-11 h-11 rounded-xl",
+        "padding": "p-3"
+      },
+      "tablet": {
+        "layout": "flex items-center gap-4",
+        "avatar": "w-14 h-14 rounded-xl",
+        "padding": "p-4",
+        "additionalInfo": true,
+        "tailwind": "md:gap-4 md:p-4"
+      },
+      "additionalTabletContent": [
+        "matchCount",
+        "lastActive",
+        "confidenceBar"
+      ]
+    },
+    
+    "tournamentCard": {
+      "mobile": {
+        "layout": "flex gap-3",
+        "dateBox": "w-12",
+        "padding": "p-3"
+      },
+      "tablet": {
+        "layout": "flex gap-4",
+        "dateBox": "w-16",
+        "padding": "p-4",
+        "showImage": true,
+        "image": "w-24 h-24 rounded-xl object-cover flex-shrink-0",
+        "tailwind": "md:gap-4 md:p-4"
+      }
+    }
+  },
+
+  "modals": {
+    "description": "Modal behavior changes for tablet",
+    
+    "default": {
+      "mobile": {
+        "position": "fixed inset-0",
+        "style": "full-screen takeover"
+      },
+      "tablet": {
+        "position": "fixed inset-0 flex items-center justify-center",
+        "overlay": "bg-black/80 backdrop-blur-sm",
+        "content": {
+          "width": "max-w-2xl w-[70%]",
+          "maxHeight": "max-h-[85vh]",
+          "borderRadius": "rounded-2xl",
+          "background": "bg-slate-900",
+          "border": "border border-slate-700",
+          "shadow": "shadow-2xl",
+          "overflow": "overflow-hidden"
+        },
+        "tailwind": "md:max-w-2xl md:w-[70%] md:max-h-[85vh] md:rounded-2xl md:border md:border-slate-700"
+      }
+    },
+    
+    "playerProfile": {
+      "tablet": {
+        "width": "max-w-xl w-[65%]",
+        "layout": "grid grid-cols-1",
+        "header": "sticky top-0 bg-slate-900 z-10 px-6 py-4 border-b border-slate-800"
+      }
+    },
+    
+    "clubDetails": {
+      "tablet": {
+        "width": "max-w-3xl w-[75%]",
+        "layout": "grid md:grid-cols-2 gap-6",
+        "leftColumn": "space-y-4",
+        "rightColumn": "space-y-4"
+      }
+    },
+    
+    "closeButton": {
+      "mobile": "text-slate-400 text-sm",
+      "tablet": {
+        "position": "absolute top-4 right-4",
+        "size": "w-10 h-10",
+        "style": "rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-slate-700 hover:text-white",
+        "tailwind": "md:absolute md:top-4 md:right-4 md:w-10 md:h-10 md:rounded-full md:bg-slate-800"
+      }
+    }
+  },
+
+  "heroSection": {
+    "description": "Hero section optimizations for tablet",
+    
+    "mobile": {
+      "layout": "flex flex-col text-center",
+      "padding": "px-4 pt-8 pb-6"
+    },
+    
+    "tablet": {
+      "layout": "grid md:grid-cols-2 gap-8 items-center",
+      "padding": "px-8 py-12",
+      "leftColumn": {
+        "alignment": "text-left",
+        "content": ["badge", "heading", "subheading", "ctaButtons"]
+      },
+      "rightColumn": {
+        "content": ["statsCards", "quickChips", "illustration"],
+        "layout": "flex flex-col gap-6"
+      },
+      "statsGrid": {
+        "mobile": "grid-cols-3",
+        "tablet": "md:grid-cols-3",
+        "style": "gap-4"
+      },
+      "tailwind": {
+        "container": "md:grid md:grid-cols-2 md:gap-8 md:items-center md:px-8 md:py-12",
+        "leftCol": "md:text-left",
+        "rightCol": "md:flex md:flex-col md:gap-6"
+      }
+    }
+  },
+
+  "viewModes": {
+    "courtsTab": {
+      "mobile": {
+        "toggle": "horizontal pill buttons",
+        "layout": "stacked"
+      },
+      "tablet": {
+        "toggle": "segmented control in header",
+        "layout": {
+          "search": "2-column (list + detail preview)",
+          "map": "split view (map 60% + list 40%)",
+          "nearby": "2-column grid"
+        },
+        "tailwind": {
+          "searchLayout": "md:grid md:grid-cols-12 md:gap-6",
+          "mapLayout": "md:grid md:grid-cols-5 md:gap-4",
+          "mapPanel": "md:col-span-3",
+          "listPanel": "md:col-span-2"
+        }
+      }
+    },
+    
+    "playersTab": {
+      "mobile": {
+        "filters": "collapsible panel",
+        "list": "single column"
+      },
+      "tablet": {
+        "filters": {
+          "layout": "horizontal bar with dropdowns",
+          "position": "sticky below header",
+          "style": "bg-slate-900/95 backdrop-blur-xl py-3 px-6 border-b border-slate-800"
+        },
+        "list": "2-column grid",
+        "leaderboard": {
+          "position": "sidebar overlay or inline",
+          "width": "w-80"
+        },
+        "tailwind": {
+          "filterBar": "md:flex md:items-center md:gap-4 md:flex-wrap",
+          "playerGrid": "md:grid md:grid-cols-2 md:gap-4"
+        }
+      }
+    },
+    
+    "tournamentsTab": {
+      "mobile": {
+        "layout": "single column list"
+      },
+      "tablet": {
+        "layout": "2-column with filters sidebar",
+        "filtersSidebar": {
+          "width": "w-64",
+          "position": "sticky left"
+        },
+        "eventsList": {
+          "columns": "flex-1",
+          "grid": "grid grid-cols-1 lg:grid-cols-2 gap-4"
+        }
+      }
+    }
+  },
+
+  "spacing": {
+    "description": "Increased spacing for tablet",
+    "mobile": {
+      "sectionPadding": "py-4",
+      "cardGap": "gap-2",
+      "contentPadding": "px-4"
+    },
+    "tablet": {
+      "sectionPadding": "md:py-6",
+      "cardGap": "md:gap-4",
+      "contentPadding": "md:px-6 lg:px-8"
+    }
+  },
+
+  "typography": {
+    "description": "Slightly larger text for tablet readability",
+    "headings": {
+      "h1": {
+        "mobile": "text-3xl",
+        "tablet": "md:text-4xl lg:text-5xl"
+      },
+      "h2": {
+        "mobile": "text-lg",
+        "tablet": "md:text-xl lg:text-2xl"
+      },
+      "h3": {
+        "mobile": "text-base",
+        "tablet": "md:text-lg"
+      }
+    },
+    "body": {
+      "default": {
+        "mobile": "text-sm",
+        "tablet": "md:text-base"
+      },
+      "small": {
+        "mobile": "text-xs",
+        "tablet": "md:text-sm"
+      }
+    }
+  },
+
+  "interactiveElements": {
+    "buttons": {
+      "primary": {
+        "mobile": "py-4 px-6 text-base",
+        "tablet": "md:py-3 md:px-8 md:text-base",
+        "minWidth": "md:min-w-[140px]"
+      },
+      "secondary": {
+        "mobile": "py-3 px-4",
+        "tablet": "md:py-2.5 md:px-6"
+      },
+      "icon": {
+        "mobile": "w-10 h-10",
+        "tablet": "md:w-12 md:h-12"
+      }
+    },
+    
+    "inputs": {
+      "default": {
+        "mobile": "px-3 py-3 text-sm",
+        "tablet": "md:px-4 md:py-3 md:text-base"
+      },
+      "search": {
+        "mobile": "w-full",
+        "tablet": "md:max-w-md"
+      }
+    },
+    
+    "dropdowns": {
+      "mobile": "full-width below input",
+      "tablet": {
+        "width": "md:w-64",
+        "position": "absolute left-0 top-full mt-2"
+      }
+    }
+  },
+
+  "weekAvailabilityView": {
+    "description": "Court availability calendar optimization",
+    "mobile": {
+      "dayPills": "horizontal scroll",
+      "slotsGrid": "grid-cols-4"
+    },
+    "tablet": {
+      "layout": "side-by-side",
+      "dayPills": {
+        "layout": "md:flex md:gap-2 md:justify-start",
+        "width": "md:w-16"
+      },
+      "slotsGrid": {
+        "columns": "md:grid-cols-6 lg:grid-cols-8",
+        "gap": "gap-2"
+      },
+      "tailwind": {
+        "container": "md:grid md:grid-cols-2 md:gap-6",
+        "daysColumn": "md:col-span-1",
+        "slotsColumn": "md:col-span-1"
+      }
+    }
+  },
+
+  "mapView": {
+    "description": "Map component optimization for tablet",
+    "mobile": {
+      "height": "h-[450px]"
+    },
+    "tablet": {
+      "height": "md:h-[calc(100vh-180px)]",
+      "layout": "sticky",
+      "controls": {
+        "position": "absolute bottom-4 left-4",
+        "style": "flex gap-2"
+      },
+      "tailwind": "md:sticky md:top-20 md:h-[calc(100vh-180px)]"
+    }
+  },
+
+  "animations": {
+    "description": "Adjusted animations for tablet",
+    "transitions": {
+      "sidebar": "transition-all duration-300 ease-in-out",
+      "modal": "transition-opacity duration-200 ease-out",
+      "cards": "transition-all duration-200"
+    },
+    "hover": {
+      "enabled": true,
+      "cards": "hover:scale-[1.02] hover:shadow-lg",
+      "buttons": "hover:brightness-110"
+    }
+  },
+
+  "responsiveClasses": {
+    "description": "Quick reference for common tablet-specific Tailwind classes",
+    
+    "hideOnMobile": "hidden md:block",
+    "hideOnTablet": "md:hidden",
+    "showOnTabletOnly": "hidden md:block lg:hidden",
+    
+    "layoutSwitches": {
+      "stackedToRow": "flex flex-col md:flex-row",
+      "rowToStacked": "flex flex-row md:flex-col",
+      "centerToLeft": "text-center md:text-left",
+      "fullToHalf": "w-full md:w-1/2"
+    },
+    
+    "gridSwitches": {
+      "1to2cols": "grid-cols-1 md:grid-cols-2",
+      "2to3cols": "grid-cols-2 md:grid-cols-3",
+      "3to4cols": "grid-cols-3 md:grid-cols-4"
+    }
+  },
+
+  "implementationPriority": {
+    "phase1": {
+      "name": "Core Layout",
+      "tasks": [
+        "Implement collapsible sidebar navigation",
+        "Add md:ml-70 to main content area",
+        "Hide bottom tab bar on tablet (md:hidden)",
+        "Update hero section to 2-column grid"
+      ]
+    },
+    "phase2": {
+      "name": "Card Grids",
+      "tasks": [
+        "Convert court list to 2-column grid",
+        "Convert player list to 2-column grid",
+        "Update city cards to 3-column grid",
+        "Enhance card hover states"
+      ]
+    },
+    "phase3": {
+      "name": "Modals",
+      "tasks": [
+        "Convert full-screen modals to centered overlays",
+        "Add 70% width constraint",
+        "Update close button positioning",
+        "Add modal backdrop blur"
+      ]
+    },
+    "phase4": {
+      "name": "View Modes",
+      "tasks": [
+        "Implement split-view for map mode",
+        "Add master-detail pattern for courts",
+        "Create horizontal filter bar for players",
+        "Optimize tournament layout"
+      ]
+    }
+  }
+}

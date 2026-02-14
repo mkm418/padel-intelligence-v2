@@ -1,0 +1,482 @@
+
+🎾 PLAYTOMIC GLOBAL PADEL COURTS SCRAPER
+======================================================================
+Regions to search: 87
+API: https://api.playtomic.io/v1/tenants
+======================================================================
+
+📍 [1/87] Spain_Madrid
+   Coordinates: 40.4168, -3.7038 | Radius: 100km
+   ✅ Found 254 venues, 230 padel, 230 new
+   📊 Running total: 230 unique padel clubs
+
+📍 [2/87] Spain_Barcelona
+   Coordinates: 41.3851, 2.1734 | Radius: 100km
+   ✅ Found 305 venues, 280 padel, 280 new
+   📊 Running total: 510 unique padel clubs
+
+📍 [3/87] Spain_Valencia
+   Coordinates: 39.4699, -0.3763 | Radius: 80km
+   ✅ Found 25 venues, 21 padel, 21 new
+   📊 Running total: 531 unique padel clubs
+
+📍 [4/87] Spain_Sevilla
+   Coordinates: 37.3891, -5.9845 | Radius: 80km
+   ✅ Found 65 venues, 64 padel, 64 new
+   📊 Running total: 595 unique padel clubs
+
+📍 [5/87] Spain_Malaga
+   Coordinates: 36.7213, -4.4214 | Radius: 80km
+   ✅ Found 62 venues, 58 padel, 58 new
+   📊 Running total: 653 unique padel clubs
+
+📍 [6/87] Spain_Bilbao
+   Coordinates: 43.263, -2.935 | Radius: 80km
+   ✅ Found 38 venues, 38 padel, 38 new
+   📊 Running total: 691 unique padel clubs
+
+📍 [7/87] Spain_Zaragoza
+   Coordinates: 41.6488, -0.8891 | Radius: 80km
+   ✅ Found 25 venues, 24 padel, 24 new
+   📊 Running total: 715 unique padel clubs
+
+📍 [8/87] Spain_Alicante
+   Coordinates: 38.3452, -0.481 | Radius: 80km
+   ✅ Found 56 venues, 48 padel, 43 new
+   📊 Running total: 758 unique padel clubs
+
+📍 [9/87] Spain_Murcia
+   Coordinates: 37.9922, -1.1307 | Radius: 80km
+   ✅ Found 39 venues, 35 padel, 2 new
+   📊 Running total: 760 unique padel clubs
+
+📍 [10/87] Spain_Palma
+   Coordinates: 39.5696, 2.6502 | Radius: 60km
+   ✅ Found 52 venues, 46 padel, 46 new
+   📊 Running total: 806 unique padel clubs
+   💾 Saved intermediate: playtomic_intermediate_10_20260125_223252.json
+
+📍 [11/87] Spain_Canarias
+   Coordinates: 28.1235, -15.4366 | Radius: 100km
+   ✅ Found 28 venues, 25 padel, 25 new
+   📊 Running total: 831 unique padel clubs
+
+📍 [12/87] Spain_North
+   Coordinates: 43.0, -6.0 | Radius: 150km
+   ✅ Found 18 venues, 18 padel, 18 new
+   📊 Running total: 849 unique padel clubs
+
+📍 [13/87] Spain_Center
+   Coordinates: 39.5, -3.0 | Radius: 150km
+   ✅ Found 235 venues, 212 padel, 6 new
+   📊 Running total: 855 unique padel clubs
+
+📍 [14/87] Portugal_Lisbon
+   Coordinates: 38.7223, -9.1393 | Radius: 80km
+   ✅ Found 88 venues, 43 padel, 43 new
+   📊 Running total: 898 unique padel clubs
+
+📍 [15/87] Portugal_Porto
+   Coordinates: 41.1579, -8.6291 | Radius: 80km
+   ✅ Found 146 venues, 110 padel, 110 new
+   📊 Running total: 1008 unique padel clubs
+
+📍 [16/87] Portugal_Algarve
+   Coordinates: 37.0179, -7.9304 | Radius: 80km
+   ✅ Found 9 venues, 9 padel, 9 new
+   📊 Running total: 1017 unique padel clubs
+
+📍 [17/87] Italy_Milan
+   Coordinates: 45.4642, 9.19 | Radius: 100km
+   ✅ Found 542 venues, 347 padel, 347 new
+   📊 Running total: 1364 unique padel clubs
+
+📍 [18/87] Italy_Rome
+   Coordinates: 41.9028, 12.4964 | Radius: 100km
+   ✅ Found 229 venues, 187 padel, 187 new
+   📊 Running total: 1551 unique padel clubs
+
+📍 [19/87] Italy_Naples
+   Coordinates: 40.8518, 14.2681 | Radius: 80km
+   ✅ Found 66 venues, 62 padel, 62 new
+   📊 Running total: 1613 unique padel clubs
+
+📍 [20/87] Italy_Turin
+   Coordinates: 45.0703, 7.6869 | Radius: 80km
+   ✅ Found 136 venues, 93 padel, 76 new
+   📊 Running total: 1689 unique padel clubs
+   💾 Saved intermediate: playtomic_intermediate_20_20260125_223312.json
+
+📍 [21/87] Italy_Florence
+   Coordinates: 43.7696, 11.2558 | Radius: 80km
+   ✅ Found 88 venues, 78 padel, 78 new
+   📊 Running total: 1767 unique padel clubs
+
+📍 [22/87] Italy_Bologna
+   Coordinates: 44.4949, 11.3426 | Radius: 80km
+   ✅ Found 109 venues, 90 padel, 61 new
+   📊 Running total: 1828 unique padel clubs
+
+📍 [23/87] France_Paris
+   Coordinates: 48.8566, 2.3522 | Radius: 100km
+   ✅ Found 11 venues, 11 padel, 11 new
+   📊 Running total: 1839 unique padel clubs
+
+📍 [24/87] France_Lyon
+   Coordinates: 45.764, 4.8357 | Radius: 80km
+   ✅ Found 2 venues, 2 padel, 2 new
+   📊 Running total: 1841 unique padel clubs
+
+📍 [25/87] France_Marseille
+   Coordinates: 43.2965, 5.3698 | Radius: 80km
+   ✅ Found 2 venues, 2 padel, 2 new
+   📊 Running total: 1843 unique padel clubs
+
+📍 [26/87] France_Toulouse
+   Coordinates: 43.6047, 1.4442 | Radius: 80km
+   ✅ Found 1 venues, 1 padel, 1 new
+   📊 Running total: 1844 unique padel clubs
+
+📍 [27/87] France_Nice
+   Coordinates: 43.7102, 7.262 | Radius: 80km
+   ✅ Found 16 venues, 14 padel, 9 new
+   📊 Running total: 1853 unique padel clubs
+
+📍 [28/87] France_Bordeaux
+   Coordinates: 44.8378, -0.5792 | Radius: 80km
+   ✅ Found 0 venues, 0 padel, 0 new
+   📊 Running total: 1853 unique padel clubs
+
+📍 [29/87] Germany_Berlin
+   Coordinates: 52.52, 13.405 | Radius: 100km
+   ✅ Found 18 venues, 17 padel, 17 new
+   📊 Running total: 1870 unique padel clubs
+
+📍 [30/87] Germany_Munich
+   Coordinates: 48.1351, 11.582 | Radius: 100km
+   ✅ Found 27 venues, 24 padel, 24 new
+   📊 Running total: 1894 unique padel clubs
+   💾 Saved intermediate: playtomic_intermediate_30_20260125_223317.json
+
+📍 [31/87] Germany_Hamburg
+   Coordinates: 53.5511, 9.9937 | Radius: 80km
+   ✅ Found 21 venues, 20 padel, 20 new
+   📊 Running total: 1914 unique padel clubs
+
+📍 [32/87] Germany_Frankfurt
+   Coordinates: 50.1109, 8.6821 | Radius: 80km
+   ✅ Found 18 venues, 16 padel, 16 new
+   📊 Running total: 1930 unique padel clubs
+
+📍 [33/87] Germany_Cologne
+   Coordinates: 50.9375, 6.9603 | Radius: 80km
+   ✅ Found 31 venues, 27 padel, 27 new
+   📊 Running total: 1957 unique padel clubs
+
+📍 [34/87] UK_London
+   Coordinates: 51.5074, -0.1278 | Radius: 100km
+   ✅ Found 88 venues, 72 padel, 72 new
+   📊 Running total: 2029 unique padel clubs
+
+📍 [35/87] UK_Manchester
+   Coordinates: 53.4808, -2.2426 | Radius: 80km
+   ✅ Found 95 venues, 93 padel, 93 new
+   📊 Running total: 2122 unique padel clubs
+
+📍 [36/87] UK_Birmingham
+   Coordinates: 52.4862, -1.8904 | Radius: 80km
+   ✅ Found 34 venues, 33 padel, 25 new
+   📊 Running total: 2147 unique padel clubs
+
+📍 [37/87] UK_Leeds
+   Coordinates: 53.8008, -1.5491 | Radius: 80km
+   ✅ Found 74 venues, 72 padel, 12 new
+   📊 Running total: 2159 unique padel clubs
+
+📍 [38/87] Netherlands_Amsterdam
+   Coordinates: 52.3676, 4.9041 | Radius: 80km
+   ✅ Found 66 venues, 66 padel, 66 new
+   📊 Running total: 2225 unique padel clubs
+
+📍 [39/87] Netherlands_Rotterdam
+   Coordinates: 51.9244, 4.4777 | Radius: 60km
+   ✅ Found 53 venues, 53 padel, 6 new
+   📊 Running total: 2231 unique padel clubs
+
+📍 [40/87] Netherlands_Eindhoven
+   Coordinates: 51.4416, 5.4697 | Radius: 60km
+   ✅ Found 29 venues, 28 padel, 23 new
+   📊 Running total: 2254 unique padel clubs
+   💾 Saved intermediate: playtomic_intermediate_40_20260125_223322.json
+
+📍 [41/87] Belgium_Brussels
+   Coordinates: 50.8503, 4.3517 | Radius: 80km
+   ✅ Found 172 venues, 161 padel, 145 new
+   📊 Running total: 2399 unique padel clubs
+
+📍 [42/87] Belgium_Antwerp
+   Coordinates: 51.2194, 4.4025 | Radius: 60km
+   ✅ Found 119 venues, 113 padel, 1 new
+   📊 Running total: 2400 unique padel clubs
+
+📍 [43/87] Sweden_Stockholm
+   Coordinates: 59.3293, 18.0686 | Radius: 100km
+   ✅ Found 14 venues, 11 padel, 11 new
+   📊 Running total: 2411 unique padel clubs
+
+📍 [44/87] Sweden_Gothenburg
+   Coordinates: 57.7089, 11.9746 | Radius: 80km
+   ✅ Found 4 venues, 3 padel, 3 new
+   📊 Running total: 2414 unique padel clubs
+
+📍 [45/87] Sweden_Malmo
+   Coordinates: 55.605, 13.0038 | Radius: 60km
+   ✅ Found 6 venues, 5 padel, 5 new
+   📊 Running total: 2419 unique padel clubs
+
+📍 [46/87] Denmark_Copenhagen
+   Coordinates: 55.6761, 12.5683 | Radius: 80km
+   ✅ Found 7 venues, 5 padel, 0 new
+   📊 Running total: 2419 unique padel clubs
+
+📍 [47/87] Norway_Oslo
+   Coordinates: 59.9139, 10.7522 | Radius: 80km
+   ✅ Found 2 venues, 2 padel, 2 new
+   📊 Running total: 2421 unique padel clubs
+
+📍 [48/87] Finland_Helsinki
+   Coordinates: 60.1699, 24.9384 | Radius: 80km
+   ✅ Found 51 venues, 39 padel, 39 new
+   📊 Running total: 2460 unique padel clubs
+
+📍 [49/87] Austria_Vienna
+   Coordinates: 48.2082, 16.3738 | Radius: 80km
+   ✅ Found 1 venues, 0 padel, 0 new
+   📊 Running total: 2460 unique padel clubs
+
+📍 [50/87] Switzerland_Zurich
+   Coordinates: 47.3769, 8.5417 | Radius: 80km
+   ✅ Found 101 venues, 81 padel, 81 new
+   📊 Running total: 2541 unique padel clubs
+   💾 Saved intermediate: playtomic_intermediate_50_20260125_223330.json
+
+📍 [51/87] Switzerland_Geneva
+   Coordinates: 46.2044, 6.1432 | Radius: 60km
+   ✅ Found 5 venues, 5 padel, 5 new
+   📊 Running total: 2546 unique padel clubs
+
+📍 [52/87] Poland_Warsaw
+   Coordinates: 52.2297, 21.0122 | Radius: 100km
+   ✅ Found 6 venues, 5 padel, 5 new
+   📊 Running total: 2551 unique padel clubs
+
+📍 [53/87] Poland_Krakow
+   Coordinates: 50.0647, 19.945 | Radius: 80km
+   ✅ Found 3 venues, 3 padel, 3 new
+   📊 Running total: 2554 unique padel clubs
+
+📍 [54/87] Czech_Prague
+   Coordinates: 50.0755, 14.4378 | Radius: 80km
+   ✅ Found 2 venues, 2 padel, 2 new
+   📊 Running total: 2556 unique padel clubs
+
+📍 [55/87] USA_Miami
+   Coordinates: 25.7617, -80.1918 | Radius: 100km
+   ✅ Found 30 venues, 24 padel, 24 new
+   📊 Running total: 2580 unique padel clubs
+
+📍 [56/87] USA_NYC
+   Coordinates: 40.7128, -74.006 | Radius: 100km
+   ✅ Found 7 venues, 2 padel, 2 new
+   📊 Running total: 2582 unique padel clubs
+
+📍 [57/87] USA_LA
+   Coordinates: 34.0522, -118.2437 | Radius: 150km
+   ✅ Found 8 venues, 4 padel, 4 new
+   📊 Running total: 2586 unique padel clubs
+
+📍 [58/87] USA_Houston
+   Coordinates: 29.7604, -95.3698 | Radius: 100km
+   ✅ Found 11 venues, 10 padel, 10 new
+   📊 Running total: 2596 unique padel clubs
+
+📍 [59/87] USA_Dallas
+   Coordinates: 32.7767, -96.797 | Radius: 100km
+   ✅ Found 1 venues, 1 padel, 1 new
+   📊 Running total: 2597 unique padel clubs
+
+📍 [60/87] USA_Chicago
+   Coordinates: 41.8781, -87.6298 | Radius: 100km
+   ✅ Found 1 venues, 1 padel, 1 new
+   📊 Running total: 2598 unique padel clubs
+   💾 Saved intermediate: playtomic_intermediate_60_20260125_223332.json
+
+📍 [61/87] USA_Phoenix
+   Coordinates: 33.4484, -112.074 | Radius: 100km
+   ✅ Found 4 venues, 4 padel, 4 new
+   📊 Running total: 2602 unique padel clubs
+
+📍 [62/87] USA_Denver
+   Coordinates: 39.7392, -104.9903 | Radius: 100km
+   ✅ Found 0 venues, 0 padel, 0 new
+   📊 Running total: 2602 unique padel clubs
+
+📍 [63/87] USA_Boston
+   Coordinates: 42.3601, -71.0589 | Radius: 80km
+   ✅ Found 0 venues, 0 padel, 0 new
+   📊 Running total: 2602 unique padel clubs
+
+📍 [64/87] USA_Atlanta
+   Coordinates: 33.749, -84.388 | Radius: 100km
+   ✅ Found 1 venues, 0 padel, 0 new
+   📊 Running total: 2602 unique padel clubs
+
+📍 [65/87] USA_SanFrancisco
+   Coordinates: 37.7749, -122.4194 | Radius: 100km
+   ✅ Found 2 venues, 2 padel, 2 new
+   📊 Running total: 2604 unique padel clubs
+
+📍 [66/87] USA_Seattle
+   Coordinates: 47.6062, -122.3321 | Radius: 80km
+   ✅ Found 0 venues, 0 padel, 0 new
+   📊 Running total: 2604 unique padel clubs
+
+📍 [67/87] Mexico_MexicoCity
+   Coordinates: 19.4326, -99.1332 | Radius: 100km
+   ✅ Found 97 venues, 95 padel, 95 new
+   📊 Running total: 2699 unique padel clubs
+
+📍 [68/87] Mexico_Monterrey
+   Coordinates: 25.6866, -100.3161 | Radius: 80km
+   ✅ Found 79 venues, 76 padel, 76 new
+   📊 Running total: 2775 unique padel clubs
+
+📍 [69/87] Mexico_Guadalajara
+   Coordinates: 20.6597, -103.3496 | Radius: 80km
+   ✅ Found 81 venues, 77 padel, 77 new
+   📊 Running total: 2852 unique padel clubs
+
+📍 [70/87] Argentina_BuenosAires
+   Coordinates: -34.6037, -58.3816 | Radius: 100km
+   ✅ Found 0 venues, 0 padel, 0 new
+   📊 Running total: 2852 unique padel clubs
+   💾 Saved intermediate: playtomic_intermediate_70_20260125_223336.json
+
+📍 [71/87] Argentina_Cordoba
+   Coordinates: -31.4201, -64.1888 | Radius: 80km
+   ✅ Found 0 venues, 0 padel, 0 new
+   📊 Running total: 2852 unique padel clubs
+
+📍 [72/87] Argentina_Rosario
+   Coordinates: -32.9468, -60.6393 | Radius: 60km
+   ✅ Found 0 venues, 0 padel, 0 new
+   📊 Running total: 2852 unique padel clubs
+
+📍 [73/87] Brazil_SaoPaulo
+   Coordinates: -23.5505, -46.6333 | Radius: 150km
+   ✅ Found 1 venues, 1 padel, 1 new
+   📊 Running total: 2853 unique padel clubs
+
+📍 [74/87] Brazil_Rio
+   Coordinates: -22.9068, -43.1729 | Radius: 100km
+   ✅ Found 0 venues, 0 padel, 0 new
+   📊 Running total: 2853 unique padel clubs
+
+📍 [75/87] Chile_Santiago
+   Coordinates: -33.4489, -70.6693 | Radius: 100km
+   ✅ Found 14 venues, 14 padel, 14 new
+   📊 Running total: 2867 unique padel clubs
+
+📍 [76/87] UAE_Dubai
+   Coordinates: 25.2048, 55.2708 | Radius: 80km
+   ✅ Found 115 venues, 95 padel, 95 new
+   📊 Running total: 2962 unique padel clubs
+
+📍 [77/87] UAE_AbuDhabi
+   Coordinates: 24.4539, 54.3773 | Radius: 60km
+   ✅ Found 54 venues, 52 padel, 52 new
+   📊 Running total: 3014 unique padel clubs
+
+📍 [78/87] Qatar_Doha
+   Coordinates: 25.2854, 51.531 | Radius: 60km
+   ✅ Found 30 venues, 28 padel, 28 new
+   📊 Running total: 3042 unique padel clubs
+
+📍 [79/87] Saudi_Riyadh
+   Coordinates: 24.7136, 46.6753 | Radius: 100km
+   ✅ Found 16 venues, 15 padel, 15 new
+   📊 Running total: 3057 unique padel clubs
+
+📍 [80/87] Egypt_Cairo
+   Coordinates: 30.0444, 31.2357 | Radius: 80km
+   ✅ Found 0 venues, 0 padel, 0 new
+   📊 Running total: 3057 unique padel clubs
+   💾 Saved intermediate: playtomic_intermediate_80_20260125_223340.json
+
+📍 [81/87] SouthAfrica_Johannesburg
+   Coordinates: -26.2041, 28.0473 | Radius: 80km
+   ✅ Found 173 venues, 159 padel, 159 new
+   📊 Running total: 3216 unique padel clubs
+
+📍 [82/87] SouthAfrica_CapeTown
+   Coordinates: -33.9249, 18.4241 | Radius: 60km
+   ✅ Found 58 venues, 55 padel, 55 new
+   📊 Running total: 3271 unique padel clubs
+
+📍 [83/87] Australia_Sydney
+   Coordinates: -33.8688, 151.2093 | Radius: 100km
+   ✅ Found 7 venues, 7 padel, 7 new
+   📊 Running total: 3278 unique padel clubs
+
+📍 [84/87] Australia_Melbourne
+   Coordinates: -37.8136, 144.9631 | Radius: 100km
+   ✅ Found 6 venues, 5 padel, 5 new
+   📊 Running total: 3283 unique padel clubs
+
+📍 [85/87] Japan_Tokyo
+   Coordinates: 35.6762, 139.6503 | Radius: 100km
+   ✅ Found 0 venues, 0 padel, 0 new
+   📊 Running total: 3283 unique padel clubs
+
+📍 [86/87] Singapore
+   Coordinates: 1.3521, 103.8198 | Radius: 50km
+   ✅ Found 16 venues, 9 padel, 9 new
+   📊 Running total: 3292 unique padel clubs
+
+📍 [87/87] Thailand_Bangkok
+   Coordinates: 13.7563, 100.5018 | Radius: 80km
+   ✅ Found 3 venues, 2 padel, 2 new
+   📊 Running total: 3294 unique padel clubs
+
+======================================================================
+🏁 SCRAPE COMPLETE
+   Total padel clubs found: 3294
+
+📈 CLUBS BY COUNTRY (top 20):
+     856 - ES
+     811 - IT
+     248 - MX
+     214 - ZA
+     202 - GB
+     161 - PT
+     161 - BE
+     147 - AE
+     107 - DE
+      88 - CH
+      80 - NL
+      48 - US
+      38 - FI
+      28 - QA
+      18 - FR
+      17 - SE
+      15 - SA
+      14 - CL
+      12 - AU
+       8 - PL
+
+🎾 Total padel courts: 15231
+
+💾 Full data: playtomic_full_20260125_223344.json
+💾 Simplified: playtomic_simple_20260125_223344.json
+
+✅ Done!

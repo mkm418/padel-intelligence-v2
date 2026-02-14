@@ -1,0 +1,77 @@
+---
+description: Conductor — Auto router (decides which agents to run, ships end-to-end)
+globs: ["**/*"]
+alwaysApply: false
+---
+
+# Conductor: Auto (`@auto` / `@ship`)
+
+## Role
+Run the **entire Conductor workflow end-to-end** from a single user request by:
+- Asking minimal clarifying questions only when truly blocking
+- Deciding which steps apply (e.g., skip Python/Integration/SEO/Data if not needed)
+- Writing all relevant artifacts into `.cursor/artifacts/`
+- Implementing code changes, then reviewing and producing a ship-ready runbook/checklist
+
+## Inputs
+- User request (from chat)
+- Read existing artifacts if present:
+  - `.cursor/artifacts/SPEC.md`
+  - `.cursor/artifacts/DESIGN_SPEC.md`
+  - `.cursor/artifacts/ARCHITECTURE.md`
+  - `.cursor/artifacts/API_CONTRACT.json`
+  - `.cursor/artifacts/SEO_PLAN.md`
+  - `.cursor/artifacts/ANALYTICS_SPEC.md`
+  - `.cursor/artifacts/QA_PLAN.md`
+  - `.cursor/artifacts/REVIEW_CHECKLIST.md`
+  - `.cursor/artifacts/HANDOFF.md`
+
+## Outputs (create/refresh as applicable)
+- `.cursor/artifacts/SPEC.md`
+- `.cursor/artifacts/DESIGN_SPEC.md`
+- `.cursor/artifacts/ARCHITECTURE.md`
+- `.cursor/artifacts/API_CONTRACT.json` (only if APIs change)
+- `.cursor/artifacts/SEO_PLAN.md` (only if public pages/routes change)
+- `.cursor/artifacts/ANALYTICS_SPEC.md` (only if user-facing behavior changes)
+- `.cursor/artifacts/QA_PLAN.md`
+- `.cursor/artifacts/REVIEW_CHECKLIST.md`
+- `.cursor/artifacts/HANDOFF.md` (kept current throughout)
+
+## Routing logic (decide steps)
+
+Always run (minimum):
+- **Spec** → **Review** → **Deploy**
+
+Run **Design** if:
+- UI changes, new page, or new user flow
+
+Run **Architect** if:
+- New route/API contract, non-trivial data flow, caching decisions, auth boundaries, or multiple systems touched
+
+Run **Python** if:
+- Data pipelines / scrapers / ETL are required
+
+Run **Integration** if:
+- Next.js Route Handlers need to call Python/pipelines or new endpoints are needed
+
+Run **Frontend** if:
+- UI/page/components change
+
+Run **SEO** if:
+- Any new/changed public routes, programmatic pages, metadata, indexing policy, sitemap/robots, or structured data
+
+Run **Data** if:
+- You need analytics events for the feature, funnels, or activation metrics
+
+## Execution discipline
+- Apply **Interview-first** only to unblock decisions (don’t stall).
+- Keep the workflow linear: update `HANDOFF.md` at each boundary (“From/To/Done/Next steps”).
+- Prefer TypeScript; include helpful comments.
+- After substantive edits, run lint/typecheck/tests that exist in this repo.
+
+## Completion criteria
+- Artifacts are updated and consistent with each other
+- Code builds locally (or at least `lint`/`typecheck` pass if build is heavy)
+- QA plan exists with concrete tests
+- Deploy/runbook notes exist (or clear “ship tonight” local steps)
+

@@ -1,0 +1,203 @@
+---
+description: Ralph Loop - Autonomous iterative execution pattern
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# Ralph Loop Execution Pattern
+
+**Ralph** = Autonomous iterative execution until completion criteria are met.
+
+Named after Ralph Wiggum from The Simpsons — persistent, keeps going no matter what.
+
+---
+
+## Core Concept
+
+Traditional AI coding:
+```
+Prompt → Response → Human Review → Next Prompt
+```
+
+Ralph Loop:
+```
+Requirements → Test → Fix → Test → Fix → ... → Complete
+```
+
+The agent runs the same task repeatedly until completion criteria are met, with built-in self-testing and error recovery.
+
+---
+
+## Ralph Loop Principles
+
+### 1. Iteration > Perfection
+- Don't aim for perfect on first try
+- Let iteration refine the solution
+- Each cycle improves on the previous
+
+### 2. Failures Are Data
+- Errors are predictable and informative, not roadblocks
+- Every failure provides diagnostic information
+- Use failures to guide the next iteration
+
+### 3. Clear Completion Criteria
+- Every task has explicit, testable "done" conditions
+- No ambiguity about when to stop
+- Criteria must be programmatically verifiable
+
+### 4. Self-Correction Pattern
+- On failure: diagnose, fix, verify, repeat
+- No human intervention required
+- Built-in quality gates
+
+---
+
+## Structure Every Task With
+
+```
+Requirements:
+- [Specific requirement 1]
+- [Specific requirement 2]
+- [Specific requirement 3]
+
+Success Criteria:
+- All requirements implemented
+- Tests passing with >80% coverage
+- No linter errors
+- Documentation updated
+
+Self-Verification:
+- Run tests after each change
+- Validate output against schema
+- Check for edge cases
+- Log failures with diagnostic info
+
+Output: COMPLETE when all criteria met.
+```
+
+---
+
+## Incremental Goals
+
+Break large features into phases:
+
+```
+Phase 1: [Core functionality] (tests)
+Phase 2: [Secondary features] (tests)
+Phase 3: [Polish and edge cases] (tests)
+
+Complete when all phases done.
+```
+
+---
+
+## Example Ralph Prompt
+
+### Bad Prompt (No Ralph Loop)
+```
+"Scrape competitor pricing pages"
+```
+
+### Good Ralph Prompt
+```
+Task: Scrape competitor pricing pages and extract structured data
+
+Requirements:
+- Crawl 10 competitor websites using Firecrawl
+- Extract pricing tiers, features, and limits
+- Output to JSON with schema validation
+- Handle rate limits and retries automatically
+
+Success Criteria:
+- All 10 sites scraped successfully
+- JSON validates against schema
+- No missing required fields
+- Export to output/pricing_data.json
+- Cost < $5 in API credits
+
+Self-Verification:
+- After each scrape: validate JSON schema
+- Log failures with URL and error message
+- Retry failed sites with different API key
+- Track API costs and stop if exceeding budget
+- Final validation: all 10 sites present in output
+
+Failure Recovery:
+- On 402 error: rotate to next API key
+- On timeout: retry with longer timeout
+- On parse error: log page HTML for manual review
+- On validation error: fix schema and re-extract
+
+Output: COMPLETE when all 10 sites scraped, validated, and exported.
+```
+
+---
+
+## Escape Hatches
+
+Even with Ralph Loop, know when to stop:
+
+- **If stuck after 3 attempts on same issue** → Ask the user
+- **If requirements seem impossible** → Surface the blocker immediately
+- **If scope creep detected** → Flag it and get approval
+- **If budget exceeded** → Stop and report
+
+---
+
+## Real-World Results (Jan 2026)
+
+- Geoffrey Huntley: Completed $50k contract for $297 in API costs
+- Boris Cherny: 259 pull requests in 30 days, all AI-written
+- Anthropic released official Ralph plugin
+
+---
+
+## Critical Success Factor
+
+**Prompt quality is everything.**
+
+Effective Ralph prompts include:
+- ✅ Completion criteria (explicit, testable)
+- ✅ Self-verification mechanisms (automated checks)
+- ✅ Failure recovery strategies (what to do when things break)
+- ✅ Treat failure as diagnostic, not dead-end
+
+---
+
+## Anti-Patterns (Never Do)
+
+❌ Vague completion criteria ("make it work")
+❌ No self-verification (how do you know it's done?)
+❌ No failure recovery (what happens when it breaks?)
+❌ Infinite loops (no escape hatch)
+❌ No budget constraints (runaway API costs)
+
+---
+
+## Ralph Loop Checklist
+
+Before starting a Ralph Loop task, ensure:
+
+- [ ] Requirements are specific and testable
+- [ ] Success criteria are explicit and measurable
+- [ ] Self-verification is automated (no human needed)
+- [ ] Failure recovery is defined for common errors
+- [ ] Escape hatches are in place (max attempts, budget)
+- [ ] Output format is specified
+- [ ] Cost estimate is within budget
+
+---
+
+## Integration with AskQuestion Workflow
+
+Ralph Loop is **Phase 3** of the Interview-First workflow:
+
+1. **Phase 1: Interview** — Extract all decisions (AskQuestion)
+2. **Phase 2: Synthesis** — Build spec, get approval
+3. **Phase 3: Ralph Loop** — Execute autonomously until complete
+
+See `interview-first.mdc` for the full workflow.
+
+---
+
+**Remember:** Ralph Loop is not about AI being "smart" — it's about giving AI the structure to iterate until success.

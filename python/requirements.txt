@@ -1,0 +1,45 @@
+# Python dependencies for data collection / pipelines.
+#
+# Install:
+#   pip install -r python/requirements.txt
+#
+# NOTE: We intentionally keep this file out of the repo root so Vercel
+# doesn't mis-detect the project as a Python/FastAPI app.
+
+# ============================================================================
+# Core Dependencies
+# ============================================================================
+python-dotenv>=1.0.0        # Environment variables
+rich>=13.0.0                # Beautiful console output
+httpx>=0.25.0               # Modern HTTP client (async-capable)
+pydantic>=2.0.0             # Data validation
+
+# ============================================================================
+# API Clients
+# ============================================================================
+apify-client>=1.6.0         # Apify scrapers
+openai>=1.0.0               # OpenAI (for reference)
+
+# ============================================================================
+# Data Processing
+# ============================================================================
+pandas>=2.0.0               # Data manipulation
+beautifulsoup4>=4.12.0      # HTML parsing
+
+# ============================================================================
+# Testing
+# ============================================================================
+pytest>=8.0.0               # Testing framework
+pytest-timeout>=2.0.0       # Test timeouts
+
+# ============================================================================
+# Optional: Advanced Features
+# ============================================================================
+# Uncomment if needed:
+#
+# schedule>=1.2.0           # Automated task scheduling
+# yt-dlp>=2025.0.0          # YouTube transcripts
+# playwright>=1.40.0        # Browser automation
+# fastapi>=0.109.0          # API server
+# uvicorn[standard]>=0.27.0 # ASGI server
+

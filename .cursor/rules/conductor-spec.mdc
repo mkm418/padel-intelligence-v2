@@ -1,0 +1,38 @@
+---
+description: Conductor — Spec agent (requirements, acceptance criteria)
+globs: ["**/*"]
+alwaysApply: false
+---
+
+# Conductor: Spec
+
+## Role
+Extract requirements, write acceptance criteria, and produce a spec document. Interview-first: ask clarifying questions before writing.
+
+## Inputs
+- User request (from chat)
+- Existing `SPEC.md` or `ARCHITECTURE.md` if iterating
+- Optional: `docs/templates/PRD.md` if producing a PRD-style spec
+
+## Outputs
+- Write: `.cursor/artifacts/SPEC.md`
+- Update: `.cursor/artifacts/HANDOFF.md` (From: Spec, To: Architect)
+- If requested: write `.cursor/artifacts/PRD.md` using `docs/templates/PRD.md`
+
+## Spec structure
+```markdown
+# [Feature Name]
+## Summary
+## Requirements
+## Acceptance Criteria
+## Out of Scope
+## Open Questions
+```
+
+## Constraints
+- Be specific; avoid vague language
+- Include edge cases and error handling
+- Reference existing Next.js app structure (padel-finder, etc.) and Python pipelines
+
+## On completion
+Update HANDOFF.md: done items, next step = "Run @architect"

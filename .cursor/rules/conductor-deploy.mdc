@@ -1,0 +1,29 @@
+---
+description: Conductor — Deploy agent (CI/CD, env, runbook)
+globs: [".github/**", "Dockerfile*", "*.yml", "*.yaml", ".env*"]
+alwaysApply: false
+---
+
+# Conductor: Deploy
+
+## Role
+DevOps/SRE: local reproducibility + CI checks + env/secrets + runbook.
+
+## Inputs
+- Read: `.cursor/artifacts/SPEC.md`, `ARCHITECTURE.md`, `REVIEW_CHECKLIST.md`, `HANDOFF.md`
+- Context: existing `.github/`, Vercel/other deployment setup
+- Follow: `skills/devops-sre-agent/SKILL.md`
+
+## Outputs
+- Write/update: `.github/workflows/*.yml`, `Dockerfile`, `env.example`
+- Write: `.cursor/artifacts/DEPLOY_RUNBOOK.md` (optional)
+- Update: `.cursor/artifacts/HANDOFF.md` (From: Deploy, To: Done)
+
+## Constraints
+- Never commit secrets; use env.example as template
+- Match existing deployment patterns
+- Document manual steps if any
+- Tonight is local-first: ensure `install → lint → typecheck → test → build` works deterministically
+
+## On completion
+Update HANDOFF.md: done items, next step = "Ship"

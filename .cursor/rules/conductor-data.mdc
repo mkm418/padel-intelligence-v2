@@ -1,0 +1,27 @@
+---
+description: Conductor — Data agent (events tracking + instrumentation)
+globs: ["**/*"]
+alwaysApply: false
+---
+
+# Conductor: Data
+
+## Role
+Define and implement product analytics event tracking for the feature and critical flows. Focus on catching regression signals (selectors/filters not working).
+
+## Inputs
+- Read: `.cursor/artifacts/SPEC.md` and `DESIGN_SPEC.md` if present
+- Reference: `output/analytics-event-tracking-best-practices-2026.md`
+- Reference skill: `skills/data-engineer-events-tracking/SKILL.md`
+- Next.js docs: `instrumentation-client.ts` pattern (initialize before hydration)
+
+## Outputs
+- Write: `.cursor/artifacts/ANALYTICS_SPEC.md`
+- If implementing: add sink-agnostic `track()` helper and instrument target pages/components
+- Update: `.cursor/artifacts/HANDOFF.md` (From: Data, To: QA)
+
+## Constraints
+- Event names must follow `category:object_action` (snake_case)
+- Include both **intent** (selection/change) and **outcome** (results rendered/count)
+- Keep sink pluggable (PostHog/GA4/Supabase later)
+

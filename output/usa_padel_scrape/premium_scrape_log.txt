@@ -1,0 +1,255 @@
+
+🚀 COMPLETING USA PADEL SCRAPE - Using Premium Keys
+
+================================================================================
+
+📋 Found 19 batches to complete
+🔑 Using 3 premium API keys
+
+
+📦 BATCH 01
+   Locations: 15
+   Key: ...c6e312N9dM
+   ⏳ Starting scrape...
+   ❌ Error: You cannot run this public Actor. Your current plan does not support running public Actors.
+
+   📊 Progress: 1/19 (5.3%) | New courts: +0
+   ⏸️  Waiting 10s before next batch...
+
+📦 BATCH 03
+   Locations: 15
+   Key: ...c6e312N9dM
+   ⏳ Starting scrape...
+   ❌ Error: You cannot run this public Actor. Your current plan does not support running public Actors.
+
+   📊 Progress: 2/19 (10.5%) | New courts: +0
+   ⏸️  Waiting 10s before next batch...
+
+📦 BATCH 04
+   Locations: 15
+   Key: ...c6e312N9dM
+   ⏳ Starting scrape...
+   ❌ Error: You cannot run this public Actor. Your current plan does not support running public Actors.
+
+   📊 Progress: 3/19 (15.8%) | New courts: +0
+   ⏸️  Waiting 10s before next batch...
+
+📦 BATCH 05
+   Locations: 15
+   Key: ...c6e312N9dM
+   ⏳ Starting scrape...
+   ❌ Error: You cannot run this public Actor. Your current plan does not support running public Actors.
+
+   📊 Progress: 4/19 (21.1%) | New courts: +0
+   ⏸️  Waiting 10s before next batch...
+
+📦 BATCH 06
+   Locations: 15
+   Key: ...c6e312N9dM
+   ⏳ Starting scrape...
+   ❌ Error: You cannot run this public Actor. Your current plan does not support running public Actors.
+
+   📊 Progress: 5/19 (26.3%) | New courts: +0
+   ⏸️  Waiting 10s before next batch...
+
+📦 BATCH 07
+   Locations: 15
+   Key: ...c6e312N9dM
+   ⏳ Starting scrape...
+   ❌ Error: You cannot run this public Actor. Your current plan does not support running public Actors.
+
+   📊 Progress: 6/19 (31.6%) | New courts: +0
+   ⏸️  Waiting 10s before next batch...
+
+📦 BATCH 08
+   Locations: 15
+   Key: ...c6e312N9dM
+   ⏳ Starting scrape...
+   ❌ Error: You cannot run this public Actor. Your current plan does not support running public Actors.
+
+   📊 Progress: 7/19 (36.8%) | New courts: +0
+   ⏸️  Waiting 10s before next batch...
+
+📦 BATCH 09
+   Locations: 15
+   Key: ...c6e312N9dM
+   ⏳ Starting scrape...
+   ❌ Error: You cannot run this public Actor. Your current plan does not support running public Actors.
+
+   📊 Progress: 8/19 (42.1%) | New courts: +0
+   ⏸️  Waiting 10s before next batch...
+
+📦 BATCH 10
+   Locations: 15
+   Key: ...c6e312N9dM
+   ⏳ Starting scrape...
+   ❌ Error: You cannot run this public Actor. Your current plan does not support running public Actors.
+
+   📊 Progress: 9/19 (47.4%) | New courts: +0
+   ⏸️  Waiting 10s before next batch...
+
+📦 BATCH 12
+   Locations: 15
+   Key: ...c6e312N9dM
+   ⏳ Starting scrape...
+   ❌ Error: You cannot run this public Actor. Your current plan does not support running public Actors.
+
+   📊 Progress: 10/19 (52.6%) | New courts: +0
+   ⏸️  Waiting 10s before next batch...
+
+📦 BATCH 13
+   Locations: 15
+   Key: ...c6e312N9dM
+   ⏳ Starting scrape...
+   ❌ Error: You cannot run this public Actor. Your current plan does not support running public Actors.
+
+   📊 Progress: 11/19 (57.9%) | New courts: +0
+   ⏸️  Waiting 10s before next batch...
+
+📦 BATCH 14
+   Locations: 15
+   Key: ...c6e312N9dM
+   ⏳ Starting scrape...
+   ❌ Error: You cannot run this public Actor. Your current plan does not support running public Actors.
+
+   📊 Progress: 12/19 (63.2%) | New courts: +0
+   ⏸️  Waiting 10s before next batch...
+
+📦 BATCH 16
+   Locations: 15
+   Key: ...c6e312N9dM
+   ⏳ Starting scrape...
+   ❌ Error: You cannot run this public Actor. Your current plan does not support running public Actors.
+
+   📊 Progress: 13/19 (68.4%) | New courts: +0
+   ⏸️  Waiting 10s before next batch...
+
+📦 BATCH 17
+   Locations: 15
+   Key: ...c6e312N9dM
+   ⏳ Starting scrape...
+   ❌ Error: You cannot run this public Actor. Your current plan does not support running public Actors.
+
+   📊 Progress: 14/19 (73.7%) | New courts: +0
+   ⏸️  Waiting 10s before next batch...
+
+📦 BATCH 18
+   Locations: 15
+   Key: ...c6e312N9dM
+   ⏳ Starting scrape...
+   ❌ Error: You cannot run this public Actor. Your current plan does not support running public Actors.
+
+   📊 Progress: 15/19 (78.9%) | New courts: +0
+   ⏸️  Waiting 10s before next batch...
+
+📦 BATCH 19
+   Locations: 15
+   Key: ...c6e312N9dM
+   ⏳ Starting scrape...
+   ❌ Error: You cannot run this public Actor. Your current plan does not support running public Actors.
+
+   📊 Progress: 16/19 (84.2%) | New courts: +0
+   ⏸️  Waiting 10s before next batch...
+
+📦 BATCH 22
+   Locations: 15
+   Key: ...c6e312N9dM
+   ⏳ Starting scrape...
+   ❌ Error: You cannot run this public Actor. Your current plan does not support running public Actors.
+
+   📊 Progress: 17/19 (89.5%) | New courts: +0
+   ⏸️  Waiting 10s before next batch...
+
+📦 BATCH 23
+   Locations: 15
+   Key: ...c6e312N9dM
+   ⏳ Starting scrape...
+   ❌ Error: You cannot run this public Actor. Your current plan does not support running public Actors.
+
+   📊 Progress: 18/19 (94.7%) | New courts: +0
+   ⏸️  Waiting 10s before next batch...
+
+📦 BATCH 24
+   Locations: 5
+   Key: ...c6e312N9dM
+   ⏳ Starting scrape...
+   ❌ Error: You cannot run this public Actor. Your current plan does not support running public Actors.
+
+   📊 Progress: 19/19 (100.0%) | New courts: +0
+
+================================================================================
+
+📊 SCRAPING COMPLETE!
+   Batches completed: 19/19
+   New courts found: +0
+
+📦 COMPILING ALL BATCHES...
+
+  • Batch 01: 118 courts
+  • Batch 02:  20 courts
+  • Batch 05:  93 courts
+  • Batch 06:  68 courts
+  • Batch 09:  94 courts
+  • Batch 10:  65 courts
+  • Batch 11:  22 courts
+  • Batch 14:  53 courts
+  • Batch 15:  36 courts
+  • Batch 19:  54 courts
+  • Batch 20:  44 courts
+  • Batch 21:   6 courts
+
+================================================================================
+
+📊 FINAL RESULTS:
+   Total batches: 12/24
+   Total courts collected: 673
+   Unique courts: 568
+   Duplicates removed: 105
+
+🏆 TOP 20 CITIES:
+    1. San Diego, California: 27 courts
+    2. Akron, Ohio: 23 courts
+    3. Lincoln, Nebraska: 20 courts
+    4. Greensboro, North Carolina: 19 courts
+    5. Pittsburgh, Pennsylvania: 18 courts
+    6. Las Vegas, Nevada: 16 courts
+    7. Columbia, South Carolina: 16 courts
+    8. Rochester, Minnesota: 15 courts
+    9. Palmdale, California: 13 courts
+   10. Grand Prairie, Texas: 12 courts
+   11. Vallejo, California: 12 courts
+   12. San Antonio, Texas: 11 courts
+   13. Houston, Texas: 11 courts
+   14. Lubbock, Texas: 11 courts
+   15. Madison, Wisconsin: 11 courts
+   16. Westland, Michigan: 10 courts
+   17. Pembroke Pines, Florida: 9 courts
+   18. Knoxville, Tennessee: 8 courts
+   19. Austin, Texas: 7 courts
+   20. Cape Coral, Florida: 7 courts
+
+🗺️  TOP 10 STATES:
+    1. California: 110 courts
+    2. Texas: 94 courts
+    3. Florida: 46 courts
+    4. Pennsylvania: 33 courts
+    5. Ohio: 32 courts
+    6. North Carolina: 28 courts
+    7. Nebraska: 21 courts
+    8. South Carolina: 20 courts
+    9. Michigan: 18 courts
+   10. Arizona: 16 courts
+
+✅ MASTER FILE SAVED:
+   usa_padel_courts_COMPLETE_20260123_003928.json
+
+================================================================================
+
+🎉 USA PADEL SCRAPE COMPLETE!
+   Total Unique Courts: 568
+   Cities Covered: 196
+   States Covered: 34
+
+✅ Ready for Firecrawl enrichment!
+================================================================================
+

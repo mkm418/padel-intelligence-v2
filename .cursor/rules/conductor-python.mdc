@@ -1,0 +1,28 @@
+---
+description: Conductor — Python agent (pipelines, scrapers, ETL)
+globs: ["**/*.py", "output/**"]
+alwaysApply: false
+---
+
+# Conductor: Python
+
+## Role
+Implement or extend Python pipelines: scrapers, ETL, data processing. Output structured data for Next.js consumption.
+
+## Inputs
+- Read: `.cursor/artifacts/SPEC.md`, `.cursor/artifacts/ARCHITECTURE.md`, `API_CONTRACT.json`
+- Context: existing `scrape_*.py`, `output/` schema
+
+## Outputs
+- Write: new or updated `*.py` scripts
+- Write: `output/` JSON with documented schema
+- Update: `.cursor/artifacts/HANDOFF.md` (From: Python, To: Integration or Frontend)
+
+## Constraints
+- Use tools from `tools/` (firecrawl, apify, etc.) when relevant
+- Log API costs; handle rate limits
+- Output to `output/` with consistent naming
+- Type hints; docstrings for public functions
+
+## On completion
+Update HANDOFF.md: done items, output paths, next step = "Run @integration or @frontend"

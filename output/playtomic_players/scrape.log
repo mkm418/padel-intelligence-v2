@@ -1,0 +1,138 @@
+
+🎾 SCRAPING PLAYTOMIC PLAYERS GLOBALLY
+======================================================================
+Searching 108 cities...
+[1/108] Sevilla: 100 matches, 71 player records
+[2/108] Malaga: 100 matches, 71 player records
+[3/108] Barcelona: 100 matches, 97 player records
+[4/108] Madrid: 100 matches, 69 player records
+[5/108] Zaragoza: 100 matches, 93 player records
+[6/108] Bilbao: 100 matches, 135 player records
+[7/108] Alicante: 100 matches, 105 player records
+[8/108] Valencia: 100 matches, 132 player records
+[9/108] Murcia: 100 matches, 102 player records
+[10/108] Granada: 100 matches, 107 player records
+[11/108] Palma: 100 matches, 168 player records
+[12/108] Cordoba: 100 matches, 72 player records
+[13/108] Vigo: 100 matches, 123 player records
+[14/108] Las Palmas: 100 matches, 103 player records
+[15/108] Gijon: 100 matches, 160 player records
+[16/108] Valladolid: 100 matches, 68 player records
+[17/108] Logrono: 100 matches, 91 player records
+[18/108] Pamplona: 100 matches, 91 player records
+[19/108] Santander: 100 matches, 134 player records
+[20/108] San Sebastian: 100 matches, 123 player records
+[21/108] Salamanca: 100 matches, 92 player records
+[22/108] Oviedo: 100 matches, 146 player records
+[23/108] Cadiz: 100 matches, 79 player records
+[24/108] Burgos: 100 matches, 137 player records
+[25/108] Toledo: 100 matches, 69 player records
+[26/108] Leon: 100 matches, 193 player records
+[27/108] Huelva: 100 matches, 83 player records
+[28/108] Tarragona: 100 matches, 97 player records
+[29/108] Almeria: 100 matches, 103 player records
+[30/108] Lleida: 100 matches, 93 player records
+[31/108] Girona: 100 matches, 97 player records
+[32/108] Turin: 100 matches, 265 player records
+[33/108] Rome: 100 matches, 100 player records
+[34/108] Naples: 100 matches, 113 player records
+[35/108] Florence: No matches
+[36/108] Bologna: No matches
+[37/108] Catania: 100 matches, 125 player records
+[38/108] Milan: 100 matches, 279 player records
+[39/108] Bari: 100 matches, 107 player records
+[40/108] Venice: No matches
+[41/108] Verona: No matches
+[42/108] Genoa: 100 matches, 272 player records
+[43/108] Padua: No matches
+[44/108] Mexico City: 100 matches, 112 player records
+[45/108] Trieste: 100 matches, 172 player records
+[46/108] Guadalajara: 100 matches, 194 player records
+[47/108] Puebla: 100 matches, 142 player records
+[48/108] Monterrey: 100 matches, 185 player records
+[49/108] Brescia: 100 matches, 169 player records
+[50/108] Merida: 100 matches, 106 player records
+[51/108] Queretaro: 100 matches, 108 player records
+[52/108] Leon: 100 matches, 114 player records
+[53/108] Parma: 100 matches, 169 player records
+[54/108] London: 100 matches, 109 player records
+[55/108] Birmingham: 100 matches, 109 player records
+[56/108] Palermo: Error
+[57/108] Tijuana: Error
+[58/108] Cancun: Error
+[59/108] Manchester: Error
+[60/108] Leeds: Error
+[61/108] Porto: 100 matches, 102 player records
+[62/108] Faro: 100 matches, 104 player records
+[63/108] Glasgow: Error
+[64/108] Edinburgh: Error
+[65/108] Bristol: Error
+[66/108] Lisbon: Error
+[67/108] Cologne: 100 matches, 167 player records
+[68/108] Dusseldorf: 100 matches, 131 player records
+[69/108] Berlin: Error
+[70/108] Lyon: 100 matches, 265 player records
+[71/108] Frankfurt: 100 matches, 107 player records
+[72/108] Toulouse: 100 matches, 113 player records
+[73/108] Nice: 100 matches, 209 player records
+[74/108] Munich: Error
+[75/108] Brussels: 100 matches, 160 player records
+[76/108] Antwerp: 100 matches, 137 player records
+[77/108] Ghent: 100 matches, 137 player records
+[78/108] Amsterdam: 100 matches, 131 player records
+[79/108] Rotterdam: 100 matches, 137 player records
+[80/108] The Hague: 100 matches, 137 player records
+[81/108] Stockholm: 100 matches, 181 player records
+[82/108] Gothenburg: 100 matches, 129 player records
+[83/108] Malmo: 100 matches, 129 player records
+[84/108] Dubai: 100 matches, 222 player records
+[85/108] Hamburg: Error
+[86/108] Paris: Error
+[87/108] Abu Dhabi: 100 matches, 222 player records
+[88/108] Marseille: Error
+[89/108] Cape Town: 100 matches, 176 player records
+[90/108] Miami: 100 matches, 100 player records
+[91/108] Bordeaux: Error
+[92/108] New York: 100 matches, 270 player records
+[93/108] Johannesburg: Error
+[94/108] Houston: 100 matches, 137 player records
+[95/108] Durban: Error
+[96/108] Pretoria: Error
+[97/108] Los Angeles: Error
+[98/108] San Diego: 100 matches, 217 player records
+[99/108] Dallas: Error
+[100/108] Phoenix: Error
+[101/108] Chicago: Error
+[102/108] Austin: Error
+[103/108] San Francisco: Error
+[104/108] Buenos Aires: Error
+[105/108] Sao Paulo: Error
+[106/108] Singapore: Error
+[107/108] Sydney: Error
+[108/108] Melbourne: Error
+
+======================================================================
+🏁 PLAYER EXTRACTION COMPLETE
+   Total player records: 10074
+   Unique players (by user_id): 1911
+
+📈 PLAYERS BY COUNTRY:
+     909 - ES
+     260 - MX
+     131 - BE
+     122 - IT
+      94 - AE
+      83 - SE
+      79 - SW
+      64 - NL
+      59 - ZA
+      56 - US
+      24 - GB
+      22 - DE
+       5 - CH
+       3 - USA
+
+💾 Unique players: output/playtomic_players/playtomic_players_unique_20260125_232724.json
+💾 All records: output/playtomic_players/playtomic_player_records_20260125_232724.json
+
+✅ Done!

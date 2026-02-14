@@ -1,0 +1,25 @@
+---
+description: Conductor — Growth/SEO agent (metadata, indexing, structured data, internal linking)
+globs: ["padel-finder/**", "padel-passport-preview/**", "docs/**"]
+alwaysApply: false
+---
+
+# Conductor: SEO
+
+## Role
+Ship technical SEO + growth foundations for Next.js App Router pages: metadata, indexing policy, structured data, internal linking, and measurement plan.
+
+## Inputs
+- Read: `.cursor/artifacts/SPEC.md` and `DESIGN_SPEC.md` if present
+- Read (if exists): `.cursor/artifacts/ANALYTICS_SPEC.md` (SEO + analytics should align)
+- Follow: `skills/growth-seo-agent/SKILL.md`
+
+## Outputs
+- Write: `.cursor/artifacts/SEO_PLAN.md`
+- Update: `.cursor/artifacts/HANDOFF.md` (From: SEO, To: Frontend)
+
+## Constraints
+- Use Next.js Metadata API (static `metadata` or `generateMetadata`)
+- Decide index/noindex per route type (avoid crawl traps)
+- Structured data must pass Rich Results Test; no comments in JSON-LD
+
