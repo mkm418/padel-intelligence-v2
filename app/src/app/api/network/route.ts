@@ -8,6 +8,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 import type { SupabaseClient } from "@supabase/supabase-js";
+import { normalizeClubs } from "@/lib/club-aliases";
 
 export const revalidate = 300; // Cache for 5 minutes
 
@@ -132,12 +133,13 @@ export async function GET(req: NextRequest) {
   try {
     if (playerIdArray.length > 3000) {
       // Broad query: fetch edges by weight threshold directly, then filter
-      const allEdges = await fetchAll((sb, from, to) =>
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const allEdges: any[] = await fetchAll((sb, from, to) =>
         sb
           .from("edges")
           .select("source, target, weight, relationship")
           .gte("weight", minWeight)
-          .range(from, to),
+          .range(from, to) as ReturnType<ReturnType<typeof sb.from>["select"]>,
       );
       // Only keep edges where both endpoints are in the player set
       edgesArr = allEdges.filter(
@@ -225,7 +227,7 @@ export async function GET(req: NextRequest) {
       name: p.name,
       level: p.level_value,
       matchCount: matches,
-      clubs: p.clubs,
+      clubs: normalizeClubs(p.clubs ?? []),
       picture: p.picture,
       firstMatch: p.first_match,
       lastMatch: p.last_match,
@@ -272,10 +274,10 @@ export async function GET(req: NextRequest) {
       relationship: e.relationship,
     }));
 
-  // Club breakdown
+  // Club breakdown (use normalized node clubs)
   const clubCounts = new Map<string, number>();
-  for (const p of players) {
-    for (const c of p.clubs) {
+  for (const n of nodes) {
+    for (const c of n.clubs) {
       clubCounts.set(c, (clubCounts.get(c) ?? 0) + 1);
     }
   }
@@ -294,12 +296,12 @@ export async function GET(req: NextRequest) {
     }
   }
 
-  // All clubs (for filter dropdown) — extract from loaded players
-  const allClubsSet = new Set<string>();
+  // All clubs (for filter dropdown) — extract from loaded players, normalized
+  const rawClubList: string[] = [];
   for (const p of rawPlayers) {
-    for (const c of p.clubs) allClubsSet.add(c);
+    for (const c of p.clubs ?? []) rawClubList.push(c);
   }
-  const allClubs = Array.from(allClubsSet).sort();
+  const allClubs = normalizeClubs(rawClubList);
 
   // ── Total counts ────────────────────────────────────────────────────
 

@@ -7,6 +7,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
+import { normalizeClubs } from "@/lib/club-aliases";
 
 export const revalidate = 300; // Cache for 5 minutes
 
@@ -186,7 +187,7 @@ export async function GET(req: NextRequest) {
         // Only show win rate if we have enough data
         winRate: meaningful ? p.win_rate : null,
         winRateMeaningful: meaningful,
-        clubs: (p.clubs ?? []).map(trimClub),
+        clubs: normalizeClubs(p.clubs ?? []),
         lastMatch: p.last_match,
         firstMatch: p.first_match,
         powerScore,
@@ -223,14 +224,14 @@ export async function GET(req: NextRequest) {
   const { data: clubRows } = await supabase.rpc("get_distinct_clubs");
   let allClubNames: string[] = [];
   if (clubRows && Array.isArray(clubRows)) {
-    allClubNames = clubRows.map((r: { club_name: string }) => r.club_name).sort();
+    allClubNames = normalizeClubs(clubRows.map((r: { club_name: string }) => r.club_name));
   } else {
     // Fallback: extract from current result set
-    const clubSet = new Set<string>();
+    const rawClubs: string[] = [];
     for (const p of allPlayers) {
-      for (const c of p.clubs ?? []) clubSet.add(c.trim());
+      for (const c of p.clubs ?? []) rawClubs.push(c);
     }
-    allClubNames = Array.from(clubSet).sort();
+    allClubNames = normalizeClubs(rawClubs);
   }
 
   // When searching, return all matches (up to 200). Default: top 100.

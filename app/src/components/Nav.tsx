@@ -11,7 +11,8 @@ const NAV_ITEMS = [
   { href: "/network", label: "Network" },
   { href: "/rankings", label: "Rankings" },
   { href: "/h2h", label: "H2H" },
-  { href: "/chat", label: "Coach" },
+  { href: "/coaches", label: "Coaches" },
+  { href: "/chat", label: "AI Coach" },
 ] as const;
 
 export default function Nav() {
