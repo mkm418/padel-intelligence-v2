@@ -7,6 +7,8 @@ import { useTheme } from "@/components/ThemeProvider";
 
 const NAV_ITEMS = [
   { href: "/", label: "Home" },
+  { href: "/miami", label: "The Pulse" },
+  { href: "/clubs", label: "Clubs" },
   { href: "/tournaments", label: "Play" },
   { href: "/network", label: "Network" },
   { href: "/rankings", label: "Rankings" },

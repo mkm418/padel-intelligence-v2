@@ -52,3 +52,4 @@ tools/api_keys.py
 
 # Tools contain API keys - keep local only
 tools/
+.env*.local

@@ -5,7 +5,7 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import coaches from "@/data/coaches.json";
+import { coaches } from "@/data/coaches";
 import { normalizeClubName } from "@/lib/club-aliases";
 
 export const revalidate = 3600;
@@ -39,7 +39,7 @@ export async function GET(
 ) {
   const { id } = await params;
 
-  const coach = (coaches as CoachRaw[]).find((c) => c.coach_id === id);
+  const coach = (coaches as unknown as CoachRaw[]).find((c) => c.coach_id === id);
 
   if (!coach) {
     return NextResponse.json({ error: "Coach not found" }, { status: 404 });

@@ -3,7 +3,6 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import dynamic from "next/dynamic";
 
-import Nav from "@/components/Nav";
 import { useTheme } from "@/components/ThemeProvider";
 
 // react-force-graph-2d: client-only (canvas)
@@ -361,8 +360,6 @@ export default function NetworkGraph() {
   // ── Render ──────────────────────────────────────────────────────────
   return (
     <div className="flex h-screen w-full flex-col bg-background text-foreground pt-14 overflow-x-hidden">
-      <Nav />
-
       {/* ── Header bar ─────────────────────────────────────────── */}
       <header className="flex-shrink-0 flex items-center justify-between gap-3 border-b border-border bg-surface px-4 sm:px-5 py-2">
         <div className="flex items-center gap-3 min-w-0">

@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef, memo } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Nav from "@/components/Nav";
 
 // ── Types ────────────────────────────────────────────────────────────────
 
@@ -123,8 +122,6 @@ export default function CoachDirectory() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Nav />
-
       <div className="page-container pt-20 pb-16">
         {/* ── Header */}
         <header className="mb-10">

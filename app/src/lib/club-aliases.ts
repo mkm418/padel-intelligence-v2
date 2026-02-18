@@ -38,21 +38,34 @@ const ALIAS_MAP: Record<string, string> = {
 
   // Legio GP variants
   "Legio Gp": "LEGIO GP",
+
+  // Duplicates merged into real clubs
+  "Padel X": "Padel X Miami",
+  "Area Center Doral": "AREA Centre",
+  "Miami Padel Federation": "Smart Padel House",
+
+  // Non-clubs (leagues/platforms) - map to empty to filter out
+  "National Padel League": "",
+  "Pro Padel League": "",
+  "Playtomic US": "",
+  "Stadio Soccer": "",
+  "Eve Tennis": "",
 };
 
-/** Normalize a club name to its canonical form */
+/** Normalize a club name to its canonical form (returns "" for non-clubs) */
 export function normalizeClubName(name: string): string {
   const trimmed = name.trim();
   return ALIAS_MAP[trimmed] ?? trimmed;
 }
 
-/** Normalize an array of club names, deduplicate */
+/** Normalize an array of club names, deduplicate, filter out non-clubs */
 export function normalizeClubs(clubs: string[]): string[] {
   const seen = new Set<string>();
   const result: string[] = [];
   for (const c of clubs) {
     const norm = normalizeClubName(c);
-    if (!seen.has(norm)) {
+    // Skip empty strings (non-clubs mapped to "")
+    if (norm && !seen.has(norm)) {
       seen.add(norm);
       result.push(norm);
     }

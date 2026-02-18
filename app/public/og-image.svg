@@ -1,0 +1,30 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#0C0C0C"/>
+  
+  <!-- Top accent bar -->
+  <rect width="1200" height="4" fill="#E85A1C"/>
+  
+  <!-- Icon: orange rounded square with P -->
+  <rect x="120" y="200" width="130" height="130" rx="24" fill="#E85A1C"/>
+  <path d="M160 240h44a16 16 0 0 1 0 32h-24v40h-20V240z" fill="white"/>
+  
+  <!-- Title -->
+  <text x="290" y="262" font-family="system-ui, -apple-system, sans-serif" font-weight="700" font-size="52" fill="white">Padel Passport</text>
+  
+  <!-- Tagline -->
+  <text x="290" y="306" font-family="system-ui, -apple-system, sans-serif" font-weight="400" font-size="24" fill="#999">The scoreboard for Miami padel</text>
+  
+  <!-- Stats -->
+  <text x="290" y="346" font-family="system-ui, -apple-system, sans-serif" font-weight="500" font-size="18" fill="#E85A1C">27K+ Players</text>
+  <text x="440" y="346" font-family="system-ui, -apple-system, sans-serif" font-weight="500" font-size="18" fill="#666">·</text>
+  <text x="460" y="346" font-family="system-ui, -apple-system, sans-serif" font-weight="500" font-size="18" fill="#E85A1C">35+ Clubs</text>
+  <text x="590" y="346" font-family="system-ui, -apple-system, sans-serif" font-weight="500" font-size="18" fill="#666">·</text>
+  <text x="610" y="346" font-family="system-ui, -apple-system, sans-serif" font-weight="500" font-size="18" fill="#E85A1C">Every Match Tracked</text>
+
+  <!-- URL -->
+  <text x="120" y="560" font-family="system-ui, -apple-system, sans-serif" font-weight="400" font-size="18" fill="#555">thepadelpassport.com</text>
+  
+  <!-- Bottom accent bar -->
+  <rect y="626" width="1200" height="4" fill="#E85A1C"/>
+</svg>

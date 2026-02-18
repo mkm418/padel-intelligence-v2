@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import coachesRaw from "@/data/coaches.json";
+import { coaches as coachesRaw } from "@/data/coaches";
 import { normalizeClubName, normalizeClubs } from "@/lib/club-aliases";
 
 export const revalidate = 3600;
@@ -53,7 +53,7 @@ export async function GET(request: NextRequest) {
   const sort = searchParams.get("sort") ?? "classes";
 
   // Normalize all coaches
-  const coaches = (coachesRaw as RawCoach[]).map(normalizeCoach);
+  const coaches = (coachesRaw as unknown as RawCoach[]).map(normalizeCoach);
 
   // Collect all unique club names for the filter dropdown
   const allClubNames = new Set<string>();

@@ -8,7 +8,6 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Nav from "@/components/Nav";
 
 // ── Types ────────────────────────────────────────────────────────────────
 
@@ -148,7 +147,6 @@ function getInitials(name: string): string {
 function LoadingSkeleton() {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Nav />
       <div className="page-container pt-20 pb-16">
         <div className="mb-6">
           <div className="h-4 w-32 animate-pulse rounded bg-surface" />
@@ -194,7 +192,6 @@ export default function CoachProfile({ coachId }: { coachId: string }) {
   if (error || !data) {
     return (
       <div className="min-h-screen bg-background text-foreground">
-        <Nav />
         <div className="flex min-h-[60vh] items-center justify-center">
           <div className="card max-w-sm p-8 text-center">
             <p className="font-display text-lg font-semibold text-loss">
@@ -225,8 +222,6 @@ export default function CoachProfile({ coachId }: { coachId: string }) {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Nav />
-
       <div className="page-container pt-20 pb-16">
         {/* ── Back link */}
         <div className="mb-6">

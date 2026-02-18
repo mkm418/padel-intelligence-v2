@@ -234,12 +234,17 @@ export async function GET(req: NextRequest) {
     allClubNames = normalizeClubs(rawClubs);
   }
 
-  // When searching, return all matches (up to 200). Default: top 100.
-  const resultLimit = search ? 200 : 100;
+  // Pagination: offset + limit
+  const offset = parseInt(url.searchParams.get("offset") ?? "0", 10);
+  const limit = parseInt(url.searchParams.get("limit") ?? "100", 10);
+  const page = withRank.slice(offset, offset + limit);
+  const hasMore = offset + limit < withRank.length;
 
   return NextResponse.json({
-    rankings: withRank.slice(0, resultLimit),
+    rankings: page,
     totalRanked: withRank.length,
+    hasMore,
+    nextOffset: hasMore ? offset + limit : null,
     categories: {
       hotPlayers,
       risingStars,

@@ -8,7 +8,6 @@
  */
 
 import { useState, useEffect, useCallback, useRef, memo } from "react";
-import Nav from "@/components/Nav";
 
 // ── Types ────────────────────────────────────────────────────────────────
 
@@ -354,8 +353,6 @@ export default function H2HComparison() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Nav />
-
       <div className="page-container pt-20 pb-16">
         {/* ── Page Header ─────────────────────────────────────── */}
         <div className="mb-10 text-center">

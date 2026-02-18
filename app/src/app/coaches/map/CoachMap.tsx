@@ -3,7 +3,6 @@
 import { useEffect, useState, useRef, useMemo, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Nav from "@/components/Nav";
 import { CLUB_LOCATIONS, type ClubLocation } from "@/data/club-locations";
 import { normalizeClubName } from "@/lib/club-aliases";
 
@@ -182,7 +181,6 @@ export default function CoachMap() {
 
   return (
     <>
-      <Nav />
       <main className="min-h-screen bg-background pt-20 pb-16">
         <div className="page-container">
           {/* Header */}

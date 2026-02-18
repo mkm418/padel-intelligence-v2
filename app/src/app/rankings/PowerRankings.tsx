@@ -7,7 +7,7 @@
  */
 
 import { useState, useEffect, useRef, memo } from "react";
-import Nav from "@/components/Nav";
+import EmailPopup from "@/components/EmailPopup";
 
 // ── Types ────────────────────────────────────────────────────────────────
 
@@ -37,6 +37,8 @@ interface RankedPlayer {
 interface RankingsData {
   rankings: RankedPlayer[];
   totalRanked: number;
+  hasMore: boolean;
+  nextOffset: number | null;
   categories: {
     hotPlayers: RankedPlayer[];
     risingStars: RankedPlayer[];
@@ -91,6 +93,7 @@ const TABS: { id: Tab; label: string }[] = [
 export default function PowerRankings() {
   const [data, setData] = useState<RankingsData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [tab, setTab] = useState<Tab>("overall");
   const [club, setClub] = useState("");
@@ -99,31 +102,34 @@ export default function PowerRankings() {
   const [allClubs, setAllClubs] = useState<string[]>([]);
   const debounceRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
+  /** Build the base query params (shared between initial load and load-more) */
+  function buildParams(offset = 0): URLSearchParams {
+    const params = new URLSearchParams({
+      minLevel: String(levelRange[0]),
+      maxLevel: String(levelRange[1]),
+      offset: String(offset),
+      limit: "100",
+    });
+    if (club) params.set("club", club);
+    if (search.trim()) params.set("search", search.trim());
+    return params;
+  }
+
+  /** Initial fetch (resets data) */
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
-
-    // Longer debounce for search typing, shorter for filter changes
     const delay = search ? 400 : 250;
 
     debounceRef.current = setTimeout(() => {
       setLoading(true);
       setError(null);
-      const params = new URLSearchParams({
-        minLevel: String(levelRange[0]),
-        maxLevel: String(levelRange[1]),
-      });
-      if (club) params.set("club", club);
-      if (search.trim()) params.set("search", search.trim());
-      // Don't send minMatches — API defaults to 5 for leaderboard, 1 when searching
 
-      fetch(`/api/rankings?${params}`)
+      fetch(`/api/rankings?${buildParams(0)}`)
         .then((r) => r.json())
         .then((d) => {
           if (d.error) throw new Error(d.error);
           setData(d);
-          if (d.clubs?.length > 0) {
-            setAllClubs(d.clubs);
-          }
+          if (d.clubs?.length > 0) setAllClubs(d.clubs);
         })
         .catch((e) => {
           setError(e.message ?? "Failed to load");
@@ -135,12 +141,35 @@ export default function PowerRankings() {
     return () => {
       if (debounceRef.current) clearTimeout(debounceRef.current);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [club, levelRange, search]);
+
+  /** Load more: append next page to existing data */
+  function loadMore() {
+    if (!data?.hasMore || !data.nextOffset || loadingMore) return;
+    setLoadingMore(true);
+
+    fetch(`/api/rankings?${buildParams(data.nextOffset)}`)
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.error) throw new Error(d.error);
+        setData((prev) =>
+          prev
+            ? {
+                ...prev,
+                rankings: [...prev.rankings, ...d.rankings],
+                hasMore: d.hasMore,
+                nextOffset: d.nextOffset,
+              }
+            : d,
+        );
+      })
+      .catch((e) => setError(e.message))
+      .finally(() => setLoadingMore(false));
+  }
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Nav />
-
       <div className="page-container pt-20 pb-16">
         {/* ── Header */}
         <header className="mb-10">
@@ -265,11 +294,37 @@ export default function PowerRankings() {
             {tab === "overall" && (
               <>
                 {data.rankings.length > 0 ? (
-                  <RankingTable
-                    players={data.rankings}
-                    showRank
-                    highlightTop={search ? 0 : 3}
-                  />
+                  <>
+                    <RankingTable
+                      players={data.rankings}
+                      showRank
+                      highlightTop={search ? 0 : 3}
+                    />
+
+                    {/* Load More */}
+                    {data.hasMore && (
+                      <div className="mt-6 flex flex-col items-center gap-2">
+                        <button
+                          onClick={loadMore}
+                          disabled={loadingMore}
+                          className="px-6 py-2.5 rounded-lg bg-accent text-white text-sm font-medium hover:bg-accent-hover transition-colors disabled:opacity-50"
+                        >
+                          {loadingMore ? "Loading..." : "Load More Players"}
+                        </button>
+                        <p className="text-xs text-dim">
+                          Showing {data.rankings.length.toLocaleString()} of{" "}
+                          {data.totalRanked.toLocaleString()} players
+                        </p>
+                      </div>
+                    )}
+
+                    {/* All loaded indicator */}
+                    {!data.hasMore && data.rankings.length > 100 && (
+                      <p className="mt-6 text-center text-xs text-dim">
+                        All {data.rankings.length.toLocaleString()} players loaded
+                      </p>
+                    )}
+                  </>
                 ) : (
                   <EmptyState message={search ? `No players matching "${search}".` : "No players match these filters."} />
                 )}
@@ -341,6 +396,9 @@ export default function PowerRankings() {
           </>
         )}
       </div>
+
+      {/* Scroll-triggered email capture */}
+      <EmailPopup source="rankings_popup" scrollThreshold={55} timeDelay={15000} />
     </div>
   );
 }

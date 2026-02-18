@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useMemo, memo } from "react";
-import Nav from "@/components/Nav";
 import {
   Calendar,
   MapPin,
@@ -149,8 +148,6 @@ export default function TournamentFinder() {
   /* ── Render ───────────────────────────────────────────────── */
   return (
     <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
-      <Nav />
-
       <div className="pt-20 pb-16">
         <div className="page-container">
           {/* ── Header ──────────────────────────────────────── */}
