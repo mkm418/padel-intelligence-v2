@@ -12,19 +12,24 @@ import { supabase } from "@/lib/supabase";
 export const revalidate = 3600;
 
 export async function GET(
-  _req: NextRequest,
+  req: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
   const { id } = await params;
+  const city = req.nextUrl.searchParams.get("city") || "";
 
-  // Fetch all matches involving this player
-  const { data: rawMatches, error } = await supabase
+  // Fetch all matches involving this player, optionally filtered by city
+  let q = supabase
     .from("matches")
     .select("*")
     .or(
       `team1_p1.eq.${id},team1_p2.eq.${id},team2_p1.eq.${id},team2_p2.eq.${id}`,
     )
     .order("played_at", { ascending: false });
+
+  if (city) q = q.eq("city", city);
+
+  const { data: rawMatches, error } = await q;
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });

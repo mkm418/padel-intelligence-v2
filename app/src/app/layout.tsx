@@ -24,13 +24,13 @@ const dmSans = DM_Sans({
 const SITE_NAME = "Padel Passport";
 const SITE_URL = "https://www.thepadelpassport.com";
 const SITE_DESCRIPTION =
-  "The scoreboard for Miami padel. Track stats, compare players head-to-head, explore the 27K+ player network, and climb the power rankings.";
+  "The global padel scoreboard. Track stats, compare players head-to-head, explore player networks, and climb the power rankings across cities worldwide.";
 
 /* ── Metadata ───────────────────────────────────────────────── */
 export const metadata: Metadata = {
   /* Title template: pages set their own title, appended with " | Padel Passport" */
   title: {
-    default: "Padel Passport | Miami Padel Stats, Rankings & Player Network",
+    default: "Padel Passport | Global Padel Stats, Rankings & Player Network",
     template: "%s | Padel Passport",
   },
   description: SITE_DESCRIPTION,
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
   /* Open Graph */
   openGraph: {
     title: "Padel Passport",
-    description: "The scoreboard for Miami padel. 27K+ players tracked.",
+    description: "The global padel scoreboard. Stats, rankings, and player networks worldwide.",
     siteName: SITE_NAME,
     url: SITE_URL,
     locale: "en_US",
@@ -69,7 +69,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Padel Passport",
-    description: "The scoreboard for Miami padel. 27K+ players tracked.",
+    description: "The global padel scoreboard. Stats, rankings, and player networks worldwide.",
     images: ["/og-image.svg"],
   },
 

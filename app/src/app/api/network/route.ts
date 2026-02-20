@@ -56,9 +56,9 @@ function isRealPlayer(name: string): boolean {
 
 export async function GET(req: NextRequest) {
   const url = req.nextUrl;
+  const city = url.searchParams.get("city") || "miami";
   const club = url.searchParams.get("club") ?? "";
   const search = url.searchParams.get("search") ?? "";
-  // When searching, include all players so anyone can find themselves
   const defaultMin = search ? 1 : 5;
   const minMatches = parseInt(url.searchParams.get("minMatches") ?? String(defaultMin), 10);
   const minWeight = parseInt(url.searchParams.get("minWeight") ?? "2", 10);
@@ -73,6 +73,7 @@ export async function GET(req: NextRequest) {
       let q = sb
         .from("players")
         .select("*")
+        .eq("city", city)
         .gte("matches_played", minMatches)
         .order("matches_played", { ascending: false })
         .range(from, to);
@@ -132,12 +133,12 @@ export async function GET(req: NextRequest) {
 
   try {
     if (playerIdArray.length > 3000) {
-      // Broad query: fetch edges by weight threshold directly, then filter
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const allEdges: any[] = await fetchAll((sb, from, to) =>
         sb
           .from("edges")
           .select("source, target, weight, relationship")
+          .eq("city", city)
           .gte("weight", minWeight)
           .range(from, to) as ReturnType<ReturnType<typeof sb.from>["select"]>,
       );
@@ -307,11 +308,13 @@ export async function GET(req: NextRequest) {
 
   const { count: totalPlayers } = await supabase
     .from("players")
-    .select("*", { count: "exact", head: true });
+    .select("*", { count: "exact", head: true })
+    .eq("city", city);
 
   const { count: totalEdges } = await supabase
     .from("edges")
-    .select("*", { count: "exact", head: true });
+    .select("*", { count: "exact", head: true })
+    .eq("city", city);
 
   return NextResponse.json({
     nodes,

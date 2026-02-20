@@ -155,18 +155,27 @@ async function fetchAPI<T>(
 }
 
 // ---------------------------------------------------------------------------
-// Miami-scoped queries
+// City-generic queries
+// ---------------------------------------------------------------------------
+
+/** Active padel clubs for any coordinate + radius */
+export function getClubsByCity(coordinate: string, radius: number) {
+  return fetchAPI<Tenant[]>("tenants", {
+    coordinate,
+    radius,
+    sport_id: "PADEL",
+    playtomic_status: "ACTIVE",
+    size: 100,
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Miami-scoped queries (kept for backward compat)
 // ---------------------------------------------------------------------------
 
 /** Active padel clubs within 100 km of Miami */
 export function getMiamiClubs() {
-  return fetchAPI<Tenant[]>("tenants", {
-    coordinate: MIAMI_COORD,
-    radius: RADIUS,
-    sport_id: "PADEL",
-    playtomic_status: "ACTIVE",
-    size: 50,
-  });
+  return getClubsByCity(MIAMI_COORD, RADIUS);
 }
 
 /** Open/upcoming matches near Miami */
@@ -199,7 +208,7 @@ export function getClubClasses(tenantId: string) {
 
 /**
  * Fetch tournaments + classes for top N clubs, merged and sorted.
- * Fetches per-club for richer data (names include times, levels, etc.)
+ * Works with any city's clubs.
  */
 export async function getMiamiEvents(clubs: Tenant[], topN = 10) {
   const topClubs = clubs.slice(0, topN);

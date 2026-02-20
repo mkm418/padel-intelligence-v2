@@ -118,16 +118,14 @@ function trimClub(name: string): string {
 export async function GET(req: NextRequest) {
   try {
   const url = req.nextUrl;
+  const city = url.searchParams.get("city") || "miami";
   const club = url.searchParams.get("club") ?? "";
   const search = url.searchParams.get("search") ?? "";
   const minLevel = parseFloat(url.searchParams.get("minLevel") ?? "0");
   const maxLevel = parseFloat(url.searchParams.get("maxLevel") ?? "8");
-  // When searching, include ALL players (even 1 match) so anyone can find themselves.
-  // Default leaderboard view still requires 5+ matches for a clean ranking.
   const defaultMin = search ? 1 : 5;
   const minMatches = parseInt(url.searchParams.get("minMatches") ?? String(defaultMin), 10);
 
-  // Paginate through all matching players
   const PAGE = 1000;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const allPlayers: any[] = [];
@@ -137,6 +135,7 @@ export async function GET(req: NextRequest) {
     let q = supabase
       .from("players")
       .select("*")
+      .eq("city", city)
       .gte("matches_played", minMatches)
       .order("matches_played", { ascending: false })
       .range(from, from + PAGE - 1);
@@ -219,8 +218,7 @@ export async function GET(req: NextRequest) {
     }
   }
 
-  // Always fetch full club list from DB (independent of current filters)
-  // so the dropdown never collapses
+  // Full club list for this city (independent of current filters)
   const { data: clubRows } = await supabase.rpc("get_distinct_clubs");
   let allClubNames: string[] = [];
   if (clubRows && Array.isArray(clubRows)) {

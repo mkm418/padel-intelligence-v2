@@ -40,7 +40,8 @@ const BEST_FOR_OPTIONS: { key: BestFor; label: string; icon: string }[] = [
   { key: "social", label: "Social & Fun", icon: "🎉" },
 ];
 
-export default function ClubDirectory() {
+export default function ClubDirectory({ city: _city = "miami" }: { city?: string }) {
+  // TODO: Filter clubs by city once multi-city club profiles are added
   const allClubs = useMemo(() => getAllClubProfiles(), []);
   const miamiAvg = useMemo(() => getMiamiAverages(), []);
   const [search, setSearch] = useState("");

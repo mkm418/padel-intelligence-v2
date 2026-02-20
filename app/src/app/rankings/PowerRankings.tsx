@@ -90,7 +90,7 @@ const TABS: { id: Tab; label: string }[] = [
 
 // ── Main component ───────────────────────────────────────────────────────
 
-export default function PowerRankings() {
+export default function PowerRankings({ city = "miami" }: { city?: string }) {
   const [data, setData] = useState<RankingsData | null>(null);
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -102,9 +102,9 @@ export default function PowerRankings() {
   const [allClubs, setAllClubs] = useState<string[]>([]);
   const debounceRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
-  /** Build the base query params (shared between initial load and load-more) */
   function buildParams(offset = 0): URLSearchParams {
     const params = new URLSearchParams({
+      city,
       minLevel: String(levelRange[0]),
       maxLevel: String(levelRange[1]),
       offset: String(offset),
@@ -142,7 +142,7 @@ export default function PowerRankings() {
       if (debounceRef.current) clearTimeout(debounceRef.current);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [club, levelRange, search]);
+  }, [club, levelRange, search, city]);
 
   /** Load more: append next page to existing data */
   function loadMore() {

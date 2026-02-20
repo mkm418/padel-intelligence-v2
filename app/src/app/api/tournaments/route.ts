@@ -5,9 +5,9 @@
  * Returns combined, sorted list with club metadata attached.
  */
 
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import {
-  getMiamiClubs,
+  getClubsByCity,
   getClubTournaments,
   getClubClasses,
   padelCourtCount,
@@ -15,6 +15,7 @@ import {
   type Tournament,
   type PadelClass,
 } from "@/lib/playtomic";
+import { getCityBySlug } from "@/lib/cities";
 
 export const revalidate = 300; // cache 5 min
 
@@ -132,10 +133,13 @@ function classToEvent(c: PadelClass, club: Tenant): EventItem {
 
 /* ── Handler ─────────────────────────────────────────────────── */
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
-    // Fetch all clubs
-    const clubs = await getMiamiClubs().catch(() => [] as Tenant[]);
+    const citySlug = req.nextUrl.searchParams.get("city") || "miami";
+    const cityConfig = getCityBySlug(citySlug);
+    const clubs = cityConfig
+      ? await getClubsByCity(cityConfig.coordinate, cityConfig.radius).catch(() => [] as Tenant[])
+      : ([] as Tenant[]);
     if (clubs.length === 0) {
       return NextResponse.json({ events: [], clubs: [] });
     }

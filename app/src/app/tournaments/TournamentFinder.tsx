@@ -77,7 +77,7 @@ const EVENT_TYPES = [
 
 /* ── Main Component ─────────────────────────────────────────── */
 
-export default function TournamentFinder() {
+export default function TournamentFinder({ city = "miami" }: { city?: string }) {
   const [data, setData] = useState<ApiResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -93,7 +93,7 @@ export default function TournamentFinder() {
 
   /* ── Fetch data ───────────────────────────────────────────── */
   useEffect(() => {
-    fetch("/api/tournaments")
+    fetch(`/api/tournaments?city=${city}`)
       .then((r) => r.json())
       .then((d: ApiResponse) => {
         if (d.error) throw new Error(d.error);

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import NewsletterSignup from "./NewsletterSignup";
+import { getAllClubProfiles } from "@/lib/club-profiles";
+import { coaches } from "@/data/coaches";
 
 export const metadata: Metadata = {
   title: "The Miami Pulse | Your Weekly Padel Intel",
@@ -138,6 +140,22 @@ const TAG_COLORS: Record<string, string> = {
 // ---------------------------------------------------------------------------
 
 export default function MiamiPulsePage() {
+  const clubProfiles = getAllClubProfiles().slice(0, 8);
+
+  // Top Miami coaches by class count (deduplicated by name)
+  const seenCoachNames = new Set<string>();
+  const topCoaches = coaches
+    .filter((c) => {
+      const isMiami = c.clubs.some((club) =>
+        ["Miami", "Doral", "Miramar", "Aventura", "North Miami", "Miami Beach", "Hallandale Beach"].includes(club.city)
+      );
+      if (!isMiami || seenCoachNames.has(c.name)) return false;
+      seenCoachNames.add(c.name);
+      return true;
+    })
+    .sort((a, b) => b.stats.totalClasses - a.stats.totalClasses)
+    .slice(0, 6);
+
   return (
     <div className="bg-background text-foreground">
       {/* ══════════ HERO ══════════ */}
@@ -208,8 +226,8 @@ export default function MiamiPulsePage() {
               </p>
               <p className="text-muted">
                 And while the pros battle it out, the real story is what&apos;s
-                happening at street level: Ultra Padel just opened the
-                largest US padel club in Midtown (11 courts). Ace Padel is
+                happening at street level: <Link href="/club/ultra-padel-miami" className="text-accent hover:underline">Ultra Padel</Link> just
+                opened the largest US padel club in Midtown (11 courts). Ace Padel is
                 launching in Coconut Grove this spring. Doral is converting a
                 36,000 sq ft warehouse into courts.
               </p>
@@ -250,53 +268,174 @@ export default function MiamiPulsePage() {
         </div>
       </section>
 
-      {/* ══════════ NEW CLUBS ══════════ */}
+      {/* ══════════ CLUBS FROM OUR DATA ══════════ */}
       <section className="border-b border-border">
         <div className="page-container py-10 sm:py-14">
-          <p className="section-label mb-2">Court Watch</p>
-          <p className="text-sm text-muted mb-6">
-            New clubs opening across South Florida. The court count keeps
-            climbing.
-          </p>
-          <div className="grid gap-3 sm:grid-cols-2">
-            {NEW_CLUBS.map((club) => (
-              <div
-                key={club.name}
-                className="card p-5 flex flex-col gap-3"
+          <div className="flex items-baseline justify-between mb-6">
+            <div>
+              <p className="section-label mb-2">Club Intel</p>
+              <p className="text-sm text-muted">
+                Scout reports on every Miami club. Data from 27K+ players.
+              </p>
+            </div>
+            <Link href="/miami/clubs" className="text-sm text-accent font-medium hover:underline">
+              All clubs
+            </Link>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {clubProfiles.map((club) => (
+              <Link
+                key={club.slug}
+                href={`/club/${club.slug}`}
+                className="card group overflow-hidden"
               >
-                <div className="flex items-start justify-between gap-3">
+                <div className="relative aspect-[16/10] bg-surface overflow-hidden">
+                  {club.image ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={club.image}
+                      alt={club.name}
+                      loading="lazy"
+                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  ) : (
+                    <div className="flex h-full items-center justify-center bg-accent-soft">
+                      <span className="text-xl font-bold text-accent">{club.name.charAt(0)}</span>
+                    </div>
+                  )}
+                  <div className={`absolute top-2 right-2 px-2 py-0.5 rounded-lg backdrop-blur-sm text-xs font-bold ${
+                    club.overallScore >= 7 ? "bg-green-500/20 text-green-700 dark:text-green-400" :
+                    club.overallScore >= 5 ? "bg-amber-500/20 text-amber-700 dark:text-amber-400" :
+                    "bg-red-500/20 text-red-700 dark:text-red-400"
+                  }`}>
+                    {club.overallScore.toFixed(1)}/10
+                  </div>
+                </div>
+                <div className="p-3">
+                  <h3 className="text-xs font-bold group-hover:text-accent transition-colors">{club.name}</h3>
+                  <div className="mt-1 flex items-center gap-2 text-[10px] text-muted">
+                    <span className="font-medium text-foreground">{club.courts.total}</span> courts
+                    <span className="text-border">|</span>
+                    <span className="font-medium text-foreground">{club.stats.totalPlayers.toLocaleString()}</span> players
+                    <span className="text-border">|</span>
+                    <span>{club.stats.avgLevel.toFixed(1)} avg</span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          {/* New openings callout */}
+          <div className="mt-6">
+            <p className="text-xs font-bold text-foreground mb-3 uppercase tracking-wider text-accent">Opening Soon</p>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {NEW_CLUBS.map((club) => (
+                <div key={club.name} className="card p-4 flex items-start justify-between gap-3">
                   <div>
                     <div className="flex items-center gap-2">
                       <h3 className="text-sm font-bold">{club.name}</h3>
                       {club.hot && (
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-accent bg-accent/10 px-1.5 py-0.5 rounded">
-                          New
-                        </span>
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-accent bg-accent/10 px-1.5 py-0.5 rounded">New</span>
                       )}
                     </div>
-                    <p className="text-xs text-muted mt-0.5">
-                      {club.neighborhood}
+                    <p className="text-xs text-muted mt-0.5">{club.neighborhood}</p>
+                    <p className="text-xs text-muted mt-1 leading-relaxed">
+                      <span className="font-semibold text-foreground">{club.status}</span>
+                      {club.detail ? ` — ${club.detail}` : ""}
                     </p>
                   </div>
                   {club.courts && (
                     <div className="text-right shrink-0">
-                      <p className="stat-number text-lg font-bold">
-                        {club.courts}
-                      </p>
-                      <p className="text-[10px] text-dim uppercase tracking-wider">
-                        Courts
-                      </p>
+                      <p className="stat-number text-lg font-bold">{club.courts}</p>
+                      <p className="text-[10px] text-dim uppercase tracking-wider">Courts</p>
                     </div>
                   )}
                 </div>
-                <p className="text-xs text-muted leading-relaxed">
-                  <span className="font-semibold text-foreground">
-                    {club.status}
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════ TOP COACHES ══════════ */}
+      <section className="border-b border-border">
+        <div className="page-container py-10 sm:py-14">
+          <div className="flex items-baseline justify-between mb-6">
+            <div>
+              <p className="section-label mb-2">Coach Spotlight</p>
+              <p className="text-sm text-muted">
+                The most active coaches in Miami, ranked by classes taught.
+              </p>
+            </div>
+            <Link href="/coaches" className="text-sm text-accent font-medium hover:underline">
+              All coaches
+            </Link>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {topCoaches.map((coach, i) => (
+              <Link
+                key={coach.coach_id}
+                href={`/coach/${coach.coach_id}`}
+                className="card p-4 group flex items-start gap-3"
+              >
+                <div className="relative shrink-0">
+                  {coach.picture ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={coach.picture}
+                      alt={coach.name}
+                      className="w-10 h-10 rounded-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center text-xs font-bold text-accent">
+                      {coach.name.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase()}
+                    </div>
+                  )}
+                  <span className="absolute -top-1 -left-1 w-5 h-5 rounded-full bg-accent text-white text-[10px] font-bold flex items-center justify-center">
+                    {i + 1}
                   </span>
-                  {club.detail ? ` — ${club.detail}` : ""}
-                </p>
-              </div>
+                </div>
+                <div className="min-w-0">
+                  <h3 className="text-sm font-bold group-hover:text-accent transition-colors truncate">{coach.name}</h3>
+                  <p className="text-[10px] text-muted mt-0.5 truncate">
+                    {coach.clubs.map((c) => c.name).join(", ")}
+                  </p>
+                  <div className="mt-1.5 flex items-center gap-3 text-[10px]">
+                    <span className="font-semibold text-foreground">{coach.stats.totalClasses}</span>
+                    <span className="text-muted">classes</span>
+                    {coach.level && (
+                      <>
+                        <span className="text-border">|</span>
+                        <span className="font-semibold text-foreground">{coach.level}</span>
+                        <span className="text-muted">level</span>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </Link>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════ HOT TAKE ══════════ */}
+      <section className="border-b border-border">
+        <div className="page-container py-8 sm:py-10">
+          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#1a1a2e] to-[#16213e] p-6 sm:p-8">
+            <div className="absolute top-3 right-4 text-6xl sm:text-8xl opacity-10 select-none">
+              🔥
+            </div>
+            <div className="relative z-10 max-w-xl">
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-amber-400 mb-2">Hot Take</p>
+              <p className="text-lg sm:text-xl font-bold text-white leading-snug">
+                If you&apos;re still playing pickleball in Miami, you&apos;re missing the wave.
+              </p>
+              <p className="mt-3 text-sm text-white/60 leading-relaxed">
+                Padel courts in the US crossed 770 this year. Miami alone added 30+ courts in the last 12 months. 
+                The Premier Padel P1 is bringing Tapia, Coello, and Galan to Miami Beach next month.
+                Pickleball doesn&apos;t have that. <Link href="/miami/rankings" className="text-amber-400 hover:underline">Check where you rank</Link>.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -305,17 +444,36 @@ export default function MiamiPulsePage() {
       <section className="border-b border-border bg-surface/50">
         <div className="page-container py-10 sm:py-14">
           <p className="section-label mb-6">By the Numbers</p>
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+          <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
             {PRO_INTEL.map((item) => (
               <div key={item.stat} className="text-center">
-                <p className="stat-number text-2xl sm:text-3xl font-bold text-accent">
+                <p className="stat-number text-3xl sm:text-4xl font-bold text-accent">
                   {item.stat}
                 </p>
-                <p className="mt-1 text-xs text-muted leading-snug max-w-[160px] mx-auto">
+                <p className="mt-1.5 text-xs text-muted leading-snug max-w-[160px] mx-auto">
                   {item.label}
                 </p>
               </div>
             ))}
+          </div>
+
+          {/* Countdown to Premier Padel P1 */}
+          <div className="mt-8 text-center">
+            <div className="inline-flex items-center gap-3 px-5 py-3 rounded-xl bg-accent/10 border border-accent/20">
+              <span className="text-2xl">🏆</span>
+              <div className="text-left">
+                <p className="text-xs font-bold text-accent uppercase tracking-wider">Premier Padel P1 Miami</p>
+                <p className="text-sm text-foreground font-semibold">March 22-29 at Miami Beach Convention Center</p>
+              </div>
+              <a
+                href="https://www.miamipremierpadel.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary !py-2 !px-4 !text-xs"
+              >
+                Get Tickets
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -323,119 +481,132 @@ export default function MiamiPulsePage() {
       {/* ══════════ GEAR INTEL ══════════ */}
       <section className="border-b border-border">
         <div className="page-container py-10 sm:py-14">
-          <p className="section-label mb-2">Gear Intel</p>
-          <p className="text-sm text-muted mb-6">
-            What the pros are swinging and what you should know before buying.
-          </p>
+          <div className="flex items-baseline justify-between mb-6">
+            <div>
+              <p className="section-label mb-2">Gear Intel</p>
+              <p className="text-sm text-muted">
+                What the pros swing. What you should buy. Links to every product.
+              </p>
+            </div>
+            <a href="https://padelusa.com" target="_blank" rel="noopener noreferrer" className="text-xs text-accent font-medium hover:underline">
+              Shop all gear
+            </a>
+          </div>
 
-          {/* Racket grid */}
+          {/* Racket grid with buy links */}
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            <GearCard
-              name="Nox AT10 Genius 18K"
-              player="Agustin Tapia"
-              tag="MOST VERSATILE"
-              detail="Modular Weight Balance System lets you adjust mid-session. Dual Spin surface with 3D texture. The 2026 trend is customization."
-            />
-            <GearCard
-              name="Bullpadel Hack 04"
-              player="Paquito Navarro"
-              tag="POWER"
-              detail="CustomWeight system + Vibradrive anti-vibration. The weapon of choice for aggressive flat hitters."
-            />
-            <GearCard
-              name="Adidas Metalbone 2026"
-              player="Ale Galan"
-              tag="CONTROL"
-              detail="16K Carbon Aluminized face, Soft Performance EVA core. Octagonal structure for torsion resistance."
-            />
-            <GearCard
-              name="Head Extreme Pro"
-              player="Various ATP"
-              tag="HEAVY HITTER"
-              detail="Auxetic 2.0 + Power Foam. Torsion Control prevents frame twisting on high-velocity exchanges."
-            />
-            <GearCard
-              name="Babolat Viper 3.0 JL"
-              player="Juan Lebron"
-              tag="EXPLOSIVE"
-              detail="3K Carbon face, Hard EVA core. Built for overhead dominance. The Wolf's weapon."
-            />
-            <GearCard
-              name="Wilson Bela Pro V3"
-              player="Fernando Belasteguin"
-              tag="LEGEND"
-              detail="The GOAT's choice. $399. Balanced power-to-control ratio for all-court play."
-            />
+            {[
+              { name: "Nox AT10 Genius 18K", player: "Agustin Tapia", tag: "EDITOR'S PICK", price: "$299", detail: "Modular Weight Balance System. Dual Spin 3D texture. The racket that defined 2026.", url: "https://padelusa.com/collections/nox", accent: "from-orange-500/20 to-red-500/10" },
+              { name: "Bullpadel Hack 04", player: "Paquito Navarro", tag: "POWER", price: "$345", detail: "CustomWeight + Vibradrive anti-vibration. For aggressive flat hitters who want to end points fast.", url: "https://padelusa.com/collections/bullpadel", accent: "from-blue-500/20 to-indigo-500/10" },
+              { name: "Adidas Metalbone 2026", player: "Ale Galan", tag: "CONTROL", price: "$435", detail: "16K Carbon Aluminized face. Octagonal structure for zero frame twist. Galan's weapon.", url: "https://padelusa.com/collections/adidas", accent: "from-slate-500/20 to-gray-500/10" },
+              { name: "Head Extreme Pro", player: "Arturo Coello", tag: "HEAVY HITTER", price: "$374", detail: "Auxetic 2.0 + Power Foam. Torsion Control tech. The frame that won Riyadh P1.", url: "https://padelusa.com/collections/head", accent: "from-green-500/20 to-emerald-500/10" },
+              { name: "Babolat Viper 3.0 JL", player: "Juan Lebron", tag: "EXPLOSIVE", price: "$369", detail: "3K Carbon face, Hard EVA core. Built for overhead dominance. The Wolf's signature.", url: "https://padelusa.com/collections/babolat", accent: "from-yellow-500/20 to-amber-500/10" },
+              { name: "Wilson Bela Pro V3", player: "Fernando Belasteguin", tag: "THE GOAT'S PICK", price: "$399", detail: "The most decorated player in history chose this. Balanced power-to-control for all-court mastery.", url: "https://padelusa.com/collections/wilson", accent: "from-red-500/20 to-rose-500/10" },
+            ].map((racket) => (
+              <a
+                key={racket.name}
+                href={racket.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="card group overflow-hidden"
+              >
+                <div className={`h-2 bg-gradient-to-r ${racket.accent}`} />
+                <div className="p-4 sm:p-5 flex flex-col gap-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-accent/10 text-accent">
+                      {racket.tag}
+                    </span>
+                    <span className="text-sm font-bold text-foreground">{racket.price}</span>
+                  </div>
+                  <h4 className="text-sm font-bold group-hover:text-accent transition-colors">{racket.name}</h4>
+                  <p className="text-[10px] text-dim uppercase tracking-wider">
+                    {racket.player}&apos;s choice
+                  </p>
+                  <p className="text-xs text-muted leading-relaxed flex-1">{racket.detail}</p>
+                  <span className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-accent opacity-0 group-hover:opacity-100 transition-opacity">
+                    Shop now
+                    <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+                      <path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </span>
+                </div>
+              </a>
+            ))}
           </div>
 
           {/* 2026 trends callout */}
-          <div className="mt-6 card p-5 sm:p-6 bg-accent-soft/50 border-accent/10">
-            <p className="text-sm font-bold text-foreground mb-2">
-              2026 Racket Trends to Watch
+          <div className="mt-6 relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#1a1a2e] to-[#0f3460] p-5 sm:p-6">
+            <div className="absolute top-2 right-4 text-5xl opacity-10 select-none">🏓</div>
+            <p className="text-xs font-bold uppercase tracking-[0.15em] text-amber-400 mb-3">
+              2026 Racket Trends
             </p>
-            <ul className="space-y-1.5 text-xs text-muted">
+            <ul className="space-y-2 text-sm text-white/80">
               <li className="flex items-start gap-2">
-                <span className="text-accent font-bold mt-px">1.</span>
-                <span><strong className="text-foreground">Modular weighting</strong> is the biggest shift. Nox and Adidas let you adjust racket balance between games.</span>
+                <span className="text-amber-400 font-bold">1.</span>
+                <span><strong className="text-white">Modular weighting</strong> is the biggest shift. Nox and Adidas let you adjust racket balance between games.</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-accent font-bold mt-px">2.</span>
-                <span><strong className="text-foreground">30mm extended handles</strong> are now standard (Nox, StarVie, Babolat) for better leverage on two-handed backhands.</span>
+                <span className="text-amber-400 font-bold">2.</span>
+                <span><strong className="text-white">30mm extended handles</strong> are now standard for better two-handed backhand leverage.</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-accent font-bold mt-px">3.</span>
-                <span><strong className="text-foreground">Torsion control tech</strong> prevents frame twisting during power shots. Head and Bullpadel lead here.</span>
+                <span className="text-amber-400 font-bold">3.</span>
+                <span><strong className="text-white">Torsion control</strong> prevents frame twisting on power shots. Head and Bullpadel lead here.</span>
               </li>
             </ul>
           </div>
 
-          {/* Shoe spotlight */}
-          <div className="mt-4 card p-5 sm:p-6">
-            <p className="text-sm font-bold text-foreground mb-2">
-              Shoe Watch: What&apos;s Hot on Court
+          {/* Shoe grid with buy links */}
+          <div className="mt-6">
+            <p className="text-sm font-bold text-foreground mb-3 flex items-center gap-2">
+              👟 Shoe Watch
             </p>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-              <div>
-                <p className="font-semibold text-foreground">Asics Gel Resolution X</p>
-                <p className="text-muted mt-0.5">The #1 padel shoe worldwide. Dynawall lateral support, GEL cushioning. ~$160.</p>
-              </div>
-              <div>
-                <p className="font-semibold text-foreground">Adidas Crazyquick Boost</p>
-                <p className="text-muted mt-0.5">Boost energy return for explosive movers. Best men&apos;s shoe of 2026.</p>
-              </div>
-              <div>
-                <p className="font-semibold text-foreground">Bullpadel Vertex Vibram</p>
-                <p className="text-muted mt-0.5">Vibram sole = grip monster. Lightweight mesh. Padel-specific design.</p>
-              </div>
-              <div>
-                <p className="font-semibold text-foreground">Wilson Bela Tour</p>
-                <p className="text-muted mt-0.5">360-degree padel-specific sole. Endofit for locked-in feel. Bela&apos;s pick.</p>
-              </div>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {[
+                { name: "Asics Gel Resolution X", price: "~$160", detail: "#1 padel shoe worldwide. Dynawall lateral support.", url: "https://padelusa.com/collections/padel-shoes" },
+                { name: "Adidas Crazyquick Boost", price: "~$140", detail: "Boost energy return. Best men's shoe of 2026.", url: "https://padelusa.com/collections/padel-shoes" },
+                { name: "Bullpadel Vertex Vibram", price: "~$130", detail: "Vibram sole grip monster. Padel-specific design.", url: "https://padelusa.com/collections/padel-shoes" },
+                { name: "Wilson Bela Tour", price: "~$160", detail: "360-degree padel sole. Endofit for locked-in feel.", url: "https://padelusa.com/collections/padel-shoes" },
+              ].map((shoe) => (
+                <a
+                  key={shoe.name}
+                  href={shoe.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="card p-3 group"
+                >
+                  <div className="flex items-center justify-between mb-1">
+                    <p className="font-semibold text-xs text-foreground group-hover:text-accent transition-colors">{shoe.name}</p>
+                  </div>
+                  <p className="text-sm font-bold text-accent">{shoe.price}</p>
+                  <p className="text-[11px] text-muted mt-1 leading-relaxed">{shoe.detail}</p>
+                </a>
+              ))}
             </div>
           </div>
 
           {/* Where to buy in Miami */}
-          <div className="mt-4 card p-5 sm:p-6">
-            <p className="text-sm font-bold text-foreground mb-3">
-              Where to Buy Gear in Miami
+          <div className="mt-6">
+            <p className="text-sm font-bold text-foreground mb-3 flex items-center gap-2">
+              🛒 Buy Gear in Miami
             </p>
-            <div className="grid gap-2 sm:grid-cols-2">
+            <div className="grid gap-2 sm:grid-cols-3">
               {[
-                { name: "Padel Padel", area: "Miami", note: "Alex's shop. Best local service. Bullpadel, Nox, Adidas, Cork. Competitive pricing.", url: "https://padelpadel.us" },
-                { name: "Open Padel Club Pro Shop", area: "Miramar", note: "Largest indoor club in USA. All top brands. Coached by 9x world champ Lasaigues.", url: "https://openpadel.club" },
-                { name: "Casas Padel", area: "Aventura Mall", note: "Physical store + online. Also builds and installs courts.", url: "https://www.casaspadel.com" },
-                { name: "I Am Beach Tennis", area: "NW 2nd Ave, Miami", note: "Padel + beach tennis gear. Authorized dealer for all brands. Local pickup available.", url: "https://iambeachtennis.com" },
-                { name: "Wynwood Padel Pro Shop", area: "Wynwood", note: "In-club shop at the 8-court Wynwood facility. Rackets, shoes, apparel, and custom collabs.", url: "https://www.wynwoodpadelmiami.com" },
-                { name: "World Tennis / Tennis Plaza", area: "Multiple locations", note: "3x Miami Herald Favorite. Padel section growing. Great for shoes.", url: "https://www.tennisplaza.com" },
+                { name: "Padel Padel", area: "Miami", note: "Best local service. All major brands.", url: "https://padelpadel.us" },
+                { name: "Casas Padel", area: "Aventura Mall", note: "Walk-in store + online. Also installs courts.", url: "https://www.casaspadel.com" },
+                { name: "Padel USA", area: "Online", note: "#1 US online store. Free shipping $99+.", url: "https://padelusa.com" },
+                { name: "Wynwood Padel Shop", area: "Wynwood", note: "In-club. Rackets, shoes, apparel.", url: "https://www.wynwoodpadelmiami.com" },
+                { name: "Tennis Plaza", area: "Multiple locations", note: "3x Miami Herald Favorite. Padel growing.", url: "https://www.tennisplaza.com" },
+                { name: "I Am Beach Tennis", area: "NW 2nd Ave", note: "All brands. Local pickup available.", url: "https://iambeachtennis.com" },
               ].map((shop) => (
                 <a
                   key={shop.name}
                   href={shop.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-start gap-3 p-3 rounded-xl hover:bg-surface transition-colors group"
+                  className="flex items-center gap-3 p-3 rounded-xl hover:bg-surface border border-transparent hover:border-border transition-all group"
                 >
-                  <div className="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center shrink-0 mt-0.5">
+                  <div className="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
                       <line x1="3" y1="6" x2="21" y2="6" />
@@ -443,9 +614,8 @@ export default function MiamiPulsePage() {
                     </svg>
                   </div>
                   <div className="min-w-0">
-                    <p className="text-sm font-semibold group-hover:text-accent transition-colors">{shop.name}</p>
-                    <p className="text-[10px] text-dim uppercase tracking-wider">{shop.area}</p>
-                    <p className="text-xs text-muted mt-0.5 leading-relaxed">{shop.note}</p>
+                    <p className="text-xs font-bold group-hover:text-accent transition-colors">{shop.name}</p>
+                    <p className="text-[10px] text-muted">{shop.area} · {shop.note}</p>
                   </div>
                 </a>
               ))}
@@ -531,38 +701,43 @@ export default function MiamiPulsePage() {
 
           {/* Notable figures */}
           <div className="card p-5 sm:p-6">
-            <p className="text-sm font-bold text-foreground mb-3">
-              People to Know in Miami Padel
-            </p>
+            <div className="flex items-baseline justify-between mb-3">
+              <p className="text-sm font-bold text-foreground">
+                People to Know in Miami Padel
+              </p>
+              <Link href="/coaches" className="text-xs text-accent font-medium hover:underline">
+                All coaches
+              </Link>
+            </div>
             <div className="grid gap-3 sm:grid-cols-2">
               <div className="flex items-start gap-3">
                 <div className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center shrink-0 text-[10px] font-bold text-accent">JD</div>
                 <div>
                   <p className="text-sm font-semibold">Juan Martin Diaz</p>
-                  <p className="text-xs text-muted">Chief Padel Officer at Reserve. 13 consecutive years as world #1. Argentine legend, now based in Miami.</p>
+                  <p className="text-xs text-muted">Chief Padel Officer at Reserve. 13 consecutive years as world #1. Now based in Miami. <Link href="/club/open-padel-by-lasaigues" className="text-accent hover:underline">See his club</Link></p>
                 </div>
               </div>
-              <div className="flex items-start gap-3">
-                <div className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center shrink-0 text-[10px] font-bold text-accent">AL</div>
+              <Link href="/coach/799330" className="flex items-start gap-3 group">
+                <div className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center shrink-0 text-[10px] font-bold text-accent">MM</div>
                 <div>
-                  <p className="text-sm font-semibold">Alejandro Lasaigues</p>
-                  <p className="text-xs text-muted">Head pro at Open Padel Club Miramar. 9x professional world champion. #1 world ranking holder.</p>
+                  <p className="text-sm font-semibold group-hover:text-accent transition-colors">Mauricio Munoz</p>
+                  <p className="text-xs text-muted">159 classes at <Link href="/club/open-padel-by-lasaigues" className="text-accent hover:underline">Open Padel by Lasaigues</Link>. One of Miami&apos;s most experienced padel coaches.</p>
                 </div>
-              </div>
+              </Link>
               <div className="flex items-start gap-3">
                 <div className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center shrink-0 text-[10px] font-bold text-accent">DR</div>
                 <div>
                   <p className="text-sm font-semibold">Diego Ramos</p>
-                  <p className="text-xs text-muted">Personal coach to Arturo Coello. Former WPT top 30, Uruguay #1. Now available for private lessons at Reserve Miami.</p>
+                  <p className="text-xs text-muted">Personal coach to Arturo Coello. Former WPT top 30, Uruguay #1. Private lessons at Reserve Miami.</p>
                 </div>
               </div>
-              <div className="flex items-start gap-3">
-                <div className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center shrink-0 text-[10px] font-bold text-accent">GM</div>
+              <Link href="/coach/1879106" className="flex items-start gap-3 group">
+                <div className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center shrink-0 text-[10px] font-bold text-accent">MM</div>
                 <div>
-                  <p className="text-sm font-semibold">Gabi Meana</p>
-                  <p className="text-xs text-muted">Reserve co-founder and Padel Director. Former tennis pro from Northern Spain, building the premium padel club model in the US.</p>
+                  <p className="text-sm font-semibold group-hover:text-accent transition-colors">Marta Morga Alonso</p>
+                  <p className="text-xs text-muted">Level 6.0 coach at <Link href="/club/the-set" className="text-accent hover:underline">THE SET Doral</Link>. 69 classes, mix of private and group. Rising star.</p>
                 </div>
-              </div>
+              </Link>
             </div>
           </div>
         </div>
@@ -695,27 +870,24 @@ export default function MiamiPulsePage() {
                 Every Tuesday. The events, the openings, the pro results, and
                 the local scene intel. Straight to your inbox.
               </p>
-              <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center sm:gap-4">
+              <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
                 <Link
-                  href="/rankings"
+                  href="/miami/rankings"
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white text-accent font-semibold text-sm hover:bg-white/90 transition-colors shadow-lg"
                 >
                   Check your ranking
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path
-                      d="M3 8h10m0 0L9 4m4 4L9 12"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
+                    <path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </Link>
-                <Link
-                  href="/clubs"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/15 text-white font-semibold text-sm hover:bg-white/25 transition-colors backdrop-blur-sm"
-                >
+                <Link href="/miami/clubs" className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white/15 text-white font-semibold text-sm hover:bg-white/25 transition-colors backdrop-blur-sm">
                   Explore clubs
+                </Link>
+                <Link href="/coaches" className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white/15 text-white font-semibold text-sm hover:bg-white/25 transition-colors backdrop-blur-sm">
+                  Find a coach
+                </Link>
+                <Link href="/h2h" className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white/15 text-white font-semibold text-sm hover:bg-white/25 transition-colors backdrop-blur-sm">
+                  H2H matchups
                 </Link>
               </div>
             </div>
@@ -872,29 +1044,3 @@ function TimelineCard({
   return content;
 }
 
-function GearCard({
-  name,
-  player,
-  tag,
-  detail,
-}: {
-  name: string;
-  player: string;
-  tag: string;
-  detail: string;
-}) {
-  return (
-    <div className="card p-4 sm:p-5 flex flex-col gap-2">
-      <div className="flex items-center gap-2">
-        <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-accent/10 text-accent">
-          {tag}
-        </span>
-      </div>
-      <h4 className="text-sm font-bold">{name}</h4>
-      <p className="text-[10px] text-dim uppercase tracking-wider">
-        Used by {player}
-      </p>
-      <p className="text-xs text-muted leading-relaxed flex-1">{detail}</p>
-    </div>
-  );
-}

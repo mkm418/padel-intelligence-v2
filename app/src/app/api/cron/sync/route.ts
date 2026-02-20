@@ -13,11 +13,11 @@ import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { normalizeClubName } from "@/lib/club-aliases";
 
+import { getCityBySlug, type CityConfig } from "@/lib/cities";
+
 // ── Config ──────────────────────────────────────────────────────────────
 
 const API = "https://api.playtomic.io/v1";
-const MIAMI = "25.7617,-80.1918";
-const RADIUS = 80000;
 const PAGE_SIZE = 200;
 const BATCH_SIZE = 500;
 
@@ -103,8 +103,8 @@ function sleep(ms: number) {
   return new Promise((r) => setTimeout(r, ms));
 }
 
-async function fetchClubs(): Promise<RawClub[]> {
-  const url = `${API}/tenants?coordinate=${MIAMI}&radius=${RADIUS}&sport_id=PADEL&playtomic_status=ACTIVE&size=100`;
+async function fetchClubs(coordinate: string, radius: number): Promise<RawClub[]> {
+  const url = `${API}/tenants?coordinate=${coordinate}&radius=${radius}&sport_id=PADEL&playtomic_status=ACTIVE&size=200`;
   const clubs = await fetchJSON<RawClub[]>(url);
   return clubs.filter((c) => !SKIP_PATTERNS.some((p) => p.test(c.tenant_name)));
 }
@@ -270,6 +270,7 @@ async function recomputePlayerStats(
   supabase: any,
   playerIds: string[],
   playerMeta: Map<string, PlayerMeta>,
+  city = "miami",
 ): Promise<number> {
   if (playerIds.length === 0) return 0;
 
@@ -312,6 +313,7 @@ async function recomputePlayerStats(
           preferred_position: meta?.preferred_position ?? null,
           is_premium: meta?.is_premium ?? false,
           picture: meta?.picture ?? null,
+          city,
           clubs: (s?.clubs as string[]) ?? [],
           matches_played: (s?.matches_played as number) ?? 0,
           total_bookings: (s?.matches_played as number) ?? 0,
@@ -348,6 +350,7 @@ async function recomputePlayerStats(
 async function recomputeEdges(
   supabase: any,
   playerIds: string[],
+  city = "miami",
 ): Promise<number> {
   if (playerIds.length === 0) return 0;
 
@@ -371,6 +374,7 @@ async function recomputeEdges(
       clubs: e.clubs as string[],
       last_played: e.last_played as string,
       relationship: e.relationship as string,
+      city,
     }));
 
     const { error: upsertErr } = await supabase
@@ -438,86 +442,124 @@ async function enrichMissingPhotos(supabase: any, playerIds: string[]): Promise<
   return added;
 }
 
-// ── Main sync logic ─────────────────────────────────────────────────────
+// ── City sync logic ─────────────────────────────────────────────────────
 
-export async function GET() {
+async function syncCity(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  supabase: any,
+  cityConfig: CityConfig,
+) {
+  const citySlug = cityConfig.slug;
+
+  // Find last sync point for this city (2 days overlap for late-reported results)
+  const { data: lastMatch } = await supabase
+    .from("matches")
+    .select("played_at")
+    .eq("city", citySlug)
+    .order("played_at", { ascending: false })
+    .limit(1)
+    .single();
+
+  const lastDate = lastMatch?.played_at
+    ? new Date(new Date(lastMatch.played_at).getTime() - 2 * 24 * 60 * 60 * 1000)
+    : new Date("2022-01-01");
+  const sinceISO = lastDate.toISOString().replace("Z", "");
+
+  // Fetch clubs + matches from Playtomic for this city
+  const clubs = await fetchClubs(cityConfig.coordinate, cityConfig.radius);
+  const allRawMatches = await fetchAllClubMatches(clubs, sinceISO, 5);
+
+  // Extract match rows and player metadata
+  const { rows, playerMeta, affectedPlayerIds } = extractMatchRows(allRawMatches);
+
+  // Tag all rows with city
+  const cityRows = rows.map((r) => ({ ...r, city: citySlug }));
+
+  // Upsert matches
+  let matchesInserted = 0;
+  for (let i = 0; i < cityRows.length; i += BATCH_SIZE) {
+    const batch = cityRows.slice(i, i + BATCH_SIZE);
+    const { error } = await supabase
+      .from("matches")
+      .upsert(batch, { onConflict: "match_id" });
+    if (!error) matchesInserted += batch.length;
+  }
+
+  // Recompute player stats (tag with city)
+  const playerIdArr = Array.from(affectedPlayerIds);
+  const playersUpdated = await recomputePlayerStats(supabase, playerIdArr, playerMeta, citySlug);
+
+  // Fetch photos for players missing one
+  const photosAdded = await enrichMissingPhotos(supabase, playerIdArr);
+
+  // Recompute edges (tag with city)
+  const edgesUpdated = await recomputeEdges(supabase, playerIdArr, citySlug);
+
+  // Update city stats in cities table
+  await supabase.from("cities").upsert({
+    slug: citySlug,
+    name: cityConfig.name,
+    country: cityConfig.countryCode,
+    coordinate: cityConfig.coordinate,
+    radius: cityConfig.radius,
+    timezone: cityConfig.timezone,
+    player_count: playerIdArr.length,
+    match_count: matchesInserted,
+    club_count: clubs.length,
+    last_synced_at: new Date().toISOString(),
+  }, { onConflict: "slug" });
+
+  return {
+    city: citySlug,
+    since: sinceISO,
+    clubs_scanned: clubs.length,
+    raw_matches_fetched: allRawMatches.length,
+    matches_upserted: matchesInserted,
+    players_updated: playersUpdated,
+    photos_added: photosAdded,
+    edges_updated: edgesUpdated,
+  };
+}
+
+// ── Main handler ────────────────────────────────────────────────────────
+
+export async function GET(request: Request) {
   const startTime = Date.now();
   const supabase = getSupabase();
 
+  const url = new URL(request.url);
+  const citySlug = url.searchParams.get("city") || "miami";
+  const cityConfig = getCityBySlug(citySlug);
+
+  if (!cityConfig) {
+    return NextResponse.json({ status: "error", error: `Unknown city: ${citySlug}` }, { status: 400 });
+  }
+
   const { data: logEntry } = await supabase
     .from("sync_log")
-    .insert({ status: "running" })
+    .insert({ status: "running", city: citySlug })
     .select("id")
     .single();
   const logId = logEntry?.id;
 
   try {
-    // Step 1: Find last sync point (2 days overlap for late-reported results)
-    const { data: lastMatch } = await supabase
-      .from("matches")
-      .select("played_at")
-      .order("played_at", { ascending: false })
-      .limit(1)
-      .single();
-
-    const lastDate = lastMatch?.played_at
-      ? new Date(new Date(lastMatch.played_at).getTime() - 2 * 24 * 60 * 60 * 1000)
-      : new Date("2022-01-01");
-    const sinceISO = lastDate.toISOString().replace("Z", "");
-
-    // Step 2: Fetch clubs + matches from Playtomic
-    const clubs = await fetchClubs();
-    const allRawMatches = await fetchAllClubMatches(clubs, sinceISO, 5);
-
-    // Step 3: Extract match rows and player metadata
-    const { rows, playerMeta, affectedPlayerIds } = extractMatchRows(allRawMatches);
-
-    // Step 4: Upsert matches (dedup via match_id conflict)
-    let matchesInserted = 0;
-    for (let i = 0; i < rows.length; i += BATCH_SIZE) {
-      const batch = rows.slice(i, i + BATCH_SIZE);
-      const { error } = await supabase
-        .from("matches")
-        .upsert(batch, { onConflict: "match_id" });
-      if (!error) matchesInserted += batch.length;
-    }
-
-    // Step 5: Recompute player stats via SQL for affected players
-    const playerIdArr = Array.from(affectedPlayerIds);
-    const playersUpdated = await recomputePlayerStats(supabase, playerIdArr, playerMeta);
-
-    // Step 5b: Fetch photos for players that don't have one yet
-    const photosAdded = await enrichMissingPhotos(supabase, playerIdArr);
-
-    // Step 6: Recompute edges via SQL for affected players
-    const edgesUpdated = await recomputeEdges(supabase, playerIdArr);
-
-    // Step 7: Log results
+    const result = await syncCity(supabase, cityConfig);
     const duration = Date.now() - startTime;
+
     if (logId) {
       await supabase.from("sync_log").update({
         finished_at: new Date().toISOString(),
         status: "success",
-        clubs_scanned: clubs.length,
-      new_matches: matchesInserted,
-      players_updated: playersUpdated,
-      photos_added: photosAdded,
-      edges_updated: edgesUpdated,
+        clubs_scanned: result.clubs_scanned,
+        new_matches: result.matches_upserted,
+        players_updated: result.players_updated,
+        photos_added: result.photos_added,
+        edges_updated: result.edges_updated,
         duration_ms: duration,
       }).eq("id", logId);
     }
 
-    return NextResponse.json({
-      status: "success",
-      since: sinceISO,
-      clubs_scanned: clubs.length,
-      raw_matches_fetched: allRawMatches.length,
-      matches_upserted: matchesInserted,
-      players_updated: playersUpdated,
-      photos_added: photosAdded,
-      edges_updated: edgesUpdated,
-      duration_ms: duration,
-    });
+    return NextResponse.json({ status: "success", ...result, duration_ms: duration });
   } catch (err) {
     const duration = Date.now() - startTime;
     const message = err instanceof Error ? err.message : String(err);
@@ -532,7 +574,7 @@ export async function GET() {
     }
 
     return NextResponse.json(
-      { status: "error", error: message, duration_ms: duration },
+      { status: "error", error: message, city: citySlug, duration_ms: duration },
       { status: 500 },
     );
   }

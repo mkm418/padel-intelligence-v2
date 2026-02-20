@@ -134,7 +134,7 @@ type SortDir = "asc" | "desc";
 
 // ─── Component ──────────────────────────────────────────────────────────
 
-export default function NetworkGraph() {
+export default function NetworkGraph({ city = "miami" }: { city?: string }) {
   const { theme } = useTheme();
   // Filters
   const [minMatches, setMinMatches] = useState(5);
@@ -171,6 +171,7 @@ export default function NetworkGraph() {
   // ── Fetch data ──────────────────────────────────────────────────────
   useEffect(() => {
     const params = new URLSearchParams({
+      city,
       minMatches: String(minMatches),
       minWeight: String(minWeight),
       ...(club && { club }),
@@ -190,7 +191,7 @@ export default function NetworkGraph() {
         setError(e.message);
         setLoading(false);
       });
-  }, [minMatches, minWeight, club, search, levelRange]);
+  }, [minMatches, minWeight, club, search, levelRange, city]);
 
   // Sorted nodes for list view
   const sortedNodes = useMemo(() => {
