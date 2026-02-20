@@ -440,15 +440,7 @@ async function enrichMissingPhotos(supabase: any, playerIds: string[]): Promise<
 
 // ── Main sync logic ─────────────────────────────────────────────────────
 
-export async function GET(request: Request) {
-  const cronSecret = process.env.CRON_SECRET;
-  if (cronSecret) {
-    const authHeader = request.headers.get("authorization");
-    if (authHeader !== `Bearer ${cronSecret}`) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-  }
-
+export async function GET() {
   const startTime = Date.now();
   const supabase = getSupabase();
 
