@@ -15,6 +15,8 @@ import { normalizeClubName } from "@/lib/club-aliases";
 
 import { getCityBySlug, type CityConfig } from "@/lib/cities";
 
+export const maxDuration = 300; // 5 min max for city sync
+
 // ── Config ──────────────────────────────────────────────────────────────
 
 const API = "https://api.playtomic.io/v1";
@@ -460,9 +462,11 @@ async function syncCity(
     .limit(1)
     .single();
 
+  // For first sync of a new city, start from 90 days ago (not 2022) to avoid timeout
+  const ninetyDaysAgo = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000);
   const lastDate = lastMatch?.played_at
     ? new Date(new Date(lastMatch.played_at).getTime() - 2 * 24 * 60 * 60 * 1000)
-    : new Date("2022-01-01");
+    : ninetyDaysAgo;
   const sinceISO = lastDate.toISOString().replace("Z", "");
 
   // Fetch clubs + matches from Playtomic for this city
